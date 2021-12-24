@@ -1,15 +1,15 @@
 1. Install LDAP in ubuntu上
-*****
+#*****#
 sudo vim /etc/hosts to add the public IP and domain
 127.0.0.1 localhost
 http://44.200.xxx.xxx  http://uuid.compute-1.amazonaws.com
-*****
+#*****#
 sudo hostnamectl set-hostname http://http://uuid.compute-1.amazonaws.com
-*****
+#*****#
 sudo apt -y install slapd ldap-utils
-*****
+#*****#
 sudo dpkg-reconfigure slapd
-*****
+#*****#
 vim ldap_data.ldif
 dn: ou=People,dc=compute-1,dc=amazonaws,dc=com
 objectClass: organizationalUnit
@@ -40,17 +40,17 @@ gecos: FULLNAME
 loginShell: /bin/bash
 homeDirectory: USERDIRECTORY
 
-*****
+#*****#
 ldapadd -x -D cn=admin,dc=compute-1,dc=amazonaws,dc=com -W -f ldap_data.ldif
-*****
+#*****#
 ldapsearch -x -LLL -b dc=compute-1,dc=amazonaws,dc=com 'uid=USER' cn gidNumber
 
 
 2. 在 ubuntu上搭建 phpldapadmin
 
-*****
+#*****#
 sudo apt-get install phpldapadmin
-*****
+#*****#
 sudo vim /etc/phpldapadmin/config.php
 <?php
 /** NOTE **
@@ -634,7 +634,7 @@ $servers->setValue('server','force_may',array('uidNumber','gidNumber','sambaSID'
 ?>
 
 
-*****
+#*****#
 sudo vim /etc/apache2/sites-enabled/000-default.conf
 <VirtualHost *:80>
 	# The ServerName directive sets the request scheme, hostname and port that
@@ -668,11 +668,17 @@ sudo vim /etc/apache2/sites-enabled/000-default.conf
 	# after it has been globally disabled with "a2disconf".
 	#Include conf-available/serve-cgi-bin.conf
 </VirtualHost>
+#*****#
 sudo mkdir /etc/apache2/ssl
+#*****#
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/apache2/ssl/apache.key -out /etc/apache2/ssl/apache.crt
+#*****#
 sudo apt-get install apache2-utils
+#*****#
 sudo htpasswd -c /etc/apache2/htpasswd demo_user
+#*****#
 sudo a2enmod ssl
+#*****#
 sudo vim /etc/phpldapadmin/apache.conf
 # Define /phpldapadmin alias, this is the default
 <IfModule mod_alias.c>
@@ -726,9 +732,9 @@ sudo vim /etc/phpldapadmin/apache.conf
 
 </Directory>
 
-*****
+#*****#
 sudo service apache2 restart
-*****
+#*****#
 ldapsearch -Y ExTERNAL -H ldapi:/// -b ou=groups,dc=compute-1,dc=amazonaws,dc=com -LLL
 sudo ldapmodify -Y EXTERNAL -H ldapi:/// <<EOF
 dn: cn=config
@@ -741,15 +747,15 @@ olcLogLevel: 256
 
 EOF
 
-*****
+#*****#
 ldapsearch -x -H ldapi:/// -b cn=vpn,cn=admin,dc=compute-1,dc=amazonaws,dc=com -D cn=admin,dc=compute-1,dc=amazonaws,dc=com -w test
-*****
+#*****#
 ldapsearch -x -H ldapi:/// -b cn=vpn,cn=admin,dc=compute-1,dc=amazonaws,dc=com -D cn=vpnuser02,cn=vpn,cn=admin,dc=compute-1,dc=amazonaws,dc=com -w test
-*****
+#*****#
 log: /var/log/syslog
-*****
+#*****#
 configuration: /etc/ldap
-*****
+#*****#
 https://kifarunix.com/configure-openvpn-ldap-based-authentication/
 https://www.linuxidc.com/Linux/2019-01/156227.htm
 
