@@ -1,10 +1,15 @@
-在 ubuntu上搭建LDAP
-sudo vim /etc/hosts 修改服务器公网IP和域名,如：
+1. Install LDAP in ubuntu上
+*****
+sudo vim /etc/hosts to add the public IP and domain
 127.0.0.1 localhost
 http://44.200.xxx.xxx  http://uuid.compute-1.amazonaws.com
+*****
 sudo hostnamectl set-hostname http://http://uuid.compute-1.amazonaws.com
+*****
 sudo apt -y install slapd ldap-utils
+*****
 sudo dpkg-reconfigure slapd
+*****
 vim ldap_data.ldif
 dn: ou=People,dc=compute-1,dc=amazonaws,dc=com
 objectClass: organizationalUnit
@@ -34,11 +39,18 @@ userPassword: USER
 gecos: FULLNAME
 loginShell: /bin/bash
 homeDirectory: USERDIRECTORY
-ldapadd -x -D cn=admin,dc=compute-1,dc=amazonaws,dc=com -W -f ldap_data.ldif
-ldapsearch -x -LLL -b dc=compute-1,dc=amazonaws,dc=com 'uid=USER' cn gidNumber
-2。在 ubuntu上搭建 phpldapadmin
 
+*****
+ldapadd -x -D cn=admin,dc=compute-1,dc=amazonaws,dc=com -W -f ldap_data.ldif
+*****
+ldapsearch -x -LLL -b dc=compute-1,dc=amazonaws,dc=com 'uid=USER' cn gidNumber
+
+
+2. 在 ubuntu上搭建 phpldapadmin
+
+*****
 sudo apt-get install phpldapadmin
+*****
 sudo vim /etc/phpldapadmin/config.php
 <?php
 /** NOTE **
@@ -622,6 +634,7 @@ $servers->setValue('server','force_may',array('uidNumber','gidNumber','sambaSID'
 ?>
 
 
+*****
 sudo vim /etc/apache2/sites-enabled/000-default.conf
 <VirtualHost *:80>
 	# The ServerName directive sets the request scheme, hostname and port that
@@ -712,7 +725,10 @@ sudo vim /etc/phpldapadmin/apache.conf
     </IfModule>
 
 </Directory>
+
+*****
 sudo service apache2 restart
+*****
 ldapsearch -Y ExTERNAL -H ldapi:/// -b ou=groups,dc=compute-1,dc=amazonaws,dc=com -LLL
 sudo ldapmodify -Y EXTERNAL -H ldapi:/// <<EOF
 dn: cn=config
@@ -725,11 +741,15 @@ olcLogLevel: 256
 
 EOF
 
+*****
 ldapsearch -x -H ldapi:/// -b cn=vpn,cn=admin,dc=compute-1,dc=amazonaws,dc=com -D cn=admin,dc=compute-1,dc=amazonaws,dc=com -w test
+*****
 ldapsearch -x -H ldapi:/// -b cn=vpn,cn=admin,dc=compute-1,dc=amazonaws,dc=com -D cn=vpnuser02,cn=vpn,cn=admin,dc=compute-1,dc=amazonaws,dc=com -w test
-log 在 /var/log/syslog
-配置在/etc/ldap
+*****
+log: /var/log/syslog
+*****
+configuration: /etc/ldap
+*****
+https://kifarunix.com/configure-openvpn-ldap-based-authentication/
+https://www.linuxidc.com/Linux/2019-01/156227.htm
 
-参考：如何在Ubuntu 18.04上安装OpenLDAP
-参考：Configure OpenVPN LDAP Based Authentication - kifarunix.com
-关联：老强哥们：OpenLDAP+OpenVPN服务器搭建-TLS
