@@ -758,4 +758,5 @@ configuration: /etc/ldap
 #*****#
 https://kifarunix.com/configure-openvpn-ldap-based-authentication/
 https://www.linuxidc.com/Linux/2019-01/156227.htm
+https://zhuanlan.zhihu.com/p/448908415
 
