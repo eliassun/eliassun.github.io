@@ -4,7 +4,7 @@ sudo vim /etc/hosts to add the public IP and domain
 127.0.0.1 localhost
 http://44.200.xxx.xxx  http://uuid.compute-1.amazonaws.com
 #*****#
-sudo hostnamectl set-hostname http://http://uuid.compute-1.amazonaws.com
+sudo hostnamectl set-hostname uuid.compute-1.amazonaws.com
 #*****#
 sudo apt -y install slapd ldap-utils
 #*****#
