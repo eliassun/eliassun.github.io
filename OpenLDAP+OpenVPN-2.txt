@@ -1,0 +1,120 @@
+1. Make certs
+
+mdkir CA
+cd CA
+touch index.txt
+echo 01 > serial
+openssl genrsa -out ca.key 4096
+openssl req -new -x509 -days 365 -key ca.key -out ca.cert.pem
+（Common Name 是LDAP服务器的domain name）
+
+vim server_cert_ext.cnf
+[v3_ca]
+basicConstraints = CA:FALSE
+nsCertType = server
+nsComment = "OpenSSL Generated Server Certificate"
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer:always
+keyUsage = critical, digitalSignature, keyEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+[alt_names]
+IP.1 = 52.23.75.x
+IP.2 = 172.17.0.x
+DNS.1 = ec2-52-23-75-x.compute-1.amazonaws.com
+mkdir private
+cd private/
+openssl genrsa -out ldap.example.com.key 4096
+openssl req -new -key ldap.example.com.key -out ldap.example.com.csr
+(Common Name 是LDAP服务器的domain name）
+
+cd ..
+openssl ca -keyfile ca.key -cert ca.cert.pem -in private/ldap.example.com.csr -out private/ldap.example.com.crt -extensions v3_ca -extfile server_cert_ext.cnf
+mkdir client
+cd client
+openssl genrsa -out client.key.pem 4096
+openssl req -new -key client-35.175.39.230.key.pem -out client.csr
+(Common Name 是VPN服务器的domain name或者公网IP)
+
+vim client_cert_ext.cnf
+basicConstraints = CA:FALSE
+nsCertType = client, email
+nsComment = "OpenSSL Generated Client Certificate"
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer
+keyUsage = critical, nonRepudiation, digitalSignature, keyEncipherment
+extendedKeyUsage = clientAuth, emailProtection
+openssl x509 -req -in client-35.175.39.230.csr -CA ../ca.cert.pem -CAkey ../ca.key -out client.cert.pem -CAcreateserial -days 365 -sha256 -extfile client_cert_ext.cnf
+2. 安装证书到LDAP服务器
+
+拷贝证书到LDAP服务器 /etc/ldap/certs/
+-rwxrwxrwx 1 openldap openldap 2110 Dec 23 01:52 ca.cert.pem
+-rwxrwxrwx 1 openldap openldap 3243 Dec 23 01:18 ec2-52-23-75-x.compute-1.amazonaws.com.key
+-rwxrwxrwx 1 openldap openldap 7386 Dec 23 03:07 ec2-52-23-75-x.compute-1.amazonaws.com.pem
+
+
+vim tls7.ldif
+dn: cn=config
+changetype: modify
+replace: olcTLSCACertificateFile
+olcTLSCACertificateFile: /etc/ldap/certs/ca.cert.pem
+
+dn: cn=config
+changetype: modify
+replace: olcTLSCertificateFile
+olcTLSCertificateFile: /etc/ldap/certs/ec2-52-23-75-x.compute-1.amazonaws.com.pem
+
+dn: cn=config
+changetype: modify
+replace: olcTLSCertificateKeyFile
+olcTLSCertificateKeyFile: /etc/ldap/certs/ec2-52-23-75-x.compute-1.amazonaws.com.key
+
+
+dn: cn=config
+changetype: modify
+add: olcTLSVerifyClient
+olcTLSVerifyClient: demand
+olcTLSVerifyClient： 可以忽略，如果不需要验证VPN服务器的证书
+ldapmodify -Y EXTERNAL -H ldapi:// -f tls7.ldif
+sudo slapcat -b "cn=config" | egrep "olcTLSCertificateFile|olcTLSCertificateKeyFile|olcTLSCACertificateFile"
+sudo vim /etc/ldap/ldap.conf
+TLS_CACERTDIR /etc/ldap/certs/
+TLS_CACERT /etc/ldap/certs/ca.cert.pem
+TLS_REQCERT allow
+sudo vim /etc/default/slapd
+SLAPD_SERVICES="ldap:/// ldapi:/// ldaps:///"
+sudo service slapd restart
+sudo cat /etc/ldap/slapd.d/cn\=config.ldif
+dn: cn=config
+objectClass: olcGlobal
+cn: config
+olcArgsFile: /var/run/slapd/slapd.args
+olcPidFile: /var/run/slapd/slapd.pid
+olcToolThreads: 1
+structuralObjectClass: olcGlobal
+entryUUID: c2048d5c-f6fe-103b-851a-b3567888f0d5
+creatorsName: cn=config
+createTimestamp: 20211221230913Z
+olcLogLevel: 256
+olcTLSCACertificateFile: /etc/ldap/certs/ca.cert.pem
+olcTLSCertificateFile: /etc/ldap/certs/ec2-52-23-75-x.compute-1.amazonaws.
+ com.pem
+olcTLSCertificateKeyFile: /etc/ldap/certs/ec2-52-23-75-x.compute-1.amazona
+ ws.com.key
+olcTLSVerifyClient: demand
+entryCSN: 20211223035932.243025Z#000000#000#000000
+modifiersName: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
+modifyTimestamp: 20211223035932Z
+3.一些有用的命令
+查看证书common name
+
+openssl x509 -noout -subject -in your-file.pem
+openssl x509 -noout -subject -in exmaple.com.cer
+openssl x509 -noout -subject -in /etc/ssl/exmaple.com.cer
+
+
+
+
+https://www.golinuxcloud.com/configure-openldap-with-tls-certificates/
+https://www.golinuxcloud.com/openssl-create-client-server-certificate/
+https://eliassun.github.io/OpenLDAP+OpenVPN-1.txt
