@@ -1,4 +1,4 @@
-Created by Elias Sun Dec. 27, 2021
+Created by Elias Sun Dec. 24, 2021
 
 1. Install LDAP in ubuntu上
 #*****#
