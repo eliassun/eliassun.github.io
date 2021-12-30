@@ -28,6 +28,9 @@ openssl genrsa -out ldap.example.com.key 4096
 openssl req -new -key ldap.example.com.key -out ldap.example.com.csr
 (Common Name 是LDAP服务器的domain name）
 
+sudo vim /usr/lib/ssl/openssl.cnf
+dir             = /home/ubuntu/CA       # Where everything is kept
+
 cd ..
 openssl ca -keyfile ca.key -cert ca.cert.pem -in private/ldap.example.com.csr -out private/ldap.example.com.crt -extensions v3_ca -extfile server_cert_ext.cnf
 mkdir client
