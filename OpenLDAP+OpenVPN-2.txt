@@ -1,14 +1,20 @@
-1. Make certs
-
+1. Create certs
+#*****#
 mdkir CA
+#*****#
 cd CA
+#*****#
 touch index.txt
+#*****#
 echo 01 > serial
+#*****#
 openssl genrsa -out ca.key 4096
+#*****#
 openssl req -new -x509 -days 365 -key ca.key -out ca.cert.pem
-（Common Name 是LDAP服务器的domain name）
-
+(Common Name is LDAP server domain name)
+#*****#
 vim server_cert_ext.cnf
+
 [v3_ca]
 basicConstraints = CA:FALSE
 nsCertType = server
@@ -22,24 +28,39 @@ subjectAltName = @alt_names
 IP.1 = 52.23.75.x
 IP.2 = 172.17.0.x
 DNS.1 = ec2-52-23-75-x.compute-1.amazonaws.com
+
+#*****#
 mkdir private
+#*****#
 cd private/
+#*****#
 openssl genrsa -out ldap.example.com.key 4096
+#*****#
 openssl req -new -key ldap.example.com.key -out ldap.example.com.csr
-(Common Name 是LDAP服务器的domain name）
+(Common Name is LDAP server domain name)
 
+#*****#
 sudo vim /usr/lib/ssl/openssl.cnf
+
 dir             = /home/ubuntu/CA       # Where everything is kept
-
+#*****#
 cd ..
+#*****#
 openssl ca -keyfile ca.key -cert ca.cert.pem -in private/ldap.example.com.csr -out private/ldap.example.com.crt -extensions v3_ca -extfile server_cert_ext.cnf
-mkdir client
-cd client
-openssl genrsa -out client.key.pem 4096
-openssl req -new -key client-35.175.39.230.key.pem -out client.csr
-(Common Name 是VPN服务器的domain name或者公网IP)
 
+#*****#
+mkdir client
+#*****#
+cd client
+#*****#
+openssl genrsa -out client.key.pem 4096
+#*****#
+openssl req -new -key client-35.175.39.230.key.pem -out client.csr
+(Common Name is VPN GW domain name or IP address)
+
+#*****#
 vim client_cert_ext.cnf
+
 basicConstraints = CA:FALSE
 nsCertType = client, email
 nsComment = "OpenSSL Generated Client Certificate"
@@ -47,16 +68,23 @@ subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid,issuer
 keyUsage = critical, nonRepudiation, digitalSignature, keyEncipherment
 extendedKeyUsage = clientAuth, emailProtection
-openssl x509 -req -in client-35.175.39.230.csr -CA ../ca.cert.pem -CAkey ../ca.key -out client.cert.pem -CAcreateserial -days 365 -sha256 -extfile client_cert_ext.cnf
-2. 安装证书到LDAP服务器
 
-拷贝证书到LDAP服务器 /etc/ldap/certs/
+#*****#
+openssl x509 -req -in client-35.175.39.230.csr -CA ../ca.cert.pem -CAkey ../ca.key -out client.cert.pem -CAcreateserial -days 365 -sha256 -extfile client_cert_ext.cnf
+
+
+2. Install server certs for LDAP server
+
+#*****#
+Copy certs to /etc/ldap/certs/
+
 -rwxrwxrwx 1 openldap openldap 2110 Dec 23 01:52 ca.cert.pem
 -rwxrwxrwx 1 openldap openldap 3243 Dec 23 01:18 ec2-52-23-75-x.compute-1.amazonaws.com.key
 -rwxrwxrwx 1 openldap openldap 7386 Dec 23 03:07 ec2-52-23-75-x.compute-1.amazonaws.com.pem
 
-
+#*****#
 vim tls7.ldif
+
 dn: cn=config
 changetype: modify
 replace: olcTLSCACertificateFile
@@ -77,21 +105,36 @@ dn: cn=config
 changetype: modify
 add: olcTLSVerifyClient
 olcTLSVerifyClient: demand
-olcTLSVerifyClient： 可以忽略，如果不需要验证VPN服务器的证书
 
-* ldapmodify -Y EXTERNAL -H ldapi:// -f tls7.ldif
+
+olcTLSVerifyClient can be igored if it doesn't need the VPN GW to verify the LDAP server cert. The value can be {never | allow | try | demand}, which is defined in https://www.openldap.org/doc/admin21/tls.html
+
+#*****#
+ldapmodify -Y EXTERNAL -H ldapi:// -f tls7.ldif
+
 If the error below happens, then we can exchange the server key and server cert order, then leave a blank line on top and bottom of the line. 
 ldap_modify: Other (e.g., implementation specific) error (80)
 
+#*****#
 sudo slapcat -b "cn=config" | egrep "olcTLSCertificateFile|olcTLSCertificateKeyFile|olcTLSCACertificateFile"
+#*****#
 sudo vim /etc/ldap/ldap.conf
+
 TLS_CACERTDIR /etc/ldap/certs/
 TLS_CACERT /etc/ldap/certs/ca.cert.pem
 TLS_REQCERT allow
+
+#*****#
 sudo vim /etc/default/slapd
+
 SLAPD_SERVICES="ldap:/// ldapi:/// ldaps:///"
+
+#*****#
 sudo service slapd restart
+
+#*****#
 sudo cat /etc/ldap/slapd.d/cn\=config.ldif
+
 dn: cn=config
 objectClass: olcGlobal
 cn: config
@@ -112,19 +155,24 @@ olcTLSVerifyClient: demand
 entryCSN: 20211223035932.243025Z#000000#000#000000
 modifiersName: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
 modifyTimestamp: 20211223035932Z
-3.一些有用的命令
-查看证书common name
 
+
+3.Useful commands
+Check the common name for certs
+
+#*****#
 openssl x509 -noout -subject -in your-file.pem
+#*****#
 openssl x509 -noout -subject -in exmaple.com.cer
+#*****#
 openssl x509 -noout -subject -in /etc/ssl/exmaple.com.cer
 
 
+#*****#
+Tips:
+LDAP over TLS/SSL (ldaps://) is deprecated in favour of StartTLS. The latter refers to an existing LDAP session (listening on TCP port 389) becoming protected by TLS/SSL whereas LDAPS, like HTTPS, is a distinct encrypted-from-the-start protocol that operates over TCP port 636.
 
 
 https://www.golinuxcloud.com/configure-openldap-with-tls-certificates/
 https://www.golinuxcloud.com/openssl-create-client-server-certificate/
 https://eliassun.github.io/OpenLDAP+OpenVPN-1.txt
-
-Tips:
-LDAP over TLS/SSL (ldaps://) is deprecated in favour of StartTLS. The latter refers to an existing LDAP session (listening on TCP port 389) becoming protected by TLS/SSL whereas LDAPS, like HTTPS, is a distinct encrypted-from-the-start protocol that operates over TCP port 636.
