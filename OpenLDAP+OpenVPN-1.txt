@@ -1,3 +1,5 @@
+Created by Elias Sun Dec. 27, 2021
+
 1. Install LDAP in ubuntu上
 #*****#
 sudo vim /etc/hosts to add the public IP and domain
