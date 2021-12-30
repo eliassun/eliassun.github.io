@@ -1,0 +1,41 @@
+Before a modification, we may need to back up a DB:
+
+mongodump --db=my_db --out=./
+
+
+1. Connect local host's mongodb
+
+mongo --port 27017
+
+
+2. List all DBs (optional)
+
+db.adminCommand( { listDatabases: 1 } )
+
+3. Which DB to access (must)
+
+use my_db
+
+4. list all collections(optional)
+
+db.getCollectionInfos()
+
+show collections
+
+5. Get a collection(must)
+
+db.getCollection('my-colletion-0c275324e2ef47460').find()
+
+6. Update a value in a collection(must)
+
+Update a value under the root of DB
+
+db.getCollection('my-colletion-0c275324e2ef47460').update({ _id: ObjectId("5eb4459d9328435f5bd9a497") }, { $set: { "mykey": "value" } })
+
+
+Update a value in a dict 
+
+xlb a dictionary ，xlb_protocol is a value in that dictionary
+
+db.getCollection('my-colletion-0c275324e2ef47460').update({ _id: ObjectId("5eb4459d9328435f5bd9a497") }, { $set: { "xlb.xlb_protocol": "UDP" } })
+
