@@ -78,7 +78,11 @@ changetype: modify
 add: olcTLSVerifyClient
 olcTLSVerifyClient: demand
 olcTLSVerifyClient： 可以忽略，如果不需要验证VPN服务器的证书
-ldapmodify -Y EXTERNAL -H ldapi:// -f tls7.ldif
+
+* ldapmodify -Y EXTERNAL -H ldapi:// -f tls7.ldif
+If the error below happens, then we can exchange the server key and server cert order, then leave a blank line on top and bottom of the line. 
+ldap_modify: Other (e.g., implementation specific) error (80)
+
 sudo slapcat -b "cn=config" | egrep "olcTLSCertificateFile|olcTLSCertificateKeyFile|olcTLSCACertificateFile"
 sudo vim /etc/ldap/ldap.conf
 TLS_CACERTDIR /etc/ldap/certs/
