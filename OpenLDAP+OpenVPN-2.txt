@@ -37,14 +37,19 @@ mkdir private
 cd private/
 #*****#
 openssl genrsa -out ldap.example.com.key 4096
-#*****#
-openssl req -new -key ldap.example.com.key -out ldap.example.com.csr
-(Common Name is LDAP server domain name)
 
 #*****#
 sudo vim /usr/lib/ssl/openssl.cnf
 
 dir             = /home/ubuntu/CA       # Where everything is kept
+
+
+#*****#
+openssl req -new -key ldap.example.com.key -out ldap.example.com.csr 
+(Common Name is LDAP server domain name)
+
+or:
+openssl req -new -key ldap.example.com.key -out ldap.example.com.csr -config ../openssl.cnf 
 #*****#
 cd ..
 #*****#
