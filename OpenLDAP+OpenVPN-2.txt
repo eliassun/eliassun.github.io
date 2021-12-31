@@ -48,8 +48,12 @@ dir             = /home/ubuntu/CA       # Where everything is kept
 openssl req -new -key ldap.example.com.key -out ldap.example.com.csr 
 (Common Name is LDAP server domain name)
 
-or:
+or, if cp /usr/lib/ssl/openssl.cnf to CA root:
+sudo vim openssl.cnf from CA root
+dir             = .      # Where everything is kept
+
 openssl req -new -key ldap.example.com.key -out ldap.example.com.csr -config ../openssl.cnf 
+
 #*****#
 cd ..
 #*****#
