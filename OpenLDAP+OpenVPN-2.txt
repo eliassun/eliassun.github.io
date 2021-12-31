@@ -59,6 +59,8 @@ cd ..
 #*****#
 openssl ca -keyfile ca.key -cert ca.cert.pem -in private/ldap.example.com.csr -out private/ldap.example.com.crt -extensions v3_ca -extfile server_cert_ext.cnf
 
+Attach -config openssl.cnf if cp openssl.cnf to CA
+
 #*****#
 mkdir client
 #*****#
