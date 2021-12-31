@@ -208,6 +208,12 @@ download all of files in client folder
 #*****#
 In endpoints(Mac, Win, Linux),  sudo openvpn --config elias.ovpn 
 
+Tips:
+Concat ca cert and key into one ovpn file by
+<ca></ca> 
+<cert></cert>
+<key></key>
+
 Reference: 
 https://www.howtoforge.com/tutorial/how-to-install-openvpn-server-and-client-with-easy-rsa-3-on-centos-8/
 
