@@ -163,6 +163,11 @@ sudo systemctl start openvpn-server@server
 systemctl status openvpn-server@server.service
 
 #*****#
+sudo systemctl enable openvpn-server@server
+
+Created symlink /etc/systemd/system/multi-user.target.wants/openvpn-server@server.service → /lib/systemd/system/openvpn-server@.service.
+
+#*****#
 cd ~
 
 #*****#
