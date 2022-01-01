@@ -1,0 +1,16 @@
+1. Check the must-have files by  ls /etc/openvpn or ls /etc/openvpn/server/
+ - ca.crt
+ - crl.pem
+ - dh.pem
+ - server.conf  
+ - server.crt  
+ - server.key
+ optional files:
+ - client_connect to take action before a vpn connection
+ - client_disconnect to take action after a vpn disconnection
+ - learn-address to modify the firewall dynamically
+ 
+ 2. Replace ca.crt, crl.pem, server.crt and server.key with the 3rd party certs and key.
+ 
+ Tips:
+ try to disable tls-auth. with tls-auth, it needs another ta.key, which is a static key
