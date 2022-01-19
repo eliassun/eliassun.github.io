@@ -1,5 +1,7 @@
 1. The health check can be TCP, HTTP, HTTPS, and SSL
 2. For the web site, we can use any of them
 3. For a VPN GW instance, we can use the traffic port(e.g. 443, 943, or any listening port)
+
+
 Reference:
 https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-healthchecks.html
