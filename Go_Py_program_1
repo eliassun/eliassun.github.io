@@ -2,56 +2,62 @@ Sever Development mixed with Go and Python - 1. Go calls Py
 
 1. Go calls Python, then Python uses the stdout to return results to Go
 In Go:
+package main
 
 import (
-    "bytes"
-    "fmt"
-    "json"
-    
-    "go.uber.org/zap"
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"os/exec"
+	"strings"
+
+	"go.uber.org/zap"
 )
 
-type struct ResultFromPy {
-  MsgType string `json:"msg_type"`
-  Param1  string `json:"param1"`
-  Param2  string `json:"param2"` 
+type ResultFromPy struct {
+	MsgType string `json:"msg_type"`
+	Param1  string `json:"param1"`
+	Param2  string `json:"param2"`
 }
 
-// Set log
-logger, _ := zap.NewProduction()
-defer logger.Sync()
+func main() {
+	// Set log
+	logger, _ := zap.NewProduction()
+	defer logger.Sync()
 
+	// Send msg from Go to Python
+	var outBuf, errBuf bytes.Buffer
+	cmdName := "python"
+	args := []string{"my_script.py", "input1", "input2"}
+	cmd := exec.Command(cmdName, args...)
+	cmd.Stdout = &outBuf
+	cmd.Stderr = &errBuf
+	err := cmd.Run()
 
-// Send msg from Go to Python
-var outBuf, errBuf bytes.Buffer
-cmdName := python
-args := []string{"my_script.py", "input1", "input2"}
-cmd := exec.Command(cmdName, args...)
-cmd.Stdout = &outBuf
-cmd.Stderr = &errBuf
-err := cmd.Run()
+	if err != nil {
+		logger.Error(
+			"Error for ",
+			zap.String("cmd", cmdName),
+			zap.Strings("args", args),
+			zap.String("stdout", outBuf.String()),
+			zap.String("stderr", errBuf.String()),
+			zap.Error(err))
+	}
 
-if err != nil {
-  	logger.Error(
-		"Error for ",
-		zap.String("cmd", cmdName),
-		zap.Strings("args", args),
-		zap.String("stdout", cmd.Stdout),
-		zap.String("stderr", cmd.Stderr),
-		zap.Error(err))
+	// Receive msg from Python
+	resultFromPy := ResultFromPy{}
+	if err := json.Unmarshal([]byte(strings.TrimSpace(outBuf.String())), &resultFromPy); err != nil {
+
+		logger.Error(
+			"Failed to receive results from Pyscript",
+			zap.String("cmd", cmdName),
+			zap.Strings("args", args),
+			zap.String("stdout", outBuf.String()),
+			zap.String("stderr", errBuf.String()),
+			zap.Error(err))
+
+	}
+	fmt.Println(resultFromPy)
 }
 
-// Receive msg from Python
-resultFromPy := ResultFromPy{}
-if err := json.Unmarshal([]byte(strings.TrimSpace(stdO)), &resultFromPy); err != nil {
-    if err != nil {
-  	logger.Error(
-		"Failed to receive results from Pyscript",
-		zap.String("cmd", cmdName),
-		zap.Strings("args", args),
-		zap.String("stdout", cmd.Stdout),
-		zap.String("stderr", cmd.Stderr),
-		zap.Error(err))
-}
-fmt.Println(resultFromPy)
-}
+
