@@ -6,63 +6,68 @@ In Go:
 package main
 
 import (
-	"bytes"
-	"encoding/json"
-	"fmt"
-	"os/exec"
-	"strings"
+        "bytes"
+        "encoding/json"
+        "fmt"
+        "os/exec"
+        "strings"
 
-	"go.uber.org/zap"
+        "go.uber.org/zap"
 )
 
 type ResultFromPy struct {
-	MsgType string `json:"msg_type"`
-	Param1  string `json:"param1"`
-	Param2  string `json:"param2"`
+        MsgType string `json:"msg_type"`
+        Param1  string `json:"param1"`
+        Param2  string `json:"param2"`
 }
 
 func main() {
-	// Set log
-	logger, _ := zap.NewProduction()
-	defer logger.Sync()
+        // Set log
+        logger, _ := zap.NewProduction()
+        defer logger.Sync()
 
-	// Send msg from Go to Python
-	var outBuf, errBuf bytes.Buffer
-	cmdName := "python"
-	args := []string{"Go_Py_program_1.py", "cmd_req_do_something", "input1", "input2"}
-	cmd := exec.Command(cmdName, args...)
-	cmd.Stdout = &outBuf
-	cmd.Stderr = &errBuf
-	err := cmd.Run()
+        // Send msg from Go to Python
+        var outBuf, errBuf bytes.Buffer
+        cmdName := "python"
+        args := []string{"Go_Py_program_1.py", "cmd_req_do_something", "input1", "input2"}
+        cmd := exec.Command(cmdName, args...)
+        cmd.Stdout = &outBuf
+        cmd.Stderr = &errBuf
+        err := cmd.Run()
 
-	if err != nil {
-		logger.Error(
-			"Error for ",
-			zap.String("cmd", cmdName),
-			zap.Strings("args", args),
-			zap.String("stdout", outBuf.String()),
-			zap.String("stderr", errBuf.String()),
-			zap.Error(err))
-	}
+        if err != nil {
+                logger.Error(
+                        "Error for ",
+                        zap.String("cmd", cmdName),
+                        zap.Strings("args", args),
+                        zap.String("stdout", outBuf.String()),
+                        zap.String("stderr", errBuf.String()),
+                        zap.Error(err))
+        }
 
-	// Receive msg from Python
-	resultFromPy := ResultFromPy{}
-	if err := json.Unmarshal([]byte(strings.TrimSpace(outBuf.String())), &resultFromPy); err != nil {
+        // Receive msg from Python
+        resultFromPy := ResultFromPy{}
+        if err := json.Unmarshal([]byte(strings.TrimSpace(outBuf.String())), &resultFromPy); err != nil {
 
-		logger.Error(
-			"Failed to receive results from Pyscript",
-			zap.String("cmd", cmdName),
-			zap.Strings("args", args),
-			zap.String("stdout", outBuf.String()),
-			zap.String("stderr", errBuf.String()),
-			zap.Error(err))
+                logger.Error(
+                        "Failed to receive results from Pyscript",
+                        zap.String("cmd", cmdName),
+                        zap.Strings("args", args),
+                        zap.String("stdout", outBuf.String()),
+                        zap.String("stderr", errBuf.String()),
+                        zap.Error(err))
 
-	}
-	fmt.Println(resultFromPy)
+        }
+        fmt.Println("stdout:", outBuf.String())
+        fmt.Println("MsgType:", resultFromPy.MsgType)
+        fmt.Println("Param1:", resultFromPy.Param1)
+        fmt.Println("Param2:", resultFromPy.Param2)
 }
 
 
 In Python:
+
+
 # !/usr/bin/env python
 
 import argparse
@@ -83,8 +88,8 @@ def get_result_for_req_from_go(input1, input2):
     LOG.info('handle req 2nd input: %s', input2)
     return json.dumps({
         'msg_type': RESULT_GO_TO_PYTHON,
-        'param1': 'input1 from Go back to py',
-        'param2': 'input2 from Go back to py'
+        'param1': '{} from Go back to py'.format(input1),
+        'param2': '{} from Go back to py'.format(input2)
     })
 
 
