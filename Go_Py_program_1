@@ -2,6 +2,7 @@ Sever Development mixed with Go and Python - 1. Go calls Py
 
 1. Go calls Python, then Python uses the stdout to return results to Go
 In Go:
+
 package main
 
 import (
@@ -28,7 +29,7 @@ func main() {
 	// Send msg from Go to Python
 	var outBuf, errBuf bytes.Buffer
 	cmdName := "python"
-	args := []string{"my_script.py", "input1", "input2"}
+	args := []string{"my_script.py", "cmd_req_do_something", "input1", "input2"}
 	cmd := exec.Command(cmdName, args...)
 	cmd.Stdout = &outBuf
 	cmd.Stderr = &errBuf
@@ -59,5 +60,50 @@ func main() {
 	}
 	fmt.Println(resultFromPy)
 }
+
+
+In Python:
+
+# !/usr/bin/env python
+
+import argparse
+import json
+import sys
+import logging
+
+LOG = logging.getLogger(__name__)
+
+CMD_GO_TO_PYTHON = 'cmd_req_do_something'
+RESULT_GO_TO_PYTHON = 'result_req_do_something'
+
+def get_result_for_req_from_go(input1, input2):
+    print('handle '+input1)
+    print('handle '+input2)
+    
+def get_parser():
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers()
+    
+    parser_req_from_go = subpasers.add_parser(CMD_GO_TO_PYTHON)
+    parser_req_from_go.add_argument('input1', help='1st input')
+    parser_req_from_go.add_argument('input2', help='2nd input')
+    parser_req_from_go.set_defaults(func=lambda o: get_result_for_req_from_go(o.input1, o.input2))
+    return parser
+
+def parse_args(args=None):
+    reqs = get_parser().parse_args(args=args)
+    return reqs
+    
+def main(reqs=None):
+    return reqs.func(reqs)
+
+if __name__ = '__main__':
+    Log.progagte = False
+    logging.basicConfig(level=logging.INFO, filename=LOG_FILE_NAME, datefmt='%H:%M:%S',
+                        format="[%(asctime)s %(filename)s:%(lineno)d %(levelname).1s]  %(message)s")
+    print(main(parse_args()))
+    sys.exit(0)
+
+
 
 
