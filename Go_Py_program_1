@@ -119,3 +119,17 @@ if __name__ == '__main__':
                         format="[%(asctime)s %(filename)s:%(lineno)d %(levelname).1s]  %(message)s")
     print(main(parse_args()))
     sys.exit(0)
+
+Then run the "go run go_src.go". If it hits something weird to run Go, then it can set a tmp GOPATH to run by
+- Open one terminal, then go the go_src.go folder
+- export GOPATH=path_to_go_src
+- export GO111MODULE=auto
+- mkdir src; cd src
+- ln mod under src, e.g. ln -s  /Users/eliassun/go/pkg/mod/go.uber.org .
+
+The output sould be:
+stdout: {"msg_type": "result_req_do_something", "param1": "input1 from Go back to py", "param2": "input2 from Go back to py"}
+
+MsgType: result_req_do_something
+Param1: input1 from Go back to py
+Param2: input2 from Go back to py
