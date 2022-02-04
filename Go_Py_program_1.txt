@@ -1,4 +1,6 @@
 Sever Development mixed with Go and Python - 1. Go calls Py
+Author: Elias Sun
+Date: Feb. 3, 2022
 
 1. Go calls Python, then Python uses the stdout to return results to Go
 In Go:
