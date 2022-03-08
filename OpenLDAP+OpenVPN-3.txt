@@ -29,3 +29,4 @@ OpenVPN ldap-auth.conf:
 Reference:
 https://blog.csdn.net/rockstics/article/details/108061374
 https://www.ibm.com/docs/en/was-liberty/base?topic=configuration-ldapregistry
+https://ldapwiki.com/wiki/LDAP%20Result%20Codes
