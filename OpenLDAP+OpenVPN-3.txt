@@ -1,11 +1,11 @@
-Create LDAP group:
+Create LDAP group on OpenLDAP:
 
 1. Groups-->"Create new entry here" ---> "Default"  ---> "groupOfNames"
 2. RDN = cn(cn)
 3. cn = testgroup2
 3. member = xxxx user(browse the users, then select)
 
-ldap-auth:
+OpenVPN ldap-auth.conf:
 
 <LDAP>
         URL   ldap://ldapserver:389
