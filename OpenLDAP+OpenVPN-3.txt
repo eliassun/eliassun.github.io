@@ -1,9 +1,9 @@
-Create group:
+Create LDAP group:
 
 1. Groups-->"Create new entry here" ---> "Default"  ---> "groupOfNames"
 2. RDN = cn(cn)
 3. cn = testgroup2
-3. member = xxxx user
+3. member = xxxx user(browse the users, then select)
 
 ldap-auth:
 
@@ -21,7 +21,7 @@ ldap-auth:
     RequireGroup    True
         <Group>
                 BaseDN          "ou=groups,dc=compute-1,dc=amazonaws,dc=com"
-                SearchFilter    "(&(cn=testgroup2))"
+                SearchFilter    "(|(cn=testgroup2)(cn=testgroup3))"
                 MemberAttribute member
         </Group>
 </Authorization>
