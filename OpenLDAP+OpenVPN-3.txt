@@ -1,0 +1,31 @@
+Create group:
+
+1. Groups-->"Create new entry here" ---> "Default"  ---> "groupOfNames"
+2. RDN = cn(cn)
+3. cn = testgroup2
+3. member = xxxx user
+
+ldap-auth:
+
+<LDAP>
+        URL   ldap://ldapserver:389
+        Timeout    15
+        BindDN    "cn=admin,dc=compute-1,dc=amazonaws,dc=com"
+        Password  test
+
+</LDAP>
+
+<Authorization>
+    BaseDN   "ou=User,dc=compute-1,dc=amazonaws,dc=com"
+    SearchFilter "(&(cn=%u))"
+    RequireGroup    True
+        <Group>
+                BaseDN          "ou=groups,dc=compute-1,dc=amazonaws,dc=com"
+                SearchFilter    "(&(cn=testgroup2))"
+                MemberAttribute member
+        </Group>
+</Authorization>
+
+Reference:
+https://blog.csdn.net/rockstics/article/details/108061374
+https://www.ibm.com/docs/en/was-liberty/base?topic=configuration-ldapregistry
