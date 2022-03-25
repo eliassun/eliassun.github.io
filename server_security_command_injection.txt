@@ -11,3 +11,22 @@ Then it will run the commands below one by one:
 - ls -l
 - pwd
 
+
+MetaCharacters
+
+    ;  The semicolon is the most common metacharacter used to test an injection flaw. The shell will run all the commands in sequence separated by the semicolon.
+    & Separate multiple commands on one command line. It runs the first command then the second command.
+    && Runs the command following && only if the preceding command is successful.
+    | The Pipe, pipes the output of the first command into the second command.
+    || Redirects the standard outputs of the first command to standard input of the second command.
+    ‘ The quote is used to force the shell to interpret and run commands between backticks. Following is an example of this command: Variable=”OS version ‘uname -a'” && echo $variable.
+    () The brackets are used to nest commands.
+    # The Hash is used as a command line comment.
+    
+    
+To avoid it:
+- If it has several choices, e.g. use native API(e.g. python os.remove), lib or shell command, then use the native API instead of shell command
+- Escape the shell character, e.g. python has the shlex, but it may not work always, e.g.  hi "ls;pwd; rm -rf *; ls -l ;
+
+References:
+https://securitytutorials.co.uk/command-injection/
