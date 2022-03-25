@@ -1,0 +1,13 @@
+Sever Development Security -- Shell Command Injection
+
+If the server needs to take inputs from the front-end (e.g. Web UI, REST API ...), then these inputs should not become the arguements of a shell command directly without any check.
+e.g. 
+If the server side receives data as below from a web UI:
+userdata;ls -l;pwd
+Then, the server may call a shell API(e.g. python API or Go API) to handle the data, e.g. echo the data
+echo userdata;ls -l;pwd
+Then it will run the commands below one by one:
+- echo userdata
+- ls -l
+- pwd
+
