@@ -1,0 +1,29 @@
+Python LDAP client
+
+import ldap
+ldap.set_option(ldap.OPT_REFERRALS, 0)
+ldap.set_option(ldap.OPT_NETWORK_TIMEOUT, 10)
+ldap.set_option(ldap.OPT_TIMEOUT, 20)
+
+# ldap none TLS
+# ldap_obj = ldap.initialize(ldap_server_uri)
+
+# ldap TLS
+try:
+    ldap_obj = ldap.initialize(ldap_server)
+    ldap_obj.set_option(ldap.OPT_REFERRALS, 0)
+    ldap_obj.set_option(ldap.OPT_PROTOCOL_VERSION, 3)
+    ldap_obj.set_option(ldap.OPT_DEBUG_LEVEL, 255)
+    ldap_obj.set_option(ldap.OPT_X_TLS, ldap.OPT_X_TLS_DEMAND)
+    ldap_obj.set_option(ldap.OPT_X_TLS_CACERTFILE, ca_cert_file.pem)
+    ldap_obj.set_option(ldap.OPT_X_TLS_CERTFILE, client_cert.pem)
+    ldap_obj.set_option(ldap.OPT_X_TLS_KEYFILE, client_key.pem)
+    ldap_obj.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_DEMAND)
+    ldap_obj.set_option(ldap.OPT_X_TLS_NEWCTX, 0)
+    ldap_obj.start_tls_s()
+except ldap.LDAPError as err:    
+    print(err)
+lobj.bind_s(bind_dn, ldap_password)
+# filters = 'cn=user'
+res = lobj.search_s(ldap_base_dn, ldap.SCOPE_SUBTREE, filters)
+lobj.unbind_s()
