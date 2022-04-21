@@ -1,0 +1,2 @@
+1. decrypt a key
+openssl rsa -in ssl.key.encrypted -out ssl.key.decrypted
