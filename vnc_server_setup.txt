@@ -1,0 +1,10 @@
+1. Follow
+https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-20-04
+
+2. cat ~/.vnc/xstartup
+
+#!/bin/bash
+xrdb $HOME/.Xresources
+unset SESSION_MANAGER
+unset DBUS_SESSION_BUS_ADDRESS
+exec startxfce4 &
