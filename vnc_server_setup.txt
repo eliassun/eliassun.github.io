@@ -1,3 +1,4 @@
+Install vpncserver in Ubuntu
 1. Follow
 https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-20-04
 
@@ -8,3 +9,11 @@ xrdb $HOME/.Xresources
 unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
 exec startxfce4 &
+
+3.restart vncserver
+vncserver -kill :1
+vncserver :1
+
+4.sudo lsof -i -P -n|grep vnc
+Xvnc4      7402        aviatrix    0u  IPv4 74376507      0t0  TCP *:6001 (LISTEN)
+Xvnc4      7402        aviatrix    3u  IPv6 74376509      0t0  TCP *:5901 (LISTEN)
