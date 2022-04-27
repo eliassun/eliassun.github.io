@@ -17,3 +17,6 @@ vncserver :1
 4.sudo lsof -i -P -n|grep vnc
 Xvnc4      7402        aviatrix    0u  IPv4 74376507      0t0  TCP *:6001 (LISTEN)
 Xvnc4      7402        aviatrix    3u  IPv6 74376509      0t0  TCP *:5901 (LISTEN)
+
+
+5. vnc://vncserver_ip_address:5901
