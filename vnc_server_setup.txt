@@ -1,6 +1,7 @@
 Install vpncserver in Ubuntu
 1. Follow
 https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-20-04
+Install RealVNC
 
 2. cat ~/.vnc/xstartup
 
