@@ -7,3 +7,20 @@ docker inspect --format '{{.NetworkSettings.IPAddress}}' <Container ID or NAME>
 3. docker map a port
 docker run -p 8080:80 -d nginx
 
+4. List the active docker containers
+docker ps
+
+5. List all container
+docker ps -a
+
+6. list images
+docker images
+
+7. build an image
+
+8. clear containers
+docker rm -f $(docker ps -aq)
+
+9. run a script/cmd from host
+docker exec -it efcd3a199ff0 sh script/or-enter-input-cmd
+
