@@ -11,3 +11,13 @@ sudo iptables -N DOCKER
 sudo iptables -t filter -F
 sudo iptables -t filter -X
 sudo chmod 744 /var/run/docker.sock
+docker rm -f $(docker ps -aq)
+mkdir my_image
+cd my_image
+wget https://go.dev/dl/go1.18.3.linux-amd64.tar.gz
+rm -rf /usr/local/go && tar -C /usr/local -xzf go1.18.3.linux-amd64.tar.gz
+rm -rf go1.18.3.linux-amd64.tar.gz
+echo -e "FROM alpine:3.10\n\nCOPY k8s-for-beginners /\n\nCMD ["/k8s-for-beginners"]\n" >> Dockerfile
+# Create a main.go file here
+GO111MODULE=auto  CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o k8s-for-beginners
+docker build -t k8s-for-beginners:v0.0.1 .
