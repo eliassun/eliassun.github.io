@@ -7,4 +7,7 @@ sudo apt-get install docker-ce
 sudo apt-get install docker-ce-cli
 sudo apt-get install containerd.io docker-compose-plugin
 docker --version
+sudo iptables -N DOCKER
+sudo iptables -t filter -F
+sudo iptables -t filter -X
 sudo chmod 744 /var/run/docker.sock
