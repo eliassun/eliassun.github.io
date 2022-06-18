@@ -1,0 +1,9 @@
+1. run a docker
+docker run -d nginx
+
+2. Get IP address
+docker inspect --format '{{.NetworkSettings.IPAddress}}' <Container ID or NAME>
+
+3. docker map a port
+docker run -p 8080:80 -d nginx
+
