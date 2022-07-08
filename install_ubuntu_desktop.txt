@@ -1,0 +1,8 @@
+1. 
+sudo apt update
+sudo apt install ubuntu-desktop
+sudo apt install tightvncserver
+sudo apt install gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal
+sudo apt install lxde -y
+sudo apt install xrdp -y
+sudo systemctl enable xrdp
