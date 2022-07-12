@@ -31,3 +31,4 @@ docker run -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY my_linux
 
 11. mount a local folder to docker image running
 docker run -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY  --mount type=bind,source="$(pwd)",target=/app  my_linux_gui_image
+or docker run -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=:10.0 --mount type=bind,source="$(pwd)",target=/app my_linux_gui_image
