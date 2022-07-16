@@ -1,4 +1,4 @@
-1. 
+1. Install desktop on ubuntu
 sudo apt update
 sudo apt install ubuntu-desktop
 sudo apt install tightvncserver
@@ -6,3 +6,60 @@ sudo apt install gnome-panel gnome-settings-daemon metacity nautilus gnome-termi
 sudo apt install lxde -y
 sudo apt install xrdp -y
 sudo systemctl enable xrdp
+
+2. Install docker
+
+
+
+
+3. Vscode remote debug Electron
+
+3.1 Luanch docker
+
+docker run -it -v /tmp/.X11-unix:/tmp/.X11-unix -p 9229:9229 -e DISPLAY=:10.0 --mount type=bind,source="$(pwd)",target=/app electron
+
+3.2 Remote package.info in docker
+{
+  "name": "electron-in-docker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron . --no-sandbox",
+    "debug": "electron . --no-sandbox --inspect-brk=0.0.0.0:9229"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^19.0.8",
+    "electron-rebuild": "^2.3.5",
+    "libxmljs": "^0.19.7"
+  }
+}
+
+Then run:
+npm run debug
+
+
+3.3 Local .vscode/launch.json
+
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Main Process",
+      "type": "node",
+      "request": "attach",
+      "address": ubuntu_ip_address,
+      "port": 9229, 
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/app",
+      "runtimeExecutable": null,
+      "args" : ["."],
+      "outputCapture": "std"
+    }
+  ]
+}
+
+
+
