@@ -1,0 +1,20 @@
+1. Detect which python to run
+myscript.sh:
+#!/bin/sh
+''''which python3 >/dev/null 2>&1 && exec python3 "$0" "$@" # '''
+''''which python  >/dev/null 2>&1 && exec python  "$0" "$@" # '''
+''''which python2 >/dev/null 2>&1 && exec python2 "$0" "$@" # '''
+''''exec echo "Error: No python module found in system"# '''
+
+Another example:
+myscript.sh:
+#!/bin/sh
+''''python3 -c "import expected_module" >/dev/null 2>&1 && exec python3 "$0" "$@" # '''
+''''python -c "import expected_module"  >/dev/null 2>&1 && exec python  "$0" "$@" # '''
+''''python2 -c "import expected_module" >/dev/null 2>&1 && exec python2 "$0" "$@" # '''
+''''exec echo "Error: No python module found in system"# '''
+
+
+2.Install py package with sudo
+echo mypackager==x.x.x > /tmp/my_requirements.txt
+sudo -H python3 -m pip install -r /tmp/my_requirements.txt --ignore-installed
