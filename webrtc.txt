@@ -4,3 +4,6 @@ https://cloud.tencent.com/developer/article/1800686
 2. WebRTC TCC
 https://www.dazhuanlan.com/chairse_xd/topics/950769
 https://www.jianshu.com/p/4d2afb21805b
+
+3. Jitsi SFU
+https://blog.csdn.net/vn9PLgZvnPs1522s82g/article/details/81571834
