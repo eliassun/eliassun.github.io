@@ -11,3 +11,6 @@ https://blog.csdn.net/qq_28880087/article/details/107026023  How to set up Jitsi
 
 4. webrtc RTCP feedback
 https://chowdera.com/2022/03/202203120728196516.html
+
+5. Capture webrtc traffic
+https://www.meetecho.com/blog/capturing-webrtc-traffic-in-janus/
