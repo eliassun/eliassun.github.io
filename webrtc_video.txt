@@ -1,0 +1,8 @@
+1. video quality standard PSNR, SSIM
+https://audiovideotestlab.com/blog/full-reference-quality-metrics-vmaf-psnr-and-ssim/
+
+
+2. webrtc testing
+https://zegodev.gitee.io/zego-express-webrtc-sample/webrtcCheck/index.html#
+
+
