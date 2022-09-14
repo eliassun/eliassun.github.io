@@ -5,4 +5,12 @@ https://audiovideotestlab.com/blog/full-reference-quality-metrics-vmaf-psnr-and-
 2. webrtc testing
 https://zegodev.gitee.io/zego-express-webrtc-sample/webrtcCheck/index.html#
 
+3. Jitsi SFU cascade
+https://webrtchacks.com/sfu-cascading/
+
+4. Jitsi SFU architecture 
+https://meetrix.io/blog/general/understanding-the-architecture-and-components-of-jitsi-meet.html
+
+
+
 
