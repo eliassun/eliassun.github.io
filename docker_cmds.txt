@@ -28,6 +28,9 @@ docker exec -it efcd3a199ff0 sh script/or-enter-input-cmd
 run with sudo
 docker exec -u 0 -it efcd3a199ff0 sh 
 
+run with sudo for networking
+docker  --cap-add=NET_ADMIN exec -u 0 -it efcd3a199ff0 bash
+
 10. run a local docker image
 xhost + local:docker
 docker run -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY my_linux_gui_image
