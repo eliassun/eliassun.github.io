@@ -19,6 +19,10 @@ https://webrtc.org.cn/user-number-in-webrtc-call-2/
 6. AWS Network speed testing
 https://medium.com/slalom-technology/examining-cross-region-communication-speeds-in-aws-9a0bee31984f
 
+7. WebRTC GCC
+https://zhuanlan.zhihu.com/p/497444640
+
+
 
 
 
