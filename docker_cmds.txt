@@ -35,7 +35,7 @@ docker  exec -u 0 -it efcd3a199ff0 bash
 xhost + local:docker
 docker run -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY my_linux_gui_image
 
-Support net admin
+Support net admin for iptables:
 docker run --cap-add=NET_ADMIN -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY my_linux_gui_image
 
 11. mount a local folder to docker image running
