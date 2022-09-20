@@ -22,6 +22,10 @@ https://medium.com/slalom-technology/examining-cross-region-communication-speeds
 7. WebRTC GCC
 https://zhuanlan.zhihu.com/p/497444640
 
+8. WebRTC Simulcast 
+https://blog.csdn.net/lym594887256/article/details/120533360
+https://rtcdeveloper.agora.io/t/topic/22429
+
 
 
 
