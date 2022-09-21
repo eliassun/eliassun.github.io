@@ -25,6 +25,11 @@ https://zhuanlan.zhihu.com/p/497444640
 8. WebRTC Simulcast 
 https://blog.csdn.net/lym594887256/article/details/120533360
 https://rtcdeveloper.agora.io/t/topic/22429
+https://www.zhihu.com/search?type=content&q=webrtc%20%E5%B8%A6%E5%AE%BD%E4%BC%B0%E7%AE%97
+
+https://zhuanlan.zhihu.com/p/550612203
+
+
 
 
 
