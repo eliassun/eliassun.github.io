@@ -29,6 +29,9 @@ https://www.zhihu.com/search?type=content&q=webrtc%20%E5%B8%A6%E5%AE%BD%E4%BC%B0
 
 https://zhuanlan.zhihu.com/p/550612203
 
+9. NACK RTX
+https://blog.krybot.com/a?ID=01750-8e53ff98-452b-4911-a181-ecd2792f2acd
+
 
 
 
