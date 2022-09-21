@@ -32,6 +32,10 @@ https://zhuanlan.zhihu.com/p/550612203
 9. NACK RTX
 https://blog.krybot.com/a?ID=01750-8e53ff98-452b-4911-a181-ecd2792f2acd
 
+10. video framerate/bitrate/resolution 
+https://bloggeek.me/tweaking-webrtc-video-quality-unpacking-bitrate-resolution-and-frame-rates/
+
+
 
 
 
