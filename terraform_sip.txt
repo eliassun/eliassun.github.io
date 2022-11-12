@@ -1,0 +1,54 @@
+1. install  Kamailio
+
+
+wget http://deb.kamailio.org/kamailiodebkey.gpg
+sudo apt-key add kamailiodebkey.gpg
+sudo vim /etc/apt/source.list   
+
+# Text begin
+
+deb http://security.debian.org/debian-security bullseye-security main contrib
+deb-src http://security.debian.org/debian-security bullseye-security main contrib
+deb https://mirrors.aliyun.com/debian/ bullseye main non-free contrib
+deb-src https://mirrors.aliyun.com/debian/ bullseye main non-free contrib
+deb https://mirrors.aliyun.com/debian-security/bullseye-security main
+deb-src https://mirrors.aliyun.com/debian-security/bullseye-security main
+deb https://mirrors.aliyun.com/debian/bullseye-updates main non-free contrib
+deb-src https://mirrors.alivun.com/debian/bullseve-updates main non-free contrib
+deb https://mirrors.aliyun.com/debian/bullseye-backports main non-free contrib
+deb-src https://mirrors.aliyun.com/debian/bullseye-backports main non-freecontrib
+
+
+deb http://deb.kamailio.org/kamailio55 jessiemain
+deb-src http://deb.kamailio.org/kamaili055 jessiemain
+deb http://deb.kamailio.org/kamailio55 stretch main
+deb-src http://deb.kamailio.org/kamailio55 stretch main
+deb http://deb.kamailio.org/kamailio55 buster main
+deb-src http://deb.kamailio.org/kamailio55 buster main
+deb http://deb.kamailio.org/kamailio55 bullseye main
+deb-src http://deb.kamailio.org/kamailio55 bullseye main
+deb http://deb.kamailio.org/kamailio55 trusty main
+deb-src http://deb.kamailio.org/kamailio55 trusty main
+deb http://deb.kamailio.org/kamailio55 xenialmain
+deb-src http://deb.kamailio.org/kamailio55 xenialmain
+deb http://deb.kamailio.org/kamaili055 bionic main
+deb-src http://deb.kamailio.org/kamailio55 bionic main
+deb http://deb.kamailio.org/kamailio55 focal main
+deb-src http://deb.kamailio.org/kamailio55 focal main
+
+# Text End
+
+sudo apt update
+sudo apt-get install vim kamailio kamailio-mysql-modules kamailio-websocket-modules
+
+2. configure Kamailio
+ls -l /etc/kamailio/
+
+#example
+#-rw-r--r-- 1 root root 25960 Feb 17  2022 kamailio.cfg
+#-rw-r--r-- 1 root root  4260 Feb 17  2022 kamctlrc
+
+
+
+
+
