@@ -106,11 +106,10 @@ kamctlrc
 # listen ip addr
 # debug level if it needs to debug the errors
 
-
 3. Test SIP client
 
 WebRTC SIP Client
-- Get a SIP WebRTC client
+- Get a SIP WebRTC and WebSocket client
 https://github.com/onsip/SIP.js/
 - Modify the demo SIP settings in the source code
 #e.g. demo-1.ts
@@ -119,14 +118,9 @@ TCP SIP Client
 - Get a TCP client, e.g. LinPhone
 https://www.linphone.org/category-product/macos
 
-
-
 4. Debug
 Log SIP messages on the server: https://lists.kamailio.org/pipermail/sr-users/2017-January/095802.html
 e.g. xlog("L_INFO", "$mb");
-
-
-
 
 
 
