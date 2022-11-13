@@ -10,9 +10,6 @@ alter user 'root'@'localhost' identified with mysql_native_password by 'your_new
 #quit
 # Then if wanting to login, mysql -uroot -p to login with your_new_password
 
-
-
-
 wget http://deb.kamailio.org/kamailiodebkey.gpg
 sudo apt-key add kamailiodebkey.gpg
 sudo vim /etc/apt/source.list   
