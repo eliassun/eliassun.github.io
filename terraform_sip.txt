@@ -98,6 +98,22 @@ local0.* -/var/log/kamailio.log
 sudo systemctl restart rsyslog 
 tail -f /var/log/kamailio.log
 
+Modify the files:
+kamailio.cfg
+kamctlrc
+
+# sip domain
+# listen ip addr
+# debug level if it needs to debug the errors
+
+
+3. Test SIP webrtc client
+- Get the SIP client
+https://github.com/onsip/SIP.js/
+- Modify the demo SIP settings
+#e.g. demo-1.ts
+
+
 
 
 
