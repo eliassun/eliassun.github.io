@@ -109,6 +109,11 @@ kamctlrc
 3. Test SIP client
 
 WebRTC SIP Client
+
+# Chrome SIP Softphone extension
+https://chrome.google.com/webstore/detail/sip-phone/eeffaijobgkgngjemggokhbjfmhklcmi/related?hl=en
+
+#Open Source
 - Get a SIP WebRTC and WebSocket client
 https://github.com/onsip/SIP.js/
 - Modify the demo SIP settings in the source code
