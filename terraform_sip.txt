@@ -115,6 +115,7 @@ https://github.com/onsip/SIP.js/
 
 4. Debug
 Log SIP messages on the server: https://lists.kamailio.org/pipermail/sr-users/2017-January/095802.html
+e.g. xlog("L_INFO", "$mb");
 
 
 
