@@ -117,6 +117,7 @@ https://github.com/onsip/SIP.js/
 TCP SIP Client
 - Get a TCP client, e.g. LinPhone
 https://www.linphone.org/category-product/macos
+# Enable ICE and Turn Server for Linphone
 
 4. Debug
 Log SIP messages on the server: https://lists.kamailio.org/pipermail/sr-users/2017-January/095802.html
