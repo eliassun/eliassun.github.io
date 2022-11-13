@@ -49,6 +49,18 @@ deb-src http://deb.kamailio.org/kamailio55 focal main
 
 sudo apt update
 sudo apt-get install vim kamailio kamailio-mysql-modules kamailio-websocket-modules
+sudo apt install net-tools
+
+#check the setup
+sudo netstat -tulpn|grep LISTEN
+#e.g.
+#tcp        0      0 127.0.0.1:33060         0.0.0.0:*               LISTEN      2325/mysqld         
+#tcp        0      0 127.0.0.1:5060          0.0.0.0:*               LISTEN      3426/kamailio       
+#tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      715/sshd: /usr/sbin 
+#tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN      392/systemd-resolve 
+#tcp        0      0 172.16.1.100:5060       0.0.0.0:*               LISTEN      3426/kamailio       
+#tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN      2325/mysqld         
+#tcp6       0      0 :::22                   :::*                    LISTEN      715/sshd: /usr/sbin
 
 2. configure Kamailio
 ls -l /etc/kamailio/
@@ -56,6 +68,35 @@ ls -l /etc/kamailio/
 #example
 #-rw-r--r-- 1 root root 25960 Feb 17  2022 kamailio.cfg
 #-rw-r--r-- 1 root root  4260 Feb 17  2022 kamctlrc
+
+
+#Create database
+kamdbctl create
+# user: 1001 pwd 123456 
+kamctl add 1001 123456
+# more
+# option start
+vim create_user.sh
+#!/bin/bash
+for((i=1;i<=2000;i++));
+do
+kamctl add $((1000+$i)) 'admin888..'
+done
+
+chmod +x create_user.sh
+sh ./create_user.sh
+
+# option done
+
+sudo systemctl start kamailio.service 
+sudo systemctl status kamailio.service 
+# kamailio debug log
+vim /etc/rsyslog.conf
+# append the end of the file
+local0.* -/var/log/kamailio.log
+
+sudo systemctl restart rsyslog 
+tail -f /var/log/kamailio.log
 
 
 
