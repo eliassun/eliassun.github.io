@@ -122,5 +122,39 @@ https://www.linphone.org/category-product/macos
 Log SIP messages on the server: https://lists.kamailio.org/pipermail/sr-users/2017-January/095802.html
 e.g. xlog("L_INFO", "$mb");
 
+5. RTP Engine
+sudo vim /etc/apt/sources.list
+#append
+# sipwise
+deb https://dfx.at/rtpengine/10.2/ stable main
+
+
+wget https://dfx.at/rtpengine/latest/pool/main/r/rtpengine-dfx-repo-keyring/rtpengine-dfx-repo-keyring_1.0_all.deb
+sudo dpkg -i rtpengine-dfx-repo-keyring_1.0_all.deb
+sudo apt-key add /usr//share/keyrings/dfx.at-rtpengine-archive-keyring.gpg
+sudo apt update
+sudo apt install rtpengine
+
+# If hitting a problem about ssl, when installing rtp engine on ubuntu 20
+#start
+wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1-1ubuntu2.1\~18.04.20_amd64.deb
+sudo dpkg -i libssl1.1_1.1.1-1ubuntu2.1~18.04.20_amd64.deb
+#end
+
+sudo vim /etc/rtpengine/rtpengine.sample.conf
+# config interface's ip; config log
+
+sudo vim /etc/rsyslog.conf
+local5.* -/var/log/rtpengine.log
+
+sudo systemctl restart rsyslog
+
+rtpengine --config-file=/etc/rtpengine/rtpengine.sample.conf
+sudo systemctl restart kamailio.service
+
+sudo tail -f /var/log/rtpengine.log 
+
+
+
 
 
