@@ -160,7 +160,10 @@ sudo systemctl restart kamailio.service
 
 sudo tail -f /var/log/rtpengine.log 
 
-References: https://www.jianshu.com/p/2fc235414891
+References: 
+https://www.kamailio.org/docs/modules/4.4.x/modules/rtpengine.html#rtpengine.f.rtpengine_answer
+https://www.jianshu.com/p/2fc235414891
+
 
 
 
