@@ -41,7 +41,7 @@ conn ipsec-ikev2-vpn
       dpddelay=300s
       rekey=no
       left=%any
-      leftid=@vpn.domain.com #<Note 1>
+      leftid=@ip-172-16-1-100 #<Note 1>
       leftcert=server.cert.pem
       leftsendcert=always
       leftsubnet=0.0.0.0/0
