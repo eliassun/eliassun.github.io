@@ -1,0 +1,58 @@
+mkdir ipsec
+cd ipsec
+sudo apt-get update && sudo apt-get upgrade
+sudo apt install strongswan strongswan-pki libcharon-extra-plugins libcharon-extauth-plugins libstrongswan-extra-plugins libtss2-tcti-tabrmd0 -y
+sudo ipsec pki --gen --size 4096 --type rsa --outform pem > ca.key.pem
+sudo cp ca.key.pem /etc/ipsec.d/private/ca.key.pem
+ipsec pki --self --in /etc/ipsec.d/private/ca.key.pem --type rsa --dn "CN=blue@elias" --ca --lifetime 3650 --outform pem ca.cert.pem > ca.cert.pem
+sudo cp ./ca.cert.pem /etc/ipsec.d/cacerts/
+ipsec pki --gen --size 4096 --type rsa --outform pem > server.key.pem
+sudo cp ./server.key.pem  /etc/ipsec.d/private/server.key.pem
+
+# change ip-172-16-1-100 to the host's name
+
+ipsec pki --pub --in /etc/ipsec.d/private/server.key.pem --type rsa | ipsec pki --issue --lifetime 3650 --cacert /etc/ipsec.d/cacerts/ca.cert.pem --cakey /etc/ipsec.d/private/ca.key.pem --dn "CN=<ip-172-16-1-100>" --san="<ip-172-16-1-100>" --flag serverAuth --flag ikeIntermediate --outform pem > server.cert.pem
+sudo cp server.cert.pem /etc/ipsec.d/certs/server.cert.pem
+
+sudo vim /etc/sysctl.conf
+#text start
+net.ipv4.ip_forward=1
+net.ipv6.conf.all.forwarding=1
+net.ipv4.conf.all.accept_redirects = 0
+net.ipv6.conf.all.accept_redirects = 0
+#text end
+
+sudo vim /etc/ipsec.conf
+
+#text start
+config setup
+        charondebug="ike 1, knl 1, cfg 0, net 1"
+        strictcrlpolicy=no
+        uniqueids=yes
+        cachecrls=no
+conn ipsec-ikev2-vpn
+      auto=add
+      compress=no
+      type=tunnel
+      keyexchange=ikev2
+      fragmentation=yes
+      forceencaps=yes
+      dpdaction=clear
+      dpddelay=300s
+      rekey=no
+      left=%any
+      leftid=@vpn.domain.com #<Note 1>
+      leftcert=server.cert.pem
+      leftsendcert=always
+      leftsubnet=0.0.0.0/0
+      right=%any
+      rightid=%any
+      rightauth=eap-mschapv2
+      rightsourceip=0.0.0.0/0 #<Note 2>
+      rightdns= #<preferred external DNS server - Note 3>
+      rightsendcert=never
+      eap_identity=%identity
+      ike=chacha20poly1305-sha512-curve25519-prfsha512,aes256gcm16-sha384-prfsha384-ecp384,aes256-sha1-modp1024,aes128-sha1-modp1024,3des-sha1-modp1024!
+      esp=chacha20poly1305-sha512,aes256gcm16-ecp384,aes256-sha256,aes256-sha1,3des-sha1!
+    
+#text end
