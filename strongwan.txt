@@ -52,8 +52,8 @@ sudo vim /etc/ipsec.secrets
 
 # repeat sudo vim /etc/ipsec.conf for another box
 
-# enable debug
-ipsec stroke loglevel ike 4
-
-
+# optional: enable IKE debug
+sudo ipsec restart
+sudo ipsec stroke loglevel ike 4
+sudo ipsec up red-to-blue
 
