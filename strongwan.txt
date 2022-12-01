@@ -22,37 +22,38 @@ net.ipv4.conf.all.accept_redirects = 0
 net.ipv6.conf.all.accept_redirects = 0
 #text end
 
+#configure Transport mode
 sudo vim /etc/ipsec.conf
 
 #text start
 config setup
-        charondebug="ike 1, knl 1, cfg 0, net 1"
+        charondebug="all"
         strictcrlpolicy=no
         uniqueids=yes
         cachecrls=no
-conn ipsec-ikev2-vpn
-      auto=add
-      compress=no
-      type=tunnel
-      keyexchange=ikev2
-      fragmentation=yes
-      forceencaps=yes
-      dpdaction=clear
-      dpddelay=300s
-      rekey=no
-      left=%any
-      leftid=@ip-172-16-1-100 #<Note 1>
-      leftcert=server.cert.pem
-      leftsendcert=always
-      leftsubnet=0.0.0.0/0
-      right=%any
-      rightid=%any
-      rightauth=eap-mschapv2
-      rightsourceip=0.0.0.0/0 #<Note 2>
-      rightdns= #<preferred external DNS server - Note 3>
-      rightsendcert=never
-      eap_identity=%identity
-      ike=chacha20poly1305-sha512-curve25519-prfsha512,aes256gcm16-sha384-prfsha384-ecp384,aes256-sha1-modp1024,aes128-sha1-modp1024,3des-sha1-modp1024!
-      esp=chacha20poly1305-sha512,aes256gcm16-ecp384,aes256-sha256,aes256-sha1,3des-sha1!
-    
+
+conn red-to-blue
+        authby=secret
+        auto=route
+        keyexchange=ikev2
+        ike=aes256-sha256-modp1024!
+        left=192.168.10.11
+        right=192.168.10.12
+        type=transport
+        esp=aes256-sha256!
 #text end
+
+#configure pre-shared key
+sudo vim /etc/ipsec.secrets
+
+#text begin
+192.168.10.11 : PSK "v+NkxY9LLZvwj4qCC2o/gGrWDF2d21jL" 
+#text end
+
+# repeat sudo vim /etc/ipsec.conf for another box
+
+# enable debug
+ipsec stroke loglevel ike 4
+
+
+
