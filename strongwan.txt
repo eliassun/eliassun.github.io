@@ -53,6 +53,10 @@ sudo vim /etc/ipsec.secrets
 
 # repeat sudo vim /etc/ipsec.conf for another box
 
+
+sudo ipsec restart
+sudo ipsec up red-to-blue
+
 # check the status
 sudo ipsec statusall
 
@@ -110,10 +114,14 @@ conn red-to-blue
 
 # sudo vim /etc/ipsec.secrets
 # text bein
-: RSA clientredcert.pem
+: RSA redkey.pem
 #text end
 
 # repeat the steps for the 1st server
+
+sudo ipsec restart
+sudo ipsec up red-to-blue
+
 
 # check the status
 sudo ipsec statusall
