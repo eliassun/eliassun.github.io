@@ -57,11 +57,14 @@ sudo vim /etc/ipsec.secrets
 
 *** PKI ***
 
-# create certs
+# create certs in the server1
 cd ~/ipsec.d
 ipsec pki --gen --type rsa --size 4096 --outform pem > strongswankey.pem
 sudo cp strongswankey.pem /etc/ipsec.d/private/
 ipsec pki --self --ca --lifetime 3650 --in /etc/ipsec.d/private/strongswankey.pem --type rsa --dn "c=CH, O=strongSwan, CN=Root CA" --outform pem > strongswancert.pem
 sudo cp strongswancert.pem /etc/ipsec.d/cacerts/strongswancert.pem
 
-
+# another server
+cd /etc/ipsec.d/
+sudo vim strongswancert.pem
+# copy the text of /etc/ipsec.d/cacerts/strongswancert.pem in the server 1
