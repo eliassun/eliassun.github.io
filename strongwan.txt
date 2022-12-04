@@ -53,7 +53,8 @@ sudo vim /etc/ipsec.secrets
 
 # repeat sudo vim /etc/ipsec.conf for another box
 
-
+# check the status
+sudo ipsec statusall
 
 *** PKI ***
 
@@ -112,4 +113,7 @@ conn red-to-blue
 : RSA clientredcert.pem
 #text end
 
+# repeat the steps for the 1st server
 
+# check the status
+sudo ipsec statusall
