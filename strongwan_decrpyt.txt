@@ -1,0 +1,48 @@
+# Decrpyt strongwan link in the wireshark
+# The link uses the PSK "v+NkxY9LLZvwj4qCC2o/gGrWDF2d21jL" 
+# PSK secret is in /etc/ipsec.secrets
+
+# Eable IKE debug
+sudo ipsec restart
+sudo ipsec stroke loglevel ike 4
+sudo ipsec up red-to-blue
+
+#Decode enrpyted data for IKE_SA_AUTH in the Wireshark.
+#Right click on the encrpyted data --- > Protocol Preferences --- > IKEV2 Decryption Table
+
+#Initiator's SPI:   81726FB33E24084A (from the syslog, or the IKE_SA_INIT in the Wireshark)
+#Responder's SPI:   7131F9745CC9E9CF (from the syslog, or the IKE_SA_INIT in the Wireshark)
+#Sk_ai secret : E1A453F16854C825E721FAC12B9375786A67CAEAA90FF7F8B5B83ECE02B28D05 (syslog)
+#Sk_ar secret : 38890268429CDDB885F0D33189B9CE01BFD80E7AB8F24D318FA27EE3D66A18B2  (syslog)
+#Sk_ei secret : E521AAB0AE69CB710C7C24902FDAD62198881C30A4215F067BC9FB2C96DD00E5  (syslog)
+#Sk_er secret : 38C04BBA8A2EBB8716097472E9334AE52AC9B2EA987C4154B109396E8E492A73  (syslog)
+#Integrity Algorithm: HMAC_SHA2_256_128 RFC4868 (/etc/ipsec.conf)
+#Encryption Algorithm: AEC-CBC-256 RFC3602 (/etc/ipsec.conf)
+
+
+#Decode enrpyted data for ESP in the Wireshark.
+
+# check IPSec link state
+sudo ip xfrm state
+#sample start
+src 192.168.10.11 dst 192.168.10.12
+	proto esp spi 0xc97e7bb3 reqid 1 mode transport
+	replay-window 0 
+	auth-trunc hmac(sha256) 0xfdeb480d119eb71bee8a2cedf2d234c17ccea9abdb68402b4552e67718181782 128
+	enc cbc(aes) 0xf64b0504c67c8161d1f7effcd6c80684a47f2d03f297930c3c8611a139467f5f
+	anti-replay context: seq 0x0, oseq 0x1b, bitmap 0x00000000
+	sel src 192.168.10.11/32 dst 192.168.10.12/32 
+src 192.168.10.12 dst 192.168.10.11
+	proto esp spi 0xca4b0bbe reqid 1 mode transport
+	replay-window 32 
+	auth-trunc hmac(sha256) 0x8b9b15046b094c596041681c2fed614080395870480eb3ae2d70fedf73f9e506 128
+	enc cbc(aes) 0xe885cfca9fb0b378fbaab2f0c878605c77e5c2cdea4ee7eb5d01b2479aaa2d5c
+	anti-replay context: seq 0x1b, oseq 0x0, bitmap 0x07ffffff
+	sel src 192.168.10.12/32 dst 192.168.10.11/32 
+# sample end
+
+# Right click on the ESP Encapsulating data --- > Protocol Preferences --- > ESP SA
+# Fill the form according to the output above
+
+
+
