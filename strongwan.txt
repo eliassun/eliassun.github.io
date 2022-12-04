@@ -76,11 +76,34 @@ ipsec pki --pub --in /etc/ipsec.d/private/bluekey.pem  --type rsa| ipsec pki --i
 sudo cp clientbluecert.pem /etc/ipsec.d/certs/clientbluecert.pem
 
 # go to the 2nd server to sign another client cert
+cd /etc/ipsec
 ipsec pki --gen --type rsa --size 2048 --outform pem > redkey.pem
 sudo cp redkey.pem /etc/ipsec.d/private/redkey.pem
 sudo chmod 755 /etc/ipsec.d/private/redkey.pem
 ipsec pki --pub --in /etc/ipsec.d/private/redkey.pem  --type rsa| ipsec pki --issue --lifetime 730 --cacert /etc/ipsec.d/cacerts/strongswancert.pem  --cakey /etc/ipsec.d/private/strongswankey.pem --dn "C=CH O=strongSwan, CN=red" --san blue --flag serverAuth --flag ikeIntermediate --outform pem > clientredcert.pem
 sudo cp clientredcert.pem /etc/ipsec.d/certs/clientredcert.pem
 
+vim /etc/ipsec.conf
 
+#text begin
+
+config setup
+        charondebug="all"
+        strictcrlpolicy=no
+        uniqueids=yes
+        cachecrls=no
+
+conn red-to-blue
+        auto=start
+        keyexchange=ikev2
+        ike=aes256-sha256-modp1024!
+        left=192.168.10.11
+        right=192.168.10.12
+        type=tunnel
+        esp=aes256-sha256!
+        leftcert=clientredcert.pem
+        leftid="C=CH O=strongSwan, CN=red"
+        rightid="C=CH O=strongSwan, CN=blue"
+
+#text end
 
