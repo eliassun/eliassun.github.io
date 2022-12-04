@@ -1,4 +1,8 @@
 # Decrpyt strongwan link in the wireshark
+# Samples:
+# https://eliassun.github.io/2decoded_ipsec_isakmp.pcap
+# https://eliassun.github.io/2decoded_ipsec_esp_ssh.pcap
+# https://eliassun.github.io/2decoded_ipsec_esp_ping.pcap
 # The link uses the PSK "v+NkxY9LLZvwj4qCC2o/gGrWDF2d21jL" 
 # PSK secret is in /etc/ipsec.secrets
 
