@@ -1,0 +1,4 @@
+1. IPSec 101: https://www.youtube.com/watch?v=D-Esrw8wxA4 - IPSec explanation based on Strongswan implementation
+2. IKEV2 RFC https://datatracker.ietf.org/doc/html/rfc5996
+3. strongSwan ipsec.conf https://wiki.strongswan.org/projects/strongswan/wiki/connsection
+4. strongSwan ipsec.secrects https://wiki.strongswan.org/projects/strongswan/wiki/IpsecSecrets
