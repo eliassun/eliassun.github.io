@@ -68,3 +68,13 @@ sudo cp strongswancert.pem /etc/ipsec.d/cacerts/strongswancert.pem
 cd /etc/ipsec.d/
 sudo vim strongswancert.pem
 # copy the text of /etc/ipsec.d/cacerts/strongswancert.pem in the server 1
+
+# go back to the 1st server to sign the client cert
+ipsec pki --gen --type rsa --size 2048 --outform pem > blue.pem
+sudo cp blue.pem /etc/ipsec.d/private/blue.pem
+sudo chmod 600 /etc/ipsec.d/private/blue.pem
+ipsec pki --pub --in /etc/ipsec.d/private/bluekey.pem  --type rsa| ipsec pki --issue --lifetime 730 --cacert /etc/ipsec.d/cacerts/strongswancert.pem  --cakey /etc/ipsec.d/private/strongswankey.pem --dn "C=CH O=strongSwan, CN=blue" --san blue --flag serverAuth --flag ikeIntermediate --outform pem > clientbluecert.pem
+sudo cp clientbluecert.pem /etc/ipsec.d/certs/clientbluecert.pem
+
+
+
