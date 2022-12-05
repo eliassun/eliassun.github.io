@@ -2,3 +2,6 @@
 2. IKEV2 RFC https://datatracker.ietf.org/doc/html/rfc5996
 3. strongSwan ipsec.conf https://wiki.strongswan.org/projects/strongswan/wiki/connsection
 4. strongSwan ipsec.secrects https://wiki.strongswan.org/projects/strongswan/wiki/IpsecSecrets
+5. IBM IPSec https://www.ibm.com/docs/en/i/7.4?topic=concepts-nat-compatible-ipsec-udp
+6. UDP Encapsulation of IPsec ESP Packets https://www.rfc-editor.org/rfc/rfc3948
+7. IPSec RFC https://www.rfc-editor.org/rfc/rfc4301
