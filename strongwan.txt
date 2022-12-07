@@ -108,6 +108,7 @@ conn red-to-blue
         left=192.168.10.11
         right=192.168.10.12
         type=tunnel
+        mark=42
         esp=aes256-sha256!
         leftcert=clientredcert.pem
         leftid="C=CH O=strongSwan, CN=red"
