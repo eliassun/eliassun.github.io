@@ -1,13 +1,7 @@
+# Route traffic over IPSec. The tunnel mode is GRE.
+
 sudo sysctl -w net.ipv4.ip_forward=1
-sudo ip tunnel add ipsec0 local 192.168.10.11 remote 0.0.0.0 mode vti key 42
-sudo sysctl -w net.ipv4.conf.ipsec0.disable_policy=1
-sudo ifconfig ipsec0 up
-sudo ip addr add 192.168.77.77 dev ipsec0
-sudo ip route add 192.168.78.0/24 dev ipsec0
-sudo iptables -A FORWARD -i ipsec0 -j ACCEPT
-
-
-
 sudo ip tunnel add tunnel100 mode gre local 192.168.10.11 remote 192.168.10.12 ttl 255 dev enp0s8 
 sudo ip addr add 192.168.100.1 dev tunnel100 peer 192.168.200.0/24
+sudo ip route add 192.168.79.0/24 dev tunnel100
 sudo ip link set dev tunnel100 up
