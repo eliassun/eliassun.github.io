@@ -45,6 +45,7 @@ conn red-to-blue
         type=transport
         esp=aes256-sha256!
 #text end
+#Optionally, set forceencaps=yes if it needs to force ESP UDP encapsulation even if a NAT is not detected. 
 
 #configure pre-shared key
 sudo vim /etc/ipsec.secrets
