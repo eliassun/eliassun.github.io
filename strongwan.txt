@@ -68,7 +68,7 @@ sudo ipsec statusall
 *** PKI ***
 
 # create certs in the server1
-cd ~/ipsec.d
+cd ~/ipsec
 ipsec pki --gen --type rsa --size 4096 --outform pem > strongswankey.pem
 sudo cp strongswankey.pem /etc/ipsec.d/private/strongswankey.pem 
 ipsec pki --self --ca --lifetime 3650 --in /etc/ipsec.d/private/strongswankey.pem --type rsa --dn "c=CH, O=strongSwan, CN=Root CA" --outform pem > strongswancert.pem
