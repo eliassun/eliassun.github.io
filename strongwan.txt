@@ -4,6 +4,7 @@ mkdir ipsec
 cd ipsec
 sudo apt-get update && sudo apt-get upgrade
 sudo apt install strongswan strongswan-pki libcharon-extra-plugins libcharon-extauth-plugins libstrongswan-extra-plugins libtss2-tcti-tabrmd0 -y
+sudo chmod 755 /etc/ipsec.d/private
 sudo ipsec pki --gen --size 4096 --type rsa --outform pem > ca.key.pem
 sudo cp ca.key.pem /etc/ipsec.d/private/ca.key.pem
 ipsec pki --self --in /etc/ipsec.d/private/ca.key.pem --type rsa --dn "CN=blue@elias" --ca --lifetime 3650 --outform pem ca.cert.pem > ca.cert.pem
