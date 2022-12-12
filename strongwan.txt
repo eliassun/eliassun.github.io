@@ -131,3 +131,9 @@ sudo ipsec up red-to-blue
 
 # check the status
 sudo ipsec statusall
+
+# check if the UDP port is reachable: port=500 or 4500
+nmap <hostname or ip> -sU -pU:<UDP port>
+# check if the UDP port is listening on the local. netstat and lsof work for this
+sudo lsof -i -P -n|grep UDP
+
