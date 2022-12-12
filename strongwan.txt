@@ -2,7 +2,7 @@
 
 mkdir ipsec
 cd ipsec
-sudo apt-get update && sudo apt-get upgrade
+sudo apt-get update && sudo apt-get upgrade -y
 sudo apt install strongswan strongswan-pki libcharon-extra-plugins libcharon-extauth-plugins libstrongswan-extra-plugins libtss2-tcti-tabrmd0 -y
 sudo chmod 755 /etc/ipsec.d/private
 sudo ipsec pki --gen --size 4096 --type rsa --outform pem > ca.key.pem
