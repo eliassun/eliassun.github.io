@@ -7,6 +7,7 @@ sudo apt install strongswan strongswan-pki libcharon-extra-plugins libcharon-ext
 sudo chmod 755 /etc/ipsec.d/private
 sudo ipsec pki --gen --size 4096 --type rsa --outform pem > ca.key.pem
 sudo cp ca.key.pem /etc/ipsec.d/private/ca.key.pem
+sudo chmod 755 /etc/ipsec.d/private
 ipsec pki --self --in /etc/ipsec.d/private/ca.key.pem --type rsa --dn "CN=blue@elias" --ca --lifetime 3650 --outform pem ca.cert.pem > ca.cert.pem
 sudo cp ./ca.cert.pem /etc/ipsec.d/cacerts/
 ipsec pki --gen --size 4096 --type rsa --outform pem > server.key.pem
