@@ -139,7 +139,8 @@ nmap <hostname or ip> -sU -pU:<UDP port>
 # check if the UDP port is listening on the local. netstat and lsof work for this
 sudo lsof -i -P -n|grep UDP
 
-========
+*** Behind NAT (AWS VPC) ***
+
 1. when sign the server cert, it needs to use the public ip
 2. sudo vim /etc/ipsec.conf
 config setup
