@@ -1,4 +1,5 @@
 # set up ipsec based on strongSwan, including the PSK and PKI authentication
+# section 1 and 2 are for the direct connections. section 3 are for the IP address behind NAT, such as hosts in AWS VPC. 
 
 mkdir ipsec
 cd ipsec
@@ -137,4 +138,29 @@ sudo ipsec statusall
 nmap <hostname or ip> -sU -pU:<UDP port>
 # check if the UDP port is listening on the local. netstat and lsof work for this
 sudo lsof -i -P -n|grep UDP
+
+========
+1. when sign the server cert, it needs to use the public ip
+2. sudo vim /etc/ipsec.conf
+config setup
+        charondebug="all"
+        strictcrlpolicy=no
+        uniqueids=yes
+        cachecrls=no
+
+conn red-to-blue
+        authby=secret
+        auto=route
+        keyexchange=ikev2
+        ike=aes256-sha256-modp1024!
+        left=%any
+	leftid=public ip
+	leftsubnet=172.16.1.0/24
+        right=public ip
+        rightid=public ip
+	rightsubnet=172.16.1.0/24
+        type=tunnel
+        esp=aes256-sha256-modp1024!
+        forceencaps=yes
+  
 
