@@ -1,0 +1,34 @@
+# Set the variable
+COUNTRY_CODE=US
+ORGANISATION=elias
+SERVER_NAME=something.com(or IP)
+IP_ADDRESS=public_ip
+
+# CA
+cd ~
+mkdir ipsec
+cd ipsec
+
+ipsec pki --gen --type rsa --size 4096 --outform der > strongswankey.der
+sudo cp strongswankey.der /etc/ipsec.d/private/strongswankey.er 
+ipsec pki --self --ca --lifetime 3650 --in /etc/ipsec.d/private/strongswankey.der --type rsa --dn "c=$COUNTRY_CODE, O=$ORGANISATION, CN=Root CA" --outform der > strongswancert.der
+sudo cp strongswancert.der /etc/ipsec.d/cacerts/strongswancert.der
+openssl x509 -inform DER -in cacerts/strongswan.der -out cacerts/strongswan.der -outform PEM
+sudo cp strongswancert.pem /etc/ipsec.d/cacerts/strongswancert.pem
+ipsec pki --print --in strongswancert.pem
+ipsec pki --print --in strongswancert.der
+sudo chmod 600 private/strongswan.der
+
+ipsec pki --gen --type rsa --size 4096 --outform der > private/strongswan.der
+chmod 600 /etc/ipsec.d/cacerts/strongswancert.der
+chmod 600 /etc/ipsec.d/cacerts/strongswancert.pem
+
+
+
+sudo apt -y install xl2tpd
+
+Refer:
+https://blog.csdn.net/nerdsu/article/details/117522440
+https://gist.github.com/karlvr/34f46e1723a2118bb16190c22dbed1cc
+https://moneyslow.com/centos7%E4%B8%8Bstrongswan%E6%9E%B6%E8%AE%BEipsec-ikev1-ikev2-l2tp-vpn%E9%80%82%E7%94%A8%E4%BA%8E-ios9osx-windows-linux.html
+https://yangyuan.github.io/post/2015-05-19-zh-setup-strongswan-vpn/
