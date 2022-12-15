@@ -30,6 +30,10 @@ ipsec pki --pub --in /etc/ipsec.d/private/vpn_server_key.der --type rsa | ipsec 
 
 sudo cp vpn_server_cert.der /etc/ipsec.d/private/vpn_server_cert.der
 
+openssl x509 -inform DER -in /etc/ipsec.d/private/vpn_server_cert.der -out vpn_server_cert.pem -outform PEM
+
+sudo cp vpn_server_cert.pem /etc/ipsec.d/private/vpn_server_cert.pem
+
 ipsec pki --print --in  /etc/ipsec.d/private/vpn_server_cert.der
 
 
