@@ -163,5 +163,28 @@ conn red-to-blue
         type=tunnel
         esp=aes256-sha256-modp1024!
         forceencaps=yes
+	
+Another Example:
+config setup
+        charondebug="all"
+        strictcrlpolicy=no
+        uniqueids=yes
+        cachecrls=no
+
+conn red-to-blue
+        authby=secret
+        auto=route
+        keyexchange=ikev2
+        ike=aes256-sha256-modp1024!
+        left=%any
+	leftid=3.137.55.102
+	leftsubnet=10.10.0.0/16
+        right=3.16.248.7
+        rightid=3.16.248.7
+	rightsubnet=172.16.0.0/16
+        type=tunnel
+        esp=aes256-sha256-modp1024!
+        forceencaps=yes
+
   
 
