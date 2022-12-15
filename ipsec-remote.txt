@@ -54,8 +54,7 @@ sudo cp $USERNAME.cert.pem  /etc/ipsec.d/certs/$USERNAME.cert.pem
 sudo chmod 755 /etc/ipsec.d/private/elias.key.pem
 sudo chmod 755 /etc/ipsec.d/private/elias.key.der
 openssl pkcs12 -export -inkey /etc/ipsec.d/private/$USERNAME.key.pem -in /etc/ipsec.d/certs/$USERNAME.cert.pem  -name "$NAME.VPN.Cert" -certfile /etc/ipsec.d/cacerts/strongswancert.pem -caname "$ORGANISATION Root CA" -out $USERNAME.p12
-
-
+sudo cp $USERNAME.p12 /etc/ipsec.d/certs/$USERNAME.p12
 
 
 sudo apt -y install xl2tpd
