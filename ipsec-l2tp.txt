@@ -1,0 +1,5 @@
+Refer:
+https://blog.csdn.net/nerdsu/article/details/117522440
+https://gist.github.com/karlvr/34f46e1723a2118bb16190c22dbed1cc
+https://moneyslow.com/centos7%E4%B8%8Bstrongswan%E6%9E%B6%E8%AE%BEipsec-ikev1-ikev2-l2tp-vpn%E9%80%82%E7%94%A8%E4%BA%8E-ios9osx-windows-linux.html
+https://yangyuan.github.io/post/2015-05-19-zh-setup-strongswan-vpn/
