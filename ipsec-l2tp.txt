@@ -1,3 +1,5 @@
+sudo apt -y install xl2tpd
+
 Refer:
 https://blog.csdn.net/nerdsu/article/details/117522440
 https://gist.github.com/karlvr/34f46e1723a2118bb16190c22dbed1cc
