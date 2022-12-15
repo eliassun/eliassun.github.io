@@ -56,8 +56,17 @@ sudo chmod 755 /etc/ipsec.d/private/elias.key.der
 openssl pkcs12 -export -inkey /etc/ipsec.d/private/$USERNAME.key.pem -in /etc/ipsec.d/certs/$USERNAME.cert.pem  -name "$NAME.VPN.Cert" -certfile /etc/ipsec.d/cacerts/strongswancert.pem -caname "$ORGANISATION Root CA" -out $USERNAME.p12
 sudo cp $USERNAME.p12 /etc/ipsec.d/certs/$USERNAME.p12
 
+# Some other ways
+# begin
+# Copy all pem to MacOS, then make p12 or:
+openssl pkcs12 -export -out Cert.p12 -in cert.pem -inkey key.pem -passin pass:root -passout pass:root
+openssl pkcs12 -export -out $USERNAME.p12  -inkey /etc/ipsec.d/private/$USERNAME.key.pem -in /etc/ipsec.d/certs/$USERNAME.cert.pem -certfile /etc/ipsec.d/cacerts/strongswancert.pem
+openssl pkcs12 -export -out $USERNAME.p12  -inkey /etc/ipsec.d/private/$USERNAME.key.pem -in /etc/ipsec.d/certs/$USERNAME.cert.pem -certfile /etc/ipsec.d/cacerts/strongswancert.pem -passin pass:123 -passout pass:321
+openssl pkcs12 -export -out $USERNAME.p12  -inkey /etc/ipsec.d/private/$USERNAME.key.pem -in /etc/ipsec.d/certs/$USERNAME.cert.pem -certfile /etc/ipsec.d/cacerts/strongswancert.pem -passout pass: -nokeys
+openssl pkcs12 -export -out $USERNAME.p12 -inkey /etc/ipsec.d/private/$USERNAME.key.pem -in /etc/ipsec.d/certs/$USERNAME.cert.pem -passout pass: -nokeys
+#end
 
-sudo apt -y install xl2tpd
+
 
 Refer:
 https://blog.csdn.net/nerdsu/article/details/117522440
