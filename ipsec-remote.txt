@@ -44,12 +44,16 @@ ORGANISATION=elias
 ipsec pki --gen --type rsa --size 2048 --outform der > $USERNAME.key.der
 sudo cp $USERNAME.key.der /etc/ipsec.d/private/$USERNAME.key.der
 ipsec pki --pub --in /etc/ipsec.d/private/$USERNAME.key.der --type rsa | ipsec pki --issue --lifetime 730 --cacert /etc/ipsec.d/cacerts/strongswancert.der --cakey  /etc/ipsec.d/private/strongswankey.der  --dn "C=$COUNTRY_CODE, O=$ORGANISATION, CN=$USERID" --san "$USERID" --outform der > $USERNAME.cert.der
-sudo cp $USERNAME.cert.der /etc/ipsec.d/certs/$USERNAME.key.der
+sudo cp $USERNAME.cert.der /etc/ipsec.d/certs/$USERNAME.cert.der
 
 
 openssl rsa -inform DER -in /etc/ipsec.d/private/$USERNAME.key.der -out $USERNAME.key.pem -outform PEM
-openssl x509 -inform DER -in certs/$USERNAME.der -out certs/$USERNAME.pem -outform PEM
-openssl pkcs12 -export -inkey private/$USERNAME.pem -in certs/$USERNAME.pem -name "$NAME's VPN Certificate" -certfile cacerts/strongswan.pem -caname "$ORGANISATION Root CA" -out p12/$USERNAME.p12
+sudo cp $USERNAME.key.pem /etc/ipsec.d/private/$USERNAME.key.pem
+openssl x509 -inform DER -in /etc/ipsec.d/certs/$USERNAME.cert.der -out $USERNAME.cert.pem -outform PEM
+sudo cp $USERNAME.cert.pem  /etc/ipsec.d/certs/$USERNAME.cert.pem 
+sudo chmod 755 /etc/ipsec.d/private/elias.key.pem
+sudo chmod 755 /etc/ipsec.d/private/elias.key.der
+openssl pkcs12 -export -inkey /etc/ipsec.d/private/$USERNAME.key.pem -in /etc/ipsec.d/certs/$USERNAME.cert.pem  -name "$NAME.VPN.Cert" -certfile /etc/ipsec.d/cacerts/strongswancert.pem -caname "$ORGANISATION Root CA" -out $USERNAME.p12
 
 
 
