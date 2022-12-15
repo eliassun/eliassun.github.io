@@ -21,6 +21,17 @@ ipsec pki --print --in /etc/ipsec.d/cacerts/strongswancert.pem
 ipsec pki --print --in /etc/ipsec.d/cacerts/strongswancert.der
 
 
+# Server cert
+ipsec pki --gen --type rsa --size 4096 --outform der > vpn_server_key.der
+sudo cp vpn_server_key.der /etc/ipsec.d/private/vpn_server_key.der
+sudo chmod 755 /etc/ipsec.d/private/vpn_server_key.der
+
+ipsec pki --pub --in /etc/ipsec.d/private/vpn_server_key.der --type rsa | ipsec pki --issue --lifetime 730 --cacert /etc/ipsec.d/cacerts/strongswancert.der --cakey /etc/ipsec.d/private/strongswankey.der --dn "C=$COUNTRY_CODE, O=$ORGANISATION, CN=$SERVER_NAME" --san=$SERVER_NAME --san $IP_ADDRESS  --san @$IP_ADDRESS --flag serverAuth --flag ikeIntermediate --outform der > vpn_server_cert.der
+
+sudo cp vpn_server_cert.der /etc/ipsec.d/private/vpn_server_cert.der
+
+ipsec pki --print --in  /etc/ipsec.d/private/vpn_server_cert.der
+
 
 
 
