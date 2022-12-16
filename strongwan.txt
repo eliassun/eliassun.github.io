@@ -1,4 +1,5 @@
 # set up ipsec based on strongSwan, including the PSK and PKI authentication
+# https://github.com/eliassun/ipsec has the source code to automate the setup, which has much more security of file permssion and network setup.
 # section 1 and 2 are for the direct connections. section 3 are for the IP address behind NAT, such as hosts in AWS VPC. 
 
 mkdir ipsec
