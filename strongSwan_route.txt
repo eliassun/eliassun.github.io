@@ -21,10 +21,19 @@ sudo iptables -t nat -A POSTROUTING -d 192.168.10.13 -j MASQUERADE
 # With the virtual network interface for the route-based e.g. GRE/vti
 Box1:
 sudo sysctl -w net.ipv4.ip_forward=1
-sudo ip tunnel add tunnel100 mode gre local your_local_ip remote the_peer_IP ttl 255 dev enp0s8 
-sudo ip addr add 192.168.100.1 dev tunnel100 peer 192.168.200.0/24
-sudo ip route add 10.0.4.0/24 dev tunnel100
-sudo ip link set dev tunnel100 up
-More detail for the route-based https://docs.strongswan.org/docs/5.9/features/routeBasedVpn.html
+sudo ip tunnel add gre1 mode gre local 10.10.1.100 remote 10.10.2.137 ttl 255
+sudo ip link set gre1 up
+sudo ip addr add 192.168.1.101 peer 192.168.1.100 dev gre1
+
+Box2:
+sudo sysctl -w net.ipv4.ip_forward=1
+sudo ip tunnel add gre1 mode gre remote 10.10.1.100 local 10.10.2.137 ttl 255
+sudo ip link set gre1 up
+sudo ip addr add 192.168.1.100 peer 192.168.1.101 dev gre1
+sudo ip route add 172.168.1.0/24 dev gre1
+ping 172.168.1.100
+ping -I gre1 10.10.1.100
+ping -I gre1 172.16.1.100
+
 
 
