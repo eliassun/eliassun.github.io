@@ -56,7 +56,7 @@ sudo chmod 755 /etc/ipsec.d/private/elias.key.der
 openssl pkcs12 -export -inkey /etc/ipsec.d/private/$USERNAME.key.pem -in /etc/ipsec.d/certs/$USERNAME.cert.pem  -name "$NAME.VPN.Cert" -certfile /etc/ipsec.d/cacerts/strongswancert.pem -caname "$ORGANISATION Root CA" -out $USERNAME.p12
 sudo cp $USERNAME.p12 /etc/ipsec.d/certs/$USERNAME.p12
 
-# Some other ways
+# Some other ways(optional)
 # begin
 # Copy all pem to MacOS, then make p12 or:
 openssl pkcs12 -export -out Cert.p12 -in cert.pem -inkey key.pem -passin pass:root -passout pass:root
@@ -67,6 +67,60 @@ openssl pkcs12 -export -out $USERNAME.p12 -inkey /etc/ipsec.d/private/$USERNAME.
 #end
 
 
+#MacOS
+#Import strongswancert.pem to MacOS, always trust
+#Import $USERNAME.p12 (e.g. elias.p12) 
+#From GUI, Network-->VPN-->Add-->IKEv2:
+#Server address = same as "IP_ADDRESS=public_ip" or Server name(domain name) above
+#Remote ID = Same as Server address, or same as the leftid
+#Local ID = cn for the client cert, e.g. elias@anymail.com
+#Authentication
+#Type=None(or Certification for early MacOS)
+#Select=Certificate
+#Certificate=the p12 imported
+
+ipsec.conf example:
+config setup
+        charondebug="all"
+        strictcrlpolicy=no
+        uniqueids=yes
+        cachecrls=no
+
+conn red-to-blue
+        authby=secret
+        auto=route
+        keyexchange=ikev2
+        ike=aes256-sha256-modp1024!
+        left=%any
+	leftid=3.141.72.6
+	leftsubnet=172.16.0.0/16
+        right=3.13.223.193
+        rightid=3.13.223.193
+	rightsubnet=10.10.0.0/16
+        type=tunnel
+        esp=aes256-sha256-modp1024!
+        forceencaps=yes
+
+conn roadwarrior
+    keyexchange=ikev2
+    ike=aes128-sha1-modp1024,aes128-sha1-modp1536,aes128-sha1-modp2048,aes128-sha256-ecp256,aes128-sha256-modp1024,aes128-sha256-modp1536,aes128-sha256-modp2048,aes256-aes128-sha256-sha1-modp2048-modp4096-modp1024,aes256-sha1-modp1024,aes256-sha256-modp1024,aes256-sha256-modp1536,aes256-sha256-modp2048,aes256-sha256-modp4096,aes256-sha384-ecp384,aes256-sha384-modp1024,aes256-sha384-modp1536,aes256-sha384-modp2048,aes256-sha384-modp4096,aes256gcm16-aes256gcm12-aes128gcm16-aes128gcm12-sha256-sha1-modp2048-modp4096-modp1024,3des-sha1-modp1024!
+    esp=aes128-aes256-sha1-sha256-modp2048-modp4096-modp1024,aes128-sha1,aes128-sha1-modp1024,aes128-sha1-modp1536,aes128-sha1-modp2048,aes128-sha256,aes128-sha256-ecp256,aes128-sha256-modp1024,aes128-sha256-modp1536,aes128-sha256-modp2048,aes128gcm12-aes128gcm16-aes256gcm12-aes256gcm16-modp2048-modp4096-modp1024,aes128gcm16,aes128gcm16-ecp256,aes256-sha1,aes256-sha256,aes256-sha256-modp1024,aes256-sha256-modp1536,aes256-sha256-modp2048,aes256-sha256-modp4096,aes256-sha384,aes256-sha384-ecp384,aes256-sha384-modp1024,aes256-sha384-modp1536,aes256-sha384-modp2048,aes256-sha384-modp4096,aes256gcm16,aes256gcm16-ecp384,3des-sha1!
+    dpdaction=clear
+    dpddelay=60s
+    left=%any
+    leftid=3.141.72.6
+    leftsubnet=172.16.0.0/16
+    leftcert=vpn_server_cert.pem
+    leftsendcert=always
+    right=%any
+    rightsourceip=10.10.3.0/24
+    rightdns=8.8.8.8
+    eap_identity=%identity
+    auto=add
+    
+ipsec.secrets example:
+
+: RSA vpn_server_key.der
 
 Refer:
 https://blog.csdn.net/nerdsu/article/details/117522440
