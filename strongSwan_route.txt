@@ -3,7 +3,8 @@
 sudo sysctl -w net.ipv4.ip_forward=1
 sudo iptables -t nat -A POSTROUTING -s 172.16.10.0/24 -j MASQUERADE
 
-# if it needs to route the remote access VPN(user vpn) to site to site vpn, the leftsubnets should be overlapped. 
+# If it needs to route the remote access VPN(user vpn) to site to site vpn, the leftsubnets should be overlapped. In the client side, it needs to make the routes correct, e.g.  sudo route -n add -net 10.0.0.0/8 ipsec_virtual_ip
+
 
 # OR With the virtual network interface e.g. GRE
 Box1:
