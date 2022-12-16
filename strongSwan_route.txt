@@ -10,61 +10,20 @@ sudo iptables -t nat -A POSTROUTING  -s 172.16.1.100 -d 10.10.2.0/24 -o eth0 -j 
 sudo iptables -S (or -L)
 sudo iptables -t nat -S
 
-# If it needs to route the remote access VPN(user vpn) to site to site vpn, the leftsubnets should be overlapped. In the client side, it needs to make the routes correct too, e.g.  sudo route -n add -net 10.0.0.0/8 ipsec_virtual_ip
-
-
-# OR With the virtual network interface for the route-based e.g. GRE/vti
-Box1:
-sudo sysctl -w net.ipv4.ip_forward=1
-sudo ip tunnel add tunnel100 mode gre local 192.168.10.11 remote 192.168.10.12 ttl 255 dev enp0s8 
-sudo ip addr add 192.168.100.1 dev tunnel100 peer 192.168.200.0/24
-sudo ip route add 10.0.4.0/24 dev tunnel100
-sudo ip link set dev tunnel100 up
-
-Box2:
-sudo sysctl -w net.ipv4.ip_forward=1
-sudo ip tunnel add tunnel100 mode gre local 192.168.10.12 remote 192.168.10.11 ttl 255 dev enp0s8 
-sudo ip addr add 192.168.200.1 dev tunnel100 peer 192.168.100.0/24
-sudo ip link set dev tunnel100 up
 
 #OR:
-
 sudo sysctl -w net.ipv4.ip_forward=1
 sudo iptables -t nat -A POSTROUTING -d 192.168.10.13 -j MASQUERADE
 
+# If it needs to route the remote access VPN(user vpn) to site to site vpn, the leftsubnets should be overlapped. In the client side, it needs to make the routes correct too, e.g.  sudo route -n add -net 10.0.0.0/8 ipsec_virtual_ip
 
-Check routes:
+
+# With the virtual network interface for the route-based e.g. GRE/vti
 Box1:
-elias@ipsecred:~$ ip route show
-default via 10.0.2.2 dev enp0s3 proto dhcp metric 100 
-default via 192.168.10.1 dev enp0s8 proto dhcp metric 101 
-10.0.2.0/24 dev enp0s3 proto kernel scope link src 10.0.2.15 metric 100 
-10.0.4.0/24 dev tunnel100 scope link 
-169.254.0.0/16 dev enp0s3 scope link metric 1000 
-192.168.10.0/24 dev enp0s8 proto kernel scope link src 192.168.10.11 metric 101 
-192.168.10.14 dev tunnel100 scope link 
-192.168.200.0/24 dev tunnel100 proto kernel scope link src 192.168.100.1 
-elias@ipsecred:~$ route -n
-Kernel IP routing table
-Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
-0.0.0.0         10.0.2.2        0.0.0.0         UG    100    0        0 enp0s3
-0.0.0.0         192.168.10.1    0.0.0.0         UG    101    0        0 enp0s8
-10.0.2.0        0.0.0.0         255.255.255.0   U     100    0        0 enp0s3
-10.0.4.0        0.0.0.0         255.255.255.0   U     0      0        0 tunnel100
-169.254.0.0     0.0.0.0         255.255.0.0     U     1000   0        0 enp0s3
-192.168.10.0    0.0.0.0         255.255.255.0   U     101    0        0 enp0s8
-192.168.10.14   0.0.0.0         255.255.255.255 UH    0      0        0 tunnel100
-192.168.200.0   0.0.0.0         255.255.255.0   U     0      0        0 tunnel100
-
-Box2:
-elias@ipsecblue:~$ sudo ip route show
-default via 10.0.2.2 dev enp0s3 proto dhcp metric 100 
-default via 192.168.10.1 dev enp0s8 proto dhcp metric 101 
-default via 10.0.4.2 dev enp0s9 proto dhcp metric 102 
-10.0.2.0/24 dev enp0s3 proto kernel scope link src 10.0.2.15 metric 100 
-10.0.4.0/24 dev enp0s9 proto kernel scope link src 10.0.4.15 metric 102 
-169.254.0.0/16 dev enp0s3 scope link metric 1000 
-192.168.10.0/24 dev enp0s8 proto kernel scope link src 192.168.10.12 metric 101 
-192.168.100.0/24 dev tunnel100 proto kernel scope link src 192.168.200.1 
+sudo sysctl -w net.ipv4.ip_forward=1
+sudo ip tunnel add tunnel100 mode gre local your_local_ip remote the_peer_IP ttl 255 dev enp0s8 
+sudo ip addr add 192.168.100.1 dev tunnel100 peer 192.168.200.0/24
+sudo ip route add 10.0.4.0/24 dev tunnel100
+sudo ip link set dev tunnel100 up
 
 
