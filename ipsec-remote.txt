@@ -79,7 +79,7 @@ openssl pkcs12 -export -out $USERNAME.p12 -inkey /etc/ipsec.d/private/$USERNAME.
 #Select=Certificate
 #Certificate=the p12 imported
 
-ipsec.conf example:
+#ipsec.conf example:
 config setup
         charondebug="all"
         strictcrlpolicy=no
@@ -118,7 +118,8 @@ conn remotevpn
     eap_identity=%identity
     auto=add
     
-ipsec.secrets example:
+# rightsourceip can be %dhcp, but it needs to set the strongSwan DHCP config.
+#ipsec.secrets example:
 
 : RSA vpn_server_key.der
 
