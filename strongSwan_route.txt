@@ -35,5 +35,7 @@ ping -I gre1 10.10.1.101
 ping -I gre1 172.168.1.100
 ping -I gre1 10.10.1.100
 
+# If it cannot access any element from the Internet, then check 1) SG 2)route table
+
 
 
