@@ -14,6 +14,7 @@ sudo systemctl restart freeswitch.service
 
 # Configure it in AWS
 # Read https://freeswitch.org/confluence/spaces/flyingpdf/pdfpageexport.action?pageId=3965076
+# The vars.xml has "set", "stun-set" or "exec-set". When it uses the "curl", then it is "exec-set". The server to get a public IP, I perfer http://checkip.amazonaws.com.
 # Then check and modify the files below:
 sudo vim /usr/local/freeswitch/conf/vars.xml
 sudo vim /usr/local/freeswitch/conf/autoload_configs/verto.conf.xml
