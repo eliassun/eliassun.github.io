@@ -1,5 +1,5 @@
 
-# Install freeswitch in Ubunt22
+# Install freeswitch in Ubuntu22
 sudo apt-get update
 sudo apt-get -y upgrade
 sudo apt-get install -y wget ca-certificates 
@@ -22,5 +22,6 @@ sudo echo "deb-src [signed-by=/usr/share/keyrings/signalwire-freeswitch-repo.gpg
 
 # you may want to populate /etc/freeswitch at this point.
 # if /etc/freeswitch does not exist, the standard vanilla configuration is deployed
-sudo apt-get update && apt-get install -y freeswitch-meta-all 
+sudo apt-get update 
+sudo apt-get install -y freeswitch-meta-all 
 
