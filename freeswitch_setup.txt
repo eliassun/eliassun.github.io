@@ -4,8 +4,7 @@ sudo apt-get update
 sudo apt-get -y upgrade
 sudo apt-get install -y gnupg2 wget lsb-release ca-certificates
 #TOKEN no ""
-TOKEN=YOURSIGNALWIRETOKEN 
-sudo wget --http-user=signalwire --http-password=$TOEKN -O  /usr/share/keyrings/signalwire-freeswitch-repo.gpg https://freeswitch.signalwire.com/repo/deb/debian-release/signalwire-freeswitch-repo.gpg
+TOKEN=YOURSIGNALWIRETOKEN ; sudo wget --http-user=signalwire --http-password=$TOEKN -O  /usr/share/keyrings/signalwire-freeswitch-repo.gpg https://freeswitch.signalwire.com/repo/deb/debian-release/signalwire-freeswitch-repo.gpg
  
 TOKEN=your_token ; sudo echo "machine freeswitch.signalwire.com login signalwire password $TOKEN" > /etc/apt/auth.conf
 #OR
