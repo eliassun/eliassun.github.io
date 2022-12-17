@@ -115,7 +115,7 @@ WantedBy=multi-user.target
 
 #text end
 
-sudo chmod ugo+x freeswitch.service
+sudo chmod ugo+x /etc/systemd/system/freeswitch.service
 sudo systemctl start freeswitch.service
 sudo systemctl enable freeswitch.service
 
