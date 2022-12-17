@@ -1,18 +1,18 @@
 #Configure freeswitch for NAT tranversal, including AWS side, STUN and client side.
 
-# Configure SIP for test
+# Configure SIP for the SIP Register
 # Change demo example default_password. It can get a random pwd by apt-get install uuid-runtime, then run uuidgen to get a unique string
 vim /usr/local/freeswitch/conf/vars.xml 
  <X-PRE-PROCESS cmd="set" data="default_password=123"/>
 # optional fsctl shutdown
 sudo systemctl restart freeswitch.service
 
-# Linphone
-# iOS: SIP Account: user 1002, password 123, domain server_ip_address
-# MacOS: SIP Account: user 1001, sip address: "1001" <sip:1001@server_ip_address>, SIP Server address  <sip:server_ip_address>
-# Then call
+# SIP Register for the clients, such as Linphone and PJSIP
+# Linphone iOS: SIP Account: user 1002, password 123, domain server_ip_address
+# Linphhone MacOS: SIP Account: user 1001, sip address: "1001" <sip:1001@server_ip_address>, SIP Server address  <sip:server_ip_address>
 
-# Configure it in AWS
+
+# RTP for AWS EC2
 # Read https://freeswitch.org/confluence/spaces/flyingpdf/pdfpageexport.action?pageId=3965076
 # The vars.xml has "set", "stun-set" or "exec-set". When it uses the "curl", then it is "exec-set". The server to get a public IP, I perfer http://checkip.amazonaws.com.
 # Then check and modify the files below:
