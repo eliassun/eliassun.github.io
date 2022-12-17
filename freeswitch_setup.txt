@@ -121,5 +121,5 @@ sudo systemctl enable freeswitch.service
 
 sudo systemctl status freeswitch.service
 
-fs_cli -r
+/usr/local/freeswitch/bin/fs_cli -r
 
