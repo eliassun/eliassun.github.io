@@ -1,3 +1,5 @@
+# Install FreeSwitch in Debian from the release server
+# Install FreeSwitch in Ubuntu from the source code
 
 # Install freeswitch in Debian 11
 sudo apt-get update
