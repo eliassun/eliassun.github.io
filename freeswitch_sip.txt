@@ -1,5 +1,5 @@
 #Configure freeswitch for NAT tranversal, including AWS side, STUN and client side.
-# https://github.com/eliassun/WebRTC automate a part of the process.
+# https://github.com/eliassun/WebRTC automatea a part of the process below.
 
 # Configure SIP for the SIP Register
 # Change demo example default_password. It can get a random pwd by apt-get install uuid-runtime, then run uuidgen to get a unique string
