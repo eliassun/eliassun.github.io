@@ -123,3 +123,23 @@ sudo systemctl status freeswitch.service
 
 /usr/local/freeswitch/bin/fs_cli -r
 
+More:
+... (three consecutive points)  - exit fs_cli. If used from console it shutdown FreeSWITCH
+
+ctrl-d  - exit fs_cli
+
+fsctl shutdown - shutdown FreeSWITCH
+
+hupall  - hangup all calls
+
+fsctl loglevel [0-7] - change which log messages are visualized
+
+status  - tells some basic statistics
+
+version - which code base
+
+show channels - visualize all call legs one by one, individually
+
+show calls - visualize all call legs grouped by complete bridged calls (A+B)
+
+help
