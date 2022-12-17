@@ -58,6 +58,8 @@ cd freeswitch-1.10.3.-release/
 sudo ./configure -C
 sudo make
 
+sudo make install
+
 # optionall recompile
 sudo ./configure && sudo make clean && sudo make
 
