@@ -22,6 +22,8 @@ sudo vim /usr/local/freeswitch/conf/sip_profiles/external.xml
 sudo vim /usr/local/freeswitch/conf/autoload_configs/switch.conf.xml
 sudo systemctl restart freeswitch.service
 sudo systemctl status freeswitch.service
+# https://github.com/eliassun/WebRTC has the samples files above.
+
 
 # debug in fs cli
 sudo /usr/local/freeswitch/bin/fs_cli -r
