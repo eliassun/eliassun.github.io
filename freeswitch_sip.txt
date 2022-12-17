@@ -1,4 +1,4 @@
-# First SIP call
+# Configure Sample SIP
 # Change demo example default_password. It can get a random pwd by apt-get install uuid-runtime, then run uuidgen to get a unique string
 vim /usr/local/freeswitch/conf/vars.xml 
  <X-PRE-PROCESS cmd="set" data="default_password=123"/>
@@ -9,4 +9,17 @@ sudo systemctl restart freeswitch.service
 # iOS: SIP Account: user 1002, password 123, domain server_ip_address
 # MacOS: SIP Account: user 1001, sip address: "1001" <sip:1001@server_ip_address>, SIP Server address  <sip:server_ip_address>
 # Then call
+
+# Configure it in AWS
+# Read https://freeswitch.org/confluence/spaces/flyingpdf/pdfpageexport.action?pageId=3965076
+# Then check and modify the files below:
+sudo vim /usr/local/freeswitch/conf/autoload_configs/verto.conf.xml
+sudo vim /usr/local/freeswitch/conf/sip_profiles/internal.xml
+sudo vim /usr/local/freeswitch/conf/sip_profiles/external.xml
+sudo vim /usr/local/freeswitch/conf/autoload/switch.conf.xml
+sudo vim /usr/local/freeswitch/conf/autoload_configs/switch.conf.xml
+sudo systemctl restart freeswitch.service
+sudo systemctl status freeswitch.service
+
+
 
