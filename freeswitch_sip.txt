@@ -15,6 +15,7 @@ sudo systemctl restart freeswitch.service
 # Configure it in AWS
 # Read https://freeswitch.org/confluence/spaces/flyingpdf/pdfpageexport.action?pageId=3965076
 # Then check and modify the files below:
+sudo vim /usr/local/freeswitch/conf/vars.xml
 sudo vim /usr/local/freeswitch/conf/autoload_configs/verto.conf.xml
 sudo vim /usr/local/freeswitch/conf/sip_profiles/internal.xml
 sudo vim /usr/local/freeswitch/conf/sip_profiles/external.xml
