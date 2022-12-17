@@ -1,3 +1,5 @@
+#Configure freeswitch for NAT tranversal, including AWS side, STUN and client side.
+
 # Configure SIP for test
 # Change demo example default_password. It can get a random pwd by apt-get install uuid-runtime, then run uuidgen to get a unique string
 vim /usr/local/freeswitch/conf/vars.xml 
@@ -20,6 +22,7 @@ sudo vim /usr/local/freeswitch/conf/autoload_configs/switch.conf.xml
 sudo systemctl restart freeswitch.service
 sudo systemctl status freeswitch.service
 
+# debug in fs cli
 sudo /usr/local/freeswitch/bin/fs_cli -r
 #In fs_cli
 sofia status profile internal  
@@ -33,11 +36,12 @@ sudo systemctl start coturn
 sudo systemctl status coturn
 # Check ports listening and config them into SG
 sudo lsof -n -P -i|grep UDP
+# Add STUN server into the the client settings.
 
 
 # Debug by tcpdump
-tcpdump -i eth0 host 192.168.10.3 and port 5060 -n -s 0 -vvv  # -w /usr/src/dump
-tcpdump -i eth0 host 192.168.10.3 and portrange 10000-50000 -n -s 0 -vvv  # -w /usr/src/dump
+sudo tcpdump -i eth0 host 192.168.10.3 and port 5060 -n -s 0 -vvv  # -w /usr/src/dump
+sudo tcpdump -i eth0 host 192.168.10.3 and portrange 10000-50000 -n -s 0 -vvv  # -w /usr/src/dump
 sudo tcpdump -i eth0 host 100.90.4.9  and portrange 500-55000 and proto \\udp
 sudo tcpdump -i eth0 port not 22 and port not 53 -w /home/ubuntu/dump.pcap
 
