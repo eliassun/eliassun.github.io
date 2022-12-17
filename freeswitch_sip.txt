@@ -10,7 +10,7 @@ sudo systemctl restart freeswitch.service
 # SIP Register for the clients, such as Linphone and PJSIP
 # Linphone iOS: SIP Account: user 1002, password 123, domain server_ip_address
 # Linphhone MacOS: SIP Account: user 1001, sip address: "1001" <sip:1001@server_ip_address>, SIP Server address  <sip:server_ip_address>
-
+# PJSIP MacOS: It needs to download the PJSIP source code, then compile it. The result is at pjsip-apps/bin/pjsua-x86_64-apple-darwinxx. This is a good debug tool as it can print the SIP message in the terminal. In the terminal, input +a to add a SIP account, then configure something like  sip:1001@ec2_public_ip.
 
 # RTP for AWS EC2
 # Read https://freeswitch.org/confluence/spaces/flyingpdf/pdfpageexport.action?pageId=3965076
