@@ -1,3 +1,5 @@
+# https://github.com/eliassun/WebRTC automates the process below for Ubuntu20.
+
 # Install FreeSwitch in Debian from the release server
 # Install FreeSwitch in Ubuntu from the source code
 
