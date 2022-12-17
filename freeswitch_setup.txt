@@ -60,9 +60,66 @@ sudo make
 
 sudo make install
 
-# optionall recompile
+# optional to recompile
 sudo ./configure && sudo make clean && sudo make
 
- 
 
+sudo make all cd-sounds-install cd-moh-install
+sudo ln -s /usr/local/freeswitch/bin/freeswitch /usr/bin/
+sudo ln -s /usr/local/freeswitch/bin/fs_cli /usr/bin
+cd /usr/local
+
+sudo groupadd freeswitch
+sudo adduser --disabled-password  --quiet --system --home /usr/local/freeswitch --gecos "FreeSWITCH Voice Platform" --ingroup freeswitch freeswitch
+sudo chown -R freeswitch:freeswitch /usr/local/freeswitch/
+sudo chmod -R ug=rwX,o= /usr/local/freeswitch/
+sudo chmod -R u=rwx,g=rx /usr/local/freeswitch/bin/
+
+sudo vim /etc/systemd/system/freeswitch.service
+#text begin
+[Unit]
+Description=freeswitch
+Wants=network-online.target
+Requires=syslog.socket network.target local-fs.target
+After=syslog.socket network.target network-online.target local-fs.target
+
+[Service]
+Type=forking
+Environment="DAEMON_OPTS=-nonat"
+EnvironmentFile=-/etc/default/freeswitch
+ExecStartPre=/bin/chown -R freeswitch:freeswitch /usr/local/freeswitch
+ExecStart=/usr/bin/freeswitch -u freeswitch -g freeswitch -ncwait $DAEMON_OPTS
+TimeoutSec=45s
+Restart=always
+RestartSec=90
+StartLimitInterval=0
+StartLimitBurst=6
+
+User=root
+Group=daemon
+LimitCORE=infinity
+LimitNOFILE=100000
+LimitNPROC=60000
+LimitSTACK=250000
+LimitRTPRIO=infinity
+LimitRTTIME=infinity
+IOSchedulingClass=realtime
+IOSchedulingPriority=2
+CPUSchedulingPolicy=rr
+CPUSchedulingPriority=89
+UMask=0007
+NoNewPrivileges=false
+
+[Install]
+WantedBy=multi-user.target
+
+#text end
+
+sudo chmod ugo+x freeswitch.service
+sudo systemctl start freeswitch.service
+sudo systemctl enable freeswitch.service
+
+sudo systemctl status freeswitch.service
+
+fs_cli -r
 
