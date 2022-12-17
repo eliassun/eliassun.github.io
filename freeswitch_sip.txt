@@ -21,5 +21,11 @@ sudo vim /usr/local/freeswitch/conf/autoload_configs/switch.conf.xml
 sudo systemctl restart freeswitch.service
 sudo systemctl status freeswitch.service
 
+# Debug by tcpdump
+tcpdump -i eth0 host 192.168.10.3 and port 5060 -n -s 0 -vvv  # -w /usr/src/dump
+tcpdump -i eth0 host 192.168.10.3 and portrange 10000-50000 -n -s 0 -vvv  # -w /usr/src/dump
+
+
+
 
 
