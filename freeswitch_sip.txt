@@ -16,16 +16,42 @@ sudo systemctl restart freeswitch.service
 sudo vim /usr/local/freeswitch/conf/autoload_configs/verto.conf.xml
 sudo vim /usr/local/freeswitch/conf/sip_profiles/internal.xml
 sudo vim /usr/local/freeswitch/conf/sip_profiles/external.xml
-sudo vim /usr/local/freeswitch/conf/autoload/switch.conf.xml
 sudo vim /usr/local/freeswitch/conf/autoload_configs/switch.conf.xml
 sudo systemctl restart freeswitch.service
 sudo systemctl status freeswitch.service
 
+sudo /usr/local/freeswitch/bin/fs_cli -r
+#In fs_cli
+sofia status profile internal  
+
+
 # Debug by tcpdump
 tcpdump -i eth0 host 192.168.10.3 and port 5060 -n -s 0 -vvv  # -w /usr/src/dump
 tcpdump -i eth0 host 192.168.10.3 and portrange 10000-50000 -n -s 0 -vvv  # -w /usr/src/dump
+sudo tcpdump -i eth0 host 100.90.4.9  and portrange 500-55000 and proto \\udp
+sudo tcpdump -i eth0 port not 22 and port not 53 -w /home/ubuntu/dump
 
 
+
+... (three consecutive points)  - exit fs_cli. If used from console it shutdown FreeSWITCH
+
+ctrl-d  - exit fs_cli
+
+fsctl shutdown - shutdown FreeSWITCH
+
+hupall  - hangup all calls
+
+fsctl loglevel [0-7] - change which log messages are visualized
+
+status  - tells some basic statistics
+
+version - which code base
+
+show channels - visualize all call legs one by one, individually
+
+show calls - visualize all call legs grouped by complete bridged calls (A+B)
+
+help
 
 
 
