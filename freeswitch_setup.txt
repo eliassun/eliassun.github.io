@@ -48,6 +48,15 @@ sudo cmake .
 sudo make
 sudo make install
 
+#optional: install ffmpeg. If it has the libavformat-dev missing, then it is a must
+cd /usr/src
+sudo wget https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/ffmpeg/7:4.2.2-1ubuntu1/ffmpeg_4.2.2.orig.tar.xz
+sudo tar -xf ffmpeg_4.2.2.orig.tar.xz
+cd ffmpeg-4.2.2
+sudo ./configure --enable-shared --enable-gpl  --enable-pic
+sudo make
+sudo make install
+
 
 cd /usr/src
 sudo wget https://files.freeswitch.org/freeswitch-releases/freeswitch-1.10.3.-release.zip
