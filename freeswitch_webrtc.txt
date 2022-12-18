@@ -69,6 +69,15 @@ sudo systemctl restart freeswitch.service
 git clone https://github.com/eliassun/WebRTC
 sudo cp -r  WebRTC/verto/dist /var/www/html/webrtc
 sudo chmod -R 755 /var/www/html/webrtc
+sudo vim /var/www/html/webrtc/config.json
+#text begin
+{
+      "login": "1008",
+      "password": "123",
+      "wsURL": "wss://www.your_domain.com:8082"
+}
+
+#text end
 
 # OR install it from the source code
 
