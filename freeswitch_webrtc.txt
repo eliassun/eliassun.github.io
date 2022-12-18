@@ -109,3 +109,8 @@ sudo ./debian8-install.sh
 
 sudo cp -r freeswitch/html5/verto/verto_communicator/dist /var/www/html/webrtc
 
+# It also compile it for fs1.10 by
+git clone https://github.com/signalwire/freeswitch.git -bv1.10 freeswitch 
+#copy my repo fs1.10/verto into freeswitch, then repeat the process above
+
+
