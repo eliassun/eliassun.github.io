@@ -101,6 +101,10 @@ vim bower.json
 
 bower update
 npm update
+# Optional. If it is not cloned.
+#start
+sudo git init
+# end
 sudo ./debian8-install.sh  
 sudo ln -s /usr/src/freeswitch/html5/verto/verto_communicator/dist /var/www/html/vc 
 
