@@ -83,7 +83,7 @@ sudo vim /var/www/html/webrtc/config.json
 # OR install it from the source code
 # Optional
 #### verto_communicator is appeared only after compiling 1.10.
-#### So, it will clone freeswitch 1.8 to do the same job.
+#### So, it will clone freeswitch 1.8 to do the same job. verto from 1.8 can work with fs1.10, not great, but it works. 
 cd ~
 git clone https://github.com/signalwire/freeswitch.git -bv1.8 freeswitch 
 vim bower.json
