@@ -66,6 +66,7 @@ sudo systemctl restart freeswitch.service
 
 # Install Verto Communicator, WebRTC Client
 # Install the Verto WebRTC client from https://github.com/eliassun/WebRTC
+sudo apt-get install -y nodejs 
 git clone https://github.com/eliassun/WebRTC
 sudo cp -r  WebRTC/verto/dist /var/www/html/webrtc
 sudo chmod -R 755 /var/www/html/webrtc
