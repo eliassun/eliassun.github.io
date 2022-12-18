@@ -18,3 +18,23 @@ sudo certbot --apache
 
 # Optional:
 sudo certbot renew --dry-run
+
+# Set up wws
+cd /etc/letsencrypt
+sudo cp  archive/your_domain/cert1.pem /usr/local/freeswitch/certs/ 
+sudo cp  archive/your_domain/chain1.pem  /usr/local/freeswitch/certs/ 
+sudo cp  archive/your_domain/fullchain1.pem  /usr/local/freeswitch/certs/ 
+sudo cp  archive/your_domain/privkey1.pem  /usr/local/freeswitch/certs/ 
+
+cd ~
+mkdir certs
+cd certs
+sudo cat /usr/local/freeswitch/certs/fullchain1.pem /usr/local/freeswitch/certs/privkey1.pem > /usr/local/freeswitch/certs/wss.pem 
+#OR
+sudo cat /usr/local/freeswitch/certs/fullchain1.pem /usr/local/freeswitch/certs/privkey1.pem > wss.pem ; sudo cp wss.pem  /usr/local/freeswitch/certs/wss.pem 
+
+sudo cat /usr/local/freeswitch/certs/cert1.pem /usr/local/freeswitch/certs/privkey1.pem > /usr/local/freeswitch/certs/agent.pem 
+#OR
+sudo cat /usr/local/freeswitch/certs/cert1.pem /usr/local/freeswitch/certs/privkey1.pem > agent.pem ; sudo cp agent.pem /usr/local/freeswitch/certs/agent.pem 
+
+sudo cat /usr/local/freeswitch/certs/chain1.pem > cafile.pem ; sudo cp cafile.pem  /usr/local/freeswitch/certs/cafile.pem 
