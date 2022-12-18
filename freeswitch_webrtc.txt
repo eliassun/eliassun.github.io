@@ -59,4 +59,5 @@ sudo service apache2 restart
 <param name="wss-binding" value=":7443"/> 
 <param name="ext-rtp-ip" value="$${external_rtp_ip}"/>
 <param name="ext-sip-ip" value="$${external_sip_ip}"/>
+sudo systemctl restart freeswitch.service
 
