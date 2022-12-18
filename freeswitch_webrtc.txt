@@ -71,9 +71,7 @@ cd /usr/src
 
 cd /usr/src/freeswitch-1.10.3.-release/html5/verto/verto_communicator/ 
 sudo apt-get -y install npm grunt
-sudo npm install grunt
-sudo npm install time-grunt
-sudo npm install jit-grunt grunt-cli
+sudo npm install grunt time-grunt jit-grunt grunt-cli
 sudo ./debian8-install.sh  
 sudo ln -s /usr/src/freeswitch/html5/verto/verto_communicator/dist /var/www/html/vc 
  
