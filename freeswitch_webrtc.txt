@@ -80,8 +80,9 @@ sudo vim /var/www/html/webrtc/config.json
 #text end
 
 # OR install it from the source code
-
-#### verto_communicator is appeared after compiling 1.10. So, it will clone freeswitch 1.8 to do the same job.
+# Optional
+#### verto_communicator is appeared only after compiling 1.10.
+#### So, it will clone freeswitch 1.8 to do the same job.
 cd ~
 git clone https://github.com/signalwire/freeswitch.git -bv1.8 freeswitch 
 vim bower.json
@@ -105,31 +106,5 @@ npm install grunt-protractor-runner grunt-usemin grunt-wiredep
 
 sudo ./debian8-install.sh  
 
-sudo cp -r /usr/src/freeswitch/html5/verto/verto_communicator/dist /var/www/html/webrtc
-
-
-==========
-cd /usr/src 
-git config --global url."https://".insteadOf git:// 
-sudo git clone https://github.com/signalwire/freeswitch.git -bv1.8 freeswitch 
-
-
-cd /usr/src/freeswitch/html5/verto/verto_communicator/ 
-#Optional
-cat debian8-install.sh 
-#begin
-#!/bin/bash
-apt-get update
-apt-get -y install npm nodejs-legacy
-npm install
-bower --allow-root install
-grunt build
-#end
-
-sudo curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-sudo apt-get install -y nodejs nodejs-legacy
-
-
-sudo ./debian8-install.sh  
-sudo ln -s /usr/src/freeswitch/html5/verto/verto_communicator/dist /var/www/html/vc 
+sudo cp -r freeswitch/html5/verto/verto_communicator/dist /var/www/html/webrtc
 
