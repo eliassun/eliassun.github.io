@@ -51,4 +51,12 @@ sudo service apache2 restart
 # SSLCertificateFile /etc/letsencrypt/live/your_domain/fullchain.pem
 # SSLCertificateKeyFile /etc/letsencrypt/live/your_domain/privkey.pem
 
+# Check /usr/local/freeswitch/conf/autoload_configs/verto.conf.xml
+<param name="bind-local" value="$${local_ip_v4}:8082" secure="true"/> 
+<param name="ext-rtp-ip" value="$${external_rtp_ip}"/>
+
+# Check  /usr/local/freeswitch/conf/sip_profiles/internal.xml
+<param name="wss-binding" value=":7443"/> 
+<param name="ext-rtp-ip" value="$${external_rtp_ip}"/>
+<param name="ext-sip-ip" value="$${external_sip_ip}"/>
 
