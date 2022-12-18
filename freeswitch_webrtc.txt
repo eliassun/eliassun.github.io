@@ -65,7 +65,9 @@ sudo service apache2 restart
 sudo systemctl restart freeswitch.service
 
 # Install Verto Communicator, WebRTC Client
+# Install the Verto WebRTC client from https://github.com/eliassun/WebRTC
 
+# OR install it from the source code
 
 #### verto_communicator is appeared after compiling 1.10. So, it will clone freeswitch 1.8 to do the same job.
 cd ~
