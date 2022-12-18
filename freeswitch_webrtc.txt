@@ -104,8 +104,7 @@ sudo npm install grunt time-grunt jit-grunt grunt-cli autoprefixer-core connect-
 sudo npm install grunt grunt-babel grunt-build-control grunt-clean grunt-concurrent 
 sudo npm install grunt-contrib-clean grunt-contrib-concat grunt-contrib-copy grunt-contrib-cssmin 
 sudo npm install grunt-contrib-imagemin 
-sudo npm install grunt-contrib-jshint 
-sudo npm install grunt-contrib-uglify 
+sudo npm install grunt-contrib-jshint  grunt-contrib-uglify 
 sudo npm install grunt-contrib-watch grunt-dom-munger grunt-env grunt-express-server 
 sudo npm install grunt-filerev grunt-google-cdn grunt-injector grunt-jscs grunt-karma grunt-mocha-istanbul 
 sudo npm install grunt-mocha-test grunt-newer grunt-ng-annotate grunt-ng-constant 
@@ -117,7 +116,24 @@ sudo ./debian8-install.sh
 sudo ln -s /usr/src/freeswitch/html5/verto/verto_communicator/dist /var/www/html/vc 
 
 
- 
+git clone https://github.com/signalwire/freeswitch.git -bv1.8 freeswitch 
+vim bower.json
+# Replace start: "bootstrap-material-design": "~0.3.0",
+"bootstrap-material-design": "git+https://github.com/mdbootstrap/bootstrap-material-design.git#~0.3.0",
+# Repalce end
+npm install grunt time-grunt jit-grunt grunt-cli autoprefixer-core connect-logger jshint-stylish grunt-git-revision grunt-preprocess grunt-clean
+npm install grunt grunt-babel grunt-build-control grunt-clean grunt-concurrent 
+npm install grunt-contrib-clean grunt-contrib-concat grunt-contrib-copy grunt-contrib-cssmin 
+npm install grunt-contrib-imagemin 
+npm install grunt-contrib-jshint  grunt-contrib-uglify 
+npm install grunt-contrib-watch grunt-dom-munger grunt-env grunt-express-server 
+npm install grunt-filerev grunt-google-cdn grunt-injector grunt-jscs grunt-karma grunt-mocha-istanbul 
+npm install grunt-mocha-test grunt-newer grunt-ng-annotate grunt-ng-constant 
+npm install grunt-node-inspector grunt-nodemon grunt-open grunt-postcss 
+npm install grunt-protractor-runner grunt-usemin grunt-wiredep 
+npm install grunt-wiredep grunt-contrib-compass
+
+
 
 
 
