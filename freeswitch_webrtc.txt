@@ -82,6 +82,9 @@ bower --allow-root install
 grunt build
 #end
 
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+sudo apt-get install -y nodejs nodejs-legacy
+
 sudo apt-get -y install npm grunt
 
 sudo npm install grunt time-grunt jit-grunt grunt-cli autoprefixer-core connect-logger jshint-stylish grunt-git-revision grunt-preprocess grunt-clean
