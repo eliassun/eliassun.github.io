@@ -105,7 +105,7 @@ sudo npm install grunt grunt-babel grunt-build-control grunt-clean grunt-concurr
 sudo npm install grunt-contrib-clean grunt-contrib-concat grunt-contrib-copy grunt-contrib-cssmin 
 sudo npm install grunt-contrib-imagemin grunt-contrib-jshint grunt-contrib-uglify 
 sudo npm install grunt-contrib-watch grunt-dom-munger grunt-env grunt-express-server 
-sudo grunt-filerev grunt-google-cdn grunt-injector grunt-jscs grunt-karma grunt-mocha-istanbul 
+sudo npm install grunt-filerev grunt-google-cdn grunt-injector grunt-jscs grunt-karma grunt-mocha-istanbul 
 sudo npm install grunt-mocha-test grunt-newer grunt-ng-annotate grunt-ng-constant 
 sudo npm install grunt-node-inspector grunt-nodemon grunt-open grunt-postcss 
 sudo npm install grunt-protractor-runner grunt-usemin grunt-wiredep 
