@@ -66,13 +66,11 @@ sudo systemctl restart freeswitch.service
 
 # Install Verto Communicator, WebRTC Client
 cd /usr/src 
-# Optional
-# begin
-#git config --global url."https://".insteadOf git:// 
-#git clone https://freeswitch.org/stash/scm/fs/freeswitch.git -bv1.10 freeswitch 
-# end
+git config --global url."https://".insteadOf git:// 
+sudo git clone https://github.com/signalwire/freeswitch.git -bv1.10 freeswitch 
 
-cd /usr/src/freeswitch-1.10.3.-release/html5/verto/verto_communicator/ 
+
+cd /usr/src/freeswitch/html5/verto/verto_communicator/ 
 #Optional
 cat debian8-install.sh 
 #begin
