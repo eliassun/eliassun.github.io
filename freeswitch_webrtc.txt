@@ -61,3 +61,19 @@ sudo service apache2 restart
 <param name="ext-sip-ip" value="$${external_sip_ip}"/>
 sudo systemctl restart freeswitch.service
 
+# Install Verto Communicator, WebRTC Client
+cd /usr/src 
+# Optional
+# begin
+#git config --global url."https://".insteadOf git:// 
+#git clone https://freeswitch.org/stash/scm/fs/freeswitch.git -bv1.10 freeswitch 
+# end
+
+cd /usr/src/freeswitch-1.10.3.-release/html5/verto/verto_communicator/ 
+sudo apt-get -y install npm grunt
+sudo ./debian8-install.sh  
+sudo ln -s /usr/src/freeswitch/html5/verto/verto_communicator/dist /var/www/html/vc 
+ 
+
+
+
