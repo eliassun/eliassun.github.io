@@ -3,6 +3,7 @@
 sudo apt install -y apache2
 
 # Browse your domain to see if the website is working
+# Read www.letsencrypt.org
 # Go to https://certbot.eff.org/instructions?ws=apache&os=ubuntufocal, then follow the instructions
 
 sudo apt -y install snapd
