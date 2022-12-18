@@ -100,6 +100,8 @@ sudo npm update
 #sudo git init
 # end
 
+sudo npm install grunt time-grunt jit-grunt grunt-cli autoprefixer-core connect-logger jshint-stylish grunt-git-revision grunt-preprocess grunt-clean
+
 sudo npm install grunt grunt-babel grunt-build-control grunt-clean grunt-concurrent grunt-contrib-clean grunt-contrib-concat grunt-contrib-copy grunt-contrib-cssmin grunt-contrib-imagemin grunt-contrib-jshint grunt-contrib-uglify grunt-contrib-watch grunt-dom-munger grunt-env grunt-express-server grunt-filerev grunt-google-cdn grunt-injector grunt-jscs grunt-karma grunt-mocha-istanbul grunt-mocha-test grunt-newer grunt-ng-annotate grunt-ng-constant grunt-node-inspector grunt-nodemon grunt-open grunt-postcss grunt-protractor-runner grunt-usemin grunt-wiredep time-grunt jit-grunt autoprefixer-core connect-logger jshint-stylish
 
 
