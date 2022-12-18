@@ -88,7 +88,7 @@ vim bower.json
 # Replace start: "bootstrap-material-design": "~0.3.0",
 "bootstrap-material-design": "git+https://github.com/mdbootstrap/bootstrap-material-design.git#~0.3.0",
 # Repalce end
-https://github.com/mdbootstrap/bootstrap-material-design.git
+
 sudo ./debian8-install.sh  
 sudo ln -s /usr/src/freeswitch/html5/verto/verto_communicator/dist /var/www/html/vc 
  
