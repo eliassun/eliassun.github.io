@@ -40,6 +40,8 @@ sudo cat /usr/local/freeswitch/certs/cert1.pem /usr/local/freeswitch/certs/privk
 
 sudo cat /usr/local/freeswitch/certs/chain1.pem > cafile.pem ; sudo cp cafile.pem  /usr/local/freeswitch/certs/cafile.pem 
 
+#Optional
+#Start
 apt-get update 
 apt-get install -y apache2 ca-certificates 
 a2enmod ssl 
@@ -50,6 +52,7 @@ sudo service apache2 restart
 # Check /etc/apache2/sites-enabled/default-ssl.conf
 # SSLCertificateFile /etc/letsencrypt/live/your_domain/fullchain.pem
 # SSLCertificateKeyFile /etc/letsencrypt/live/your_domain/privkey.pem
+# End
 
 # Check /usr/local/freeswitch/conf/autoload_configs/verto.conf.xml
 <param name="bind-local" value="$${local_ip_v4}:8082" secure="true"/> 
