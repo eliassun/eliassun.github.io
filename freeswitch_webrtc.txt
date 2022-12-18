@@ -70,6 +70,18 @@ cd /usr/src
 # end
 
 cd /usr/src/freeswitch-1.10.3.-release/html5/verto/verto_communicator/ 
+#Optional
+cat debian8-install.sh 
+#begin
+#!/bin/bash
+apt-get update
+apt-get -y install npm nodejs-legacy
+npm install -g grunt grunt-cli bower
+npm install
+bower --allow-root install
+grunt build
+#end
+
 sudo apt-get -y install npm grunt
 sudo npm install grunt time-grunt jit-grunt grunt-cli autoprefixer-core connect-logger jshint-stylish grunt-git-revision grunt-preprocess
 sudo ./debian8-install.sh  
