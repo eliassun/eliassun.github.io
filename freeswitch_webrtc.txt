@@ -108,9 +108,16 @@ npm install grunt-protractor-runner grunt-usemin grunt-wiredep
 sudo ./debian8-install.sh  
 
 sudo cp -r freeswitch/html5/verto/verto_communicator/dist /var/www/html/webrtc
+sudo chmod 755 -R /var/www/html/webrtc
 
 # It also can compile Verto for fs1.10 by
 git clone https://github.com/signalwire/freeswitch.git -bv1.10 freeswitch 
 # Copy my repo fs1.10/verto into freeswitch, then repeat the process above
 
+# Test FreeSWITCH WebRTC
+# Go to the https://domain//webrtc to make a call. 
+# OR: https://www.doubango.org/sipml5/call.htm?svn=252
+# Expert mode:
+# WebSocket Server URL[2]: wss://ip_or_domain:8082
+# ICE Servers[4]:  [{ url: 'stun:server_ip:3478'}, { url:'turn:test@server_ip:3478', credential:'test123'}]
 
