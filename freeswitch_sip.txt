@@ -1,6 +1,6 @@
 # Configure freeswitch for NAT tranversal, including AWS side, STUN and client side.
 # https://github.com/eliassun/WebRTC automatea a part of the process below.
-# For coturn, it will turn on the STUN only. But this log will show to how turn on the TURN at the end. 
+# For coturn, it will turn on the STUN only for FreeSWITCH. But at the end of this log will still show to how turn on the TURN service. 
 
 # Configure SIP for the SIP Register
 # Change demo example default_password. It can get a random pwd by apt-get install uuid-runtime, then run uuidgen to get a unique string
