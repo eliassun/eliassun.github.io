@@ -1,5 +1,6 @@
-#Configure freeswitch for NAT tranversal, including AWS side, STUN and client side.
+# Configure freeswitch for NAT tranversal, including AWS side, STUN and client side.
 # https://github.com/eliassun/WebRTC automatea a part of the process below.
+# For coturn, it will turn on the STUN only. But this log will show to how turn on the TURN at the end. 
 
 # Configure SIP for the SIP Register
 # Change demo example default_password. It can get a random pwd by apt-get install uuid-runtime, then run uuidgen to get a unique string
@@ -74,5 +75,25 @@ show calls - visualize all call legs grouped by complete bridged calls (A+B)
 
 help
 
+# Optional, turn on the coturn TURN
+sudo vim /etc/turnserver.conf
+# begin
+realm= <DOMAIN> or IP
+server-name= ip-172-17-1-100 
+external-ip=IP_ADDRESS
+min-port=16383
+max-port=32769
+fingerprint
+verbose
+user=test:test123
+lt-cred-mech
+# end
+
+sudo systemctl restart coturn
+sudo systemctl status coturn
+# Check the setting on https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/
+# The results should show:
+# turn:3.18.171.201:3478?transport=udp	
+# stun:3.18.171.201:3478	
 
 
