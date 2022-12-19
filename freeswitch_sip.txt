@@ -78,9 +78,11 @@ help
 # Optional, turn on the coturn TURN
 sudo vim /etc/turnserver.conf
 # begin
-realm= <DOMAIN> or IP
-server-name= ip-172-17-1-100 
-external-ip=IP_ADDRESS
+listening-ip=0.0.0.0
+external-ip=Public IP Address
+syslog
+realm= domain name or IP(e.g. wwww.my_domain.com)
+server-name= hostname(e.g. ip-172-17-1-100)
 min-port=16383
 max-port=32769
 fingerprint
