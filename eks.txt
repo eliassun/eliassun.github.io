@@ -119,6 +119,15 @@ kubectl exec -it nodeapp bash
 # Expose by lb
 kubectl patch svc nodeapp -p '{"spec": {"type":"LoadBalancer"}}'
 
+(base) Elias-Home-Mac:kubectl eliassun$ kubectl get svc nodeapp
+#begin
+NAME      TYPE           CLUSTER-IP       EXTERNAL-IP                                                               PORT(S)          AGE
+nodeapp   LoadBalancer   172.20.165.172   a5312a38ef1fe4899b93562203e6e2e1-1840692725.us-east-2.elb.amazonaws.com   8080:30296/TCP   36m
+#end
+# visit http://a5312a38ef1fe4899b93562203e6e2e1-1840692725.us-east-2.elb.amazonaws.com:8080
+
+
+
 #end
 
 
