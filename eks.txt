@@ -18,6 +18,11 @@ ip-10-11-2-40.us-east-2.compute.internal    Ready    <none>   71m   v1.24.7-eks-
 #end
 8. Deploy a service 
 # Read https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+# Sample: https://github.com/javahometech/kubernetes/tree/master/pods
+
+
+# Another Sample
+#Begin
 # create a sample to deploy
 vim myservice.yml
 #begin
@@ -95,4 +100,5 @@ webapp-765f9bc79b-mw97v   0/1     ImagePullBackOff   0          2m17s
 
 kubectl describe pods/webapp-765f9bc79b-h78rz
 
+#end
 
