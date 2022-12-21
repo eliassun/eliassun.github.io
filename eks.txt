@@ -4,5 +4,70 @@
 3. Create EKS https://us-east-2.console.aws.amazon.com/eks/home
 4. Create a IAM role for node group: EC2-->permission:AmazonEKS_CNI_Policy AmazonEKSWorkerNodePolicy AmazonEC2ContainerRegistryFullAccess
 5. Create a user to login AWS CLI
-
+6. Install kubectl to the laptop, e.g. MacOS
+curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.23.6/bin/darwin/amd64/kubectl
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
+7. Check the running nodes from CLI
 aws eks --region us-east-2 update-kubeconfig --name eliaseks
+kubectl get nodes or kubectl get nodes --watch
+# result sample begin
+NAME                                        STATUS   ROLES    AGE   VERSION
+ip-10-11-1-192.us-east-2.compute.internal   Ready    <none>   71m   v1.24.7-eks-fb459a0
+ip-10-11-2-40.us-east-2.compute.internal    Ready    <none>   71m   v1.24.7-eks-fb459a0
+#end
+8. Deploy a service 
+# Read https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+# create a sample to deploy
+vim myservice.yml
+#begin
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: webapp
+  name: webapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: webapp
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - image: public.ecr.aws/b5c5s7l4/adityaprakash2811/nodek8:latest
+        name: webapp
+        imagePullPolicy: Always
+        resources: {}
+        ports:
+          - containerPort: 3080 
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp
+  labels:
+    run: webapp
+spec:
+  ports:
+  - port: 3080
+    protocol: TCP
+  selector:
+    app: webapp
+  type: NodePort
+#end
+
+kubectl create -f myservice.yml 
+#begin
+deployment.apps/webapp created
+service/webapp created
+#end
