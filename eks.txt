@@ -105,5 +105,15 @@ webapp-765f9bc79b-mw97v   0/1     ImagePullBackOff   0          2m17s
 
 kubectl describe pods/webapp-765f9bc79b-h78rz
 
+kubectl get nodes -o wide |  awk {'print $1" " $2 " " $7'} | column -t
+#begin
+NAME                                       STATUS  EXTERNAL-IP
+ip-10-11-1-241.us-east-2.compute.internal  Ready   18.118.199.209
+ip-10-11-2-100.us-east-2.compute.internal  Ready   3.15.235.163
+(base) Elias-Home-Mac:kubectl eliassun$ 
 #end
+
+#end
+
+
 
