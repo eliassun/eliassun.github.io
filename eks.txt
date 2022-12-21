@@ -1,1 +1,8 @@
 
+1. Create a IAM role: https://docs.aws.amazon.com/eks/latest/userguide/service_IAM_role.html#create-service-role
+2. Create two subnet in different AZ
+3. Create EKS https://us-east-2.console.aws.amazon.com/eks/home
+4. Create a IAM role for node group: EC2-->permission:AmazonEKS_CNI_Policy AmazonEKSWorkerNodePolicy AmazonEC2ContainerRegistryFullAccess
+5. Create a user to login AWS CLI
+
+aws eks --region us-east-2 update-kubeconfig --name eliaseks
