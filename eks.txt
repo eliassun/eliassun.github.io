@@ -116,6 +116,9 @@ ip-10-11-2-100.us-east-2.compute.internal  Ready   3.15.235.163
 kubectl exec -it nodeapp bash
 # Run wget 172.20.112.52:8080, which will get the page
 
+# Expose by lb
+kubectl patch svc nodeapp -p '{"spec": {"type":"LoadBalancer"}}'
+
 #end
 
 
