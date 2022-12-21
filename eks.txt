@@ -74,9 +74,11 @@ service/webapp created
 
 #check
 kubectl get svc
+#begin
 NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 kubernetes   ClusterIP   172.20.0.1      <none>        443/TCP          166m
 webapp       NodePort    172.20.112.52   <none>        3080:32236/TCP   54s
+#end
 
 kubectl get deploy
 # begin
@@ -85,7 +87,12 @@ webapp   0/2     2            0           106s
 #end
 
 kubectl get pods
+#begin
 NAME                      READY   STATUS             RESTARTS   AGE
 webapp-765f9bc79b-h78rz   0/1     ImagePullBackOff   0          2m17s
 webapp-765f9bc79b-mw97v   0/1     ImagePullBackOff   0          2m17s
+#end
+
+kubectl describe pods/webapp-765f9bc79b-h78rz
+
 
