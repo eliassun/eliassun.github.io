@@ -11,6 +11,10 @@ chmod +x ./kubectl
 sudo mv ./kubectl /usr/local/bin/kubectl
 8. Check the running nodes from CLI
 aws eks --region us-east-2 update-kubeconfig --name eliaseks
+#begin
+Added new context arn:aws:eks:us-east-2:085825898815:cluster/ekscluster to /Users/eliassun/.kube/config
+#end
+
 kubectl get nodes or kubectl get nodes --watch
 # result sample begin
 NAME                                        STATUS   ROLES    AGE   VERSION
