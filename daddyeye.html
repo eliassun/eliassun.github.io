@@ -3,19 +3,24 @@
 <body>
 
 <h1>DaddyEye</h1>
-<p>DaddyEye is a peer to peer screenshot capture command line software.</p>
+<p>DaddyEye is a peer to peer screenshot capture command line software. NO Server Storage. DIFFERENT ID for every new connection. </p>
 <p>It has two modes: dad and sweet.</p>
 <h2> Run on dad mode </h2> 
 <p> ./picap </p>
+<p> It will print a dad id as soon as it starts.</p>
 <h2> Run on sweet mode </h2> 
 <p> ./picap -o sweet </p>
 <p> ./picap -o sweet -i dad_id </p>
+<p> They will print a sweet id as soon as they start.</p>
+<p> The first command line will allow any dad to capture the screen if he knows the sweet's id. </p>
+<p> The 2nd command line will only allow one dad with the exact id to to capure the sweet's screen. So, the dad end needs to run first. </p>
   
 <h2> Usage for dad mode </h2>
 <p>
   1. After the "./picap" runs, then it will print "Enter sweet id:". Check the sweet mode screen.
   If the sweet screen shows "Sweet Mode. https://eliassun.github.io/daddyeye.html for more information.",
-  then it means it is ready to capture the screenshot for dad. Now, find something like </p>
+  then it means it is ready to capture the screenshot for dad. <b>Important: Make sure the sweet is ready 
+  before inputting the sweet id on the dad's screen.</b> Now, find something like </p>
 <p> *********** sweet ID *********** </p>
 <p> 76mzSKTY </p>
 <p> Please copy sweet ID to dad!!! </p>
@@ -33,4 +38,18 @@
 <p> Input getscreen on the dad screen, then press "Enter" key, then it will "Decoded a screen", which means it has a screenshot captured. </p>
 <p> Input open on the dad screen, then press "Enter" key. This will open the screenshot captured.</p>
 </body>
+<h2> Usage for sweet mode </h2>
+<p> ./picap -o sweet </p>
+<p> It will print a sweet id as soon as it starts. This will capture the screenshot if any dad knows this id. </p>
+<p> ./picap -o sweet -i dad_id </p>
+<p> This will capture the screenshot when only dad with the dad_id. </p>
+<p> e.g. the dad's screen shows </p>
+<p>*********** dad ID ***********</p>
+<p>ciDoZ2cT</p>
+<p>On the sweet's screen, run ./piap -o sweet -i dad_id_above .</p>
+<p>Then it will only accept the command from this dad. Or it will accept a command from any dad.</p>
+<p>*********************************</p>
+<p>./picap -o sweet -i ciDoZ2cT</p>
+<p>Only dad with ID ciDoZ2cT can capture the screen from the sweet. 
+  So, dad must run ./picap first before running ./picap -o sweet -i ciDoZ2cT on the sweet's laptop</p>
 </html>
