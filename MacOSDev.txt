@@ -20,9 +20,12 @@ extern "C" void updateMainThread(uint64_t code, uint8_t *info, uint64_t size);
 
 
 4. Swift call C
-* Swift --> Objective-C --> C
+* Swift --> brdige -- > Objective-C --> C/C++
 e.g. 
 Swift  : DadEye().getscreen()
+
+* Bridge : dadeye-Bridging-Header.h
+#import "dadeyewrapper.h"
 
 * Objective-C : "dadeyewrapper.h"
 #import <Foundation/Foundation.h>
