@@ -54,6 +54,8 @@ void DadEyeWrapper::getscreen(const char* path) {}
 
 5. Update UI outside View
 
+Key: If possible, update all UI elements at one time, and try to avoid the often update.
+
 View components(Text, Button) -->  ViewModel : ObservableObject ----> func outside of view
 e.g.
 * View
