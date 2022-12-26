@@ -85,5 +85,9 @@ e.g.
 
 DadEyeViewModel.shared.updateInfo(for : "info") 
 
+# Some discussion about the sandbox permission:
+https://walkginkgo.com/ffmpeg/2018/07/15/MAS-sanbox.html
+
+
 
 
