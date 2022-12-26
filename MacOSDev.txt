@@ -3,7 +3,7 @@
 com.apple.security.files.downloads.read-write  :  store the file downloaded from Internet, not for the local writing
 com.apple.security.assets.pictures.read-write  :  write the image from the local
 
-2. dylib
+2. Link dylib
 * Build Phase : Link binary with lib, then General --> Framework, lib : Embeded and Sign
 
 3. C call Swift
@@ -52,9 +52,36 @@ public:
 * C/C++ main.cpp
 void DadEyeWrapper::getscreen(const char* path) {}
 
+5. Update UI outside View
 
+View components(Text, Button) -->  ViewModel : ObservableObject ----> func outside of view
+e.g.
+* View
+    @StateObject
+    private var deVM: DadEyeViewModel = .shared
+    var body: some View {
+            HStack{
+                Text(deVM.myID.description).frame(maxWidth: .infinity, alignment: .leading)
+            }
+    }
+ 
+ * ViewMode
+ 
+ final class DadEyeViewModel: ObservableObject {
+    static let shared: DadEyeViewModel = .init()
+    @Published
+    private (set) var myID: String = "xxxx"
+    @Published
+    func updateInfo(for value: String) {
+        Task { @MainActor in
+            myID = value
+        }
+    }
+ }
 
+* func outside of view
 
+DadEyeViewModel.shared.updateInfo(for : "info") 
 
 
 
