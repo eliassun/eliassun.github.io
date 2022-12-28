@@ -1,5 +1,5 @@
 1. sudo apt install strongswan-swanctl and Read the mapping https://wiki.strongswan.org/projects/strongswan/wiki/Fromipsecconf
-2. Equal settings:
+2. Equal settings for site-to-site:
 #ipsec.conf
 config setup
         charondebug="all"
