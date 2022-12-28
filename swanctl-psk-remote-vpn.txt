@@ -1,0 +1,67 @@
+sudo apt-get update
+sudo apt-get -y upgrade
+sudo apt install strongswan strongswan-swanctl
+sudo apt-get -y install strongswan strongswan-swanctl strongswan-pki libcharon-extra-plugins libcharon-extauth-plugins libstrongswan-extra-plugins libtss2-tcti-tabrmd0 net-tools 
+sudo systemctl start strongswan-starter.service
+sudo vim /etc/swanctl/swanctl.conf 
+# text begin
+connections {
+    remotevpn {
+        # IKEv2
+        version = 2
+        encap = yes
+        dpd_delay = 60s
+        local_addrs  = %any
+        remote_addrs = %any
+        pools = rw_pool
+        local {
+            auth = psk
+            id = 3.12.55.41
+        }
+        remote {
+            auth = psk
+        }
+        children {
+            red-to-blue {
+                local_ts = 172.16.0.0/16
+                esp_proposals = aes128-sha1-modp1024,aes128-sha1-modp1536,aes128-sha1-modp2048,aes128-sha256-ecp256,aes128-sha256-modp1024,aes128-sha256-modp1536,aes128-sha256-modp2048,aes256-aes128-sha256-sha1-modp2048-modp4096-modp1024,aes256-sha1-modp1024,aes256-sha256-modp1024,aes256-sha256-modp1536,aes256-sha256-modp2048,aes256-sha256-modp4096,aes256-sha384-ecp384,aes256-sha384-modp1024,aes256-sha384-modp1536,aes256-sha384-modp2048,aes256-sha384-modp4096,aes256gcm16-aes256gcm12-aes128gcm16-aes128gcm12-sha256-sha1-modp2048-modp4096-modp1024,3des-sha1-modp1024,default
+                mode = tunnel
+                dpd_action = clear
+            }
+        }
+        proposals = aes128-sha1-modp1024,aes128-sha1-modp1536,aes128-sha1-modp2048,aes128-sha256-ecp256,aes128-sha256-modp1024,aes128-sha256-modp1536,aes128-sha256-modp2048,aes256-aes128-sha256-sha1-modp2048-modp4096-modp1024,aes256-sha1-modp1024,aes256-sha256-modp1024,aes256-sha256-modp1536,aes256-sha256-modp2048,aes256-sha256-modp4096,aes256-sha384-ecp384,aes256-sha384-modp1024,aes256-sha384-modp1536,aes256-sha384-modp2048,aes256-sha384-modp4096,aes256gcm16-aes256gcm12-aes128gcm16-aes128gcm12-sha256-sha1-modp2048-modp4096-modp1024,3des-sha1-modp1024,default
+    }
+}
+
+secrets {
+    ike-elias {
+        id = elias
+        secret = "test123"
+    }
+}
+
+
+pools {
+  rw_pool {
+    dns = 8.8.8.8
+    addrs = 10.9.8.0/24
+  }
+}
+
+# Include config snippets
+include conf.d/*.conf
+# text end
+
+# /etc/strongswan.conf
+
+charon {
+	load_modular = yes
+	plugins {
+		include strongswan.d/charon/*.conf
+	}
+	start-scripts {
+            creds = /usr/sbin/swanctl --load-creds
+            conns = /usr/sbin/swanctl --load-conns
+        }
+}
+
