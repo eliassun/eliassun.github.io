@@ -68,6 +68,7 @@ openssl pkcs12 -export -out $USERNAME.p12 -inkey /etc/ipsec.d/private/$USERNAME.
 
 
 #MacOS
+#****** Auth by cert ********
 #Import strongswancert.pem to MacOS, always trust
 #Import $USERNAME.p12 (e.g. elias.p12) 
 #From GUI, Network-->VPN-->Add-->IKEv2:
@@ -122,6 +123,27 @@ conn remotevpn
 #ipsec.secrets example:
 
 : RSA vpn_server_key.der
+
+# *** Auth by PSK ******
+#/etc/ipsec.conf 
+conn remotevpn
+    keyexchange=ikev2
+    ike=aes128-sha1-modp1024,aes128-sha1-modp1536,aes128-sha1-modp2048,aes128-sha256-ecp256,aes128-sha256-modp1024,aes128-sha256-modp1536,aes128-sha256-modp2048,aes256-aes128-sha256-sha1-modp2048-modp4096-modp1024,aes256-sha1-modp1024,aes256-sha256-modp1024,aes256-sha256-modp1536,aes256-sha256-modp2048,aes256-sha256-modp4096,aes256-sha384-ecp384,aes256-sha384-modp1024,aes256-sha384-modp1536,aes256-sha384-modp2048,aes256-sha384-modp4096,aes256gcm16-aes256gcm12-aes128gcm16-aes128gcm12-sha256-sha1-modp2048-modp4096-modp1024,3des-sha1-modp1024!
+    esp=aes128-aes256-sha1-sha256-modp2048-modp4096-modp1024,aes128-sha1,aes128-sha1-modp1024,aes128-sha1-modp1536,aes128-sha1-modp2048,aes128-sha256,aes128-sha256-ecp256,aes128-sha256-modp1024,aes128-sha256-modp1536,aes128-sha256-modp2048,aes128gcm12-aes128gcm16-aes256gcm12-aes256gcm16-modp2048-modp4096-modp1024,aes128gcm16,aes128gcm16-ecp256,aes256-sha1,aes256-sha256,aes256-sha256-modp1024,aes256-sha256-modp1536,aes256-sha256-modp2048,aes256-sha256-modp4096,aes256-sha384,aes256-sha384-ecp384,aes256-sha384-modp1024,aes256-sha384-modp1536,aes256-sha384-modp2048,aes256-sha384-modp4096,aes256gcm16,aes256gcm16-ecp384,3des-sha1!
+    dpdaction=clear
+    dpddelay=60s
+    authby=secret
+    left=%any
+    leftid=18.118.245.28
+    leftsubnet=172.16.0.0/16
+    right=%any
+    rightsourceip=10.10.3.0/24
+    rightdns=8.8.8.8
+    auto=add
+  
+#/etc/ipsec.secrets 
+elias : PSK "test123"
+
 
 Refer:
 https://blog.csdn.net/nerdsu/article/details/117522440
