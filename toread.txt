@@ -2,3 +2,4 @@
 #IPSec VPN Client: https://github.com/halo/macosvpn
 #EKS https://www.eksworkshop.com/beginner/130_exposing-service/
 #strongSwan Docker https://github.com/strongX509/docker/tree/master/strongswan
+#https://www.iicoom.shop/posts/11
