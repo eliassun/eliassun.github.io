@@ -1,0 +1,105 @@
+1. sudo apt install strongswan-swanctl and Read the mapping https://wiki.strongswan.org/projects/strongswan/wiki/Fromipsecconf
+2. Equal settings:
+#ipsec.conf
+config setup
+        charondebug="all"
+        strictcrlpolicy=no
+        uniqueids=yes
+        cachecrls=no
+
+conn red-to-blue
+        authby=secret
+        auto=route
+        keyexchange=ikev2
+        ike=aes256-sha256-modp1024!
+        left=%any
+	leftid=18.118.245.28
+	leftsubnet=172.16.0.0/16
+        right=18.224.233.144
+        rightid=18.224.233.144
+	rightsubnet=10.10.0.0/16
+        type=tunnel
+        esp=aes256-sha256-modp1024!
+        forceencaps=yes
+        
+        
+ #ipsec.secrects
+ 
+10.10.1.100 : PSK "test123"
+18.224.233.144 : PSK "test123"
+18.118.245.28 : PSK "test123"
+172.16.1.100 : PSK "test123"
+
+# /etc/swanctl/swanctl.conf
+connections {
+    red-to-blue {
+        # IKEv2
+        version = 2
+        proposals = aes256-sha256-modp1024,default
+        rekey_time = 0s
+        fragmentation = yes
+        encap = yes
+        dpd_delay = 30s
+        dpd_timeout = 90s
+        local_addrs  = %any
+        local {
+            auth = psk
+            id = 18.118.245.28
+        }
+        remote {
+            auth = psk
+            id = 18.224.233.144
+        }
+        children {
+            red-to-blue {
+                local_ts = 172.16.0.0/16
+                esp_proposals = aes256-sha256-modp1024,default
+                mode = tunnel
+                rekey_time = 0s
+                dpd_action = restart
+            }
+        }
+    }
+}
+
+secrets {
+    ike-10-10-1-100 {
+        id = 10.10.1.100
+        secret = "test123"
+    }
+    ike-18-224-233-144 {
+        id = 18.224.233.144
+        secret = "test123"
+    }
+    ike-18-118-245-28 {
+        id = 18.118.245.28
+        secret = "test123"
+    }
+    ike-172-16-1-100 {
+        id = 172.16.1.100
+        secret = "test123"
+    }
+}
+
+# Include config snippets
+include conf.d/*.conf
+
+# /etc/strongswan.conf
+
+charon {
+	load_modular = yes
+	plugins {
+		include strongswan.d/charon/*.conf
+	}
+	start-scripts {
+            creds = /usr/sbin/swanctl --load-creds
+            conns = /usr/sbin/swanctl --load-conns
+        }
+}
+
+include strongswan.d/*.conf
+
+3. sudo service ipsec stop
+4. sudo swanctl --load-all ; sudo service strongswan-starter restart (or sudo service strongswan-starter start)
+5. sudo swanctl --initiate  --child  red-to-blue (equal to sudo ipsec up red-to-blue)
+
