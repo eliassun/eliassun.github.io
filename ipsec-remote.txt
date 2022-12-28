@@ -143,6 +143,8 @@ conn remotevpn
   
 #/etc/ipsec.secrets 
 elias : PSK "test123"
+user2 : PSK "test123"
+include /etc/ipsec.d/secrets/*
 
 On Mac: https://eliassun.github.io/ipsec-psk.png
 
