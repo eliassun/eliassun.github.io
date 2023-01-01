@@ -145,6 +145,6 @@ conn remotevpn
 elias : PSK "test123"
 user2 : PSK "test123"
 include /etc/ipsec.d/secrets/*
-
-Configure MacOS client: https://eliassun.github.io/ipsec-psk.png
+# sudo ipsec secrets to reload the secrects without interrupting the existing vpn connection.
+#cConfigure MacOS client: https://eliassun.github.io/ipsec-psk.png
 
