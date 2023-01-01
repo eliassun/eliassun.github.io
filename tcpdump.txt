@@ -1,0 +1,2 @@
+#1. proto and port
+tcpdump -i enp1s0 udp and port 50
