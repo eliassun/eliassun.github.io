@@ -45,7 +45,8 @@ chmod +x vars
 ./easyrsa init-pki
 
 #*****#
-./easyrsa build-ca nopass
+./easyrsa build-ca 
+# OR ./easyrsa build-ca nopass
 
 #*****#
 ./easyrsa gen-req ec2-x-x-x-x.us-west-1.compute.amazonaws.com nopass
@@ -165,7 +166,7 @@ systemctl status openvpn-server@server.service
 #*****#
 sudo systemctl enable openvpn-server@server
 
-Created symlink /etc/systemd/system/multi-user.target.wants/openvpn-server@server.service → /lib/systemd/system/openvpn-server@.service.
+# Created symlink /etc/systemd/system/multi-user.target.wants/openvpn-server@server.service → /lib/systemd/system/openvpn-server@.service.
 
 #*****#
 cd ~
