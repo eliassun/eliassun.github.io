@@ -41,6 +41,7 @@ ping -I gre1 10.10.1.100
 The virtual interface can be used to implement routing features. It has many ways to create it. Here is another example:
 sudo ip link add name app type dummy
 sudo ip addr add 172.16.1.102 dev app
+sudo ip link set app up
 # ping 172.16.1.102 should work
 
 
