@@ -37,5 +37,10 @@ ping -I gre1 10.10.1.100
 
 # If it cannot access any element from the Internet, then check 1) SG 2)route table
 
+# Note:
+The virtual interface can be used to implement routing features. It has many ways to create it. Here is another example:
+sudo ip link add name app type dummy
+sudo ip addr add 172.16.1.102 dev app
+# ping 172.16.1.102 should work
 
 
