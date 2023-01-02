@@ -45,7 +45,7 @@ chmod +x vars
 ./easyrsa init-pki
 
 #*****#
-./easyrsa build-ca
+./easyrsa build-ca nopass
 
 #*****#
 ./easyrsa gen-req ec2-x-x-x-x.us-west-1.compute.amazonaws.com nopass
