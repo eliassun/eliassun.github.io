@@ -30,6 +30,10 @@ sudo apt install python3-pysaml2
 #cd /home/ubuntu/saml/pysaml2/src/saml2
 
 
+python3 -m pip install Flask-Login requests Flask-SQLAlchemy pysaml2
+
+
+
 
  
 
