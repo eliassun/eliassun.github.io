@@ -11,6 +11,7 @@ Optional
 #cd libxml2-2.9.1
 #./configure && make && sudo make install
 
+# Configure App in Okta
 # Get a okta developer account, then get okta url, e.g.
 # https://dev-85323738-admin.okta.com, then fill froms:
 # OKTA-->Dashboard-->Create App Integration-->SAML 2.0 --> App Name: myApp --> Next
@@ -21,6 +22,12 @@ Optional
 # LastName	Unspecified	user.lastName
 # Email	Unspecified	user.email
 # After the form is filled, then the App created has a tab "Sign On", then "SAML Signing Certificates" --> Action--> View Idp Metadata
+
+# Install SAML in the server
+sudo apt install python3-pysaml2
+#Optional
+#git clone https://github.com/IdentityPython/pysaml2.git
+#cd /home/ubuntu/saml/pysaml2/src/saml2
 
 
 
