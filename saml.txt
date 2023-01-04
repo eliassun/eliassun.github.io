@@ -33,8 +33,7 @@ sudo apt install python3-pysaml2
 
 python3 -m pip install Flask-Login requests Flask-SQLAlchemy pysaml2
 
-
-
+# Download the OKTA SAML APP https://github.com/jpf/okta-pysaml2-example
 
  
 
