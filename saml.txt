@@ -7,5 +7,17 @@ Optional
 #wget http://xmlsoft.org/sources/libxml2-2.9.1.tar.gz
 #tar -xvf libxml2-2.9.1.tar.gz
 #cd libxml2-2.9.1
-#./configure && make && make install
+#./configure && make && sudo make install
+
+#Get a okta developer account, then get okta url, e.g.
+https://dev-85323738-admin.okta.com
+
+# OKTA-->Dashboard-->Create App Integration-->SAML 2.0 --> App Name: myApp --> Next
+# Single sign-on URL : https://host_name_or_ip/login/vpn/saml
+# Audience URI (SP Entity ID) : https://host_name_or_ip/
+# Attribute Statements
+# FirstName	Unspecified	user.firstName
+# LastName	Unspecified	user.lastName
+# Email	Unspecified	user.email
+ 
 
