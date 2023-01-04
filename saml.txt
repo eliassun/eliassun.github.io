@@ -1,0 +1,7 @@
+sudo apt-get install libxml2-dev libxmlsec1-dev libxmlsec1-openssl
+pip install xmlsec
+wget http://xmlsoft.org/sources/libxml2-2.9.1.tar.gz
+tar -xvf libxml2-2.9.1.tar.gz
+cd libxml2-2.9.1
+./configure && make && make install
+
