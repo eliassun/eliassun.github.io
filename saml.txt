@@ -22,6 +22,7 @@ Optional
 # LastName	Unspecified	user.lastName
 # Email	Unspecified	user.email
 # After the form is filled, then the App created has a tab "Sign On", then "SAML Signing Certificates" --> Action--> View Idp Metadata
+# e.g. my metadata is https://dev-85323738.okta.com/app/exk7u91tbptIw9j2A5d7/sso/saml/metadata
 
 # Install SAML in the server
 sudo apt install python3-pysaml2
