@@ -1,7 +1,11 @@
 sudo apt-get install libxml2-dev libxmlsec1-dev libxmlsec1-openssl
+apt-get install xmlsec1
 pip install xmlsec
-wget http://xmlsoft.org/sources/libxml2-2.9.1.tar.gz
-tar -xvf libxml2-2.9.1.tar.gz
-cd libxml2-2.9.1
-./configure && make && make install
+python3 -m pip install pysaml2
+ 
+Optional
+#wget http://xmlsoft.org/sources/libxml2-2.9.1.tar.gz
+#tar -xvf libxml2-2.9.1.tar.gz
+#cd libxml2-2.9.1
+#./configure && make && make install
 
