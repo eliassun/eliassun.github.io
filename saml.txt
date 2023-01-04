@@ -9,9 +9,8 @@ Optional
 #cd libxml2-2.9.1
 #./configure && make && sudo make install
 
-#Get a okta developer account, then get okta url, e.g.
-https://dev-85323738-admin.okta.com
-
+# Get a okta developer account, then get okta url, e.g.
+# https://dev-85323738-admin.okta.com, then fill froms:
 # OKTA-->Dashboard-->Create App Integration-->SAML 2.0 --> App Name: myApp --> Next
 # Single sign-on URL : https://host_name_or_ip/login/vpn/saml
 # Audience URI (SP Entity ID) : https://host_name_or_ip/
@@ -19,5 +18,9 @@ https://dev-85323738-admin.okta.com
 # FirstName	Unspecified	user.firstName
 # LastName	Unspecified	user.lastName
 # Email	Unspecified	user.email
+# After the form is filled, then the App created has a tab "Sign On", then "SAML Signing Certificates" --> Action--> View Idp Metadata
+
+
+
  
 
