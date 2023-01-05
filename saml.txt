@@ -1,11 +1,6 @@
-# Install and configure SAML
 
-sudo apt-get install libxml2-dev libxmlsec1-dev libxmlsec1-openssl xmlsec1
-python3 -m pip install pysaml2
-sudo apt install libcairo2-dev pkg-config python3-dev
-pip install pycairo
- 
 # Configure App in Okta
+
 # Get a okta developer account, then get okta url, e.g.
 # https://dev-85323738-admin.okta.com, then fill froms:
 # OKTA-->Dashboard-->Create App Integration-->SAML 2.0 --> App Name: myApp --> Next
@@ -19,7 +14,13 @@ pip install pycairo
 # e.g. my metadata is https://dev-85323738.okta.com/app/exk7u91tbptIw9j2A5d7/sso/saml/metadata
 
 # Install SAML in the server
+
+sudo apt-get install libxml2-dev libxmlsec1-dev libxmlsec1-openssl xmlsec1
 sudo apt install python3-pysaml2
+python3 -m pip install pysaml2
+sudo apt install libcairo2-dev pkg-config python3-dev
+pip install pycairo
+
 # Download the OKTA SAML APP https://github.com/jpf/okta-pysaml2-example
 # Follow the instrucion, it can launch the saml. The App based on Python3 needs to do some bug fixes as the okta sample is based python2. 
 # The key of the sample App is the login entry is @app.route("/saml/login/<idp_name>"), and the okta call back entry is @app.route("/saml/sso/<idp_name>", methods=['POST'])
