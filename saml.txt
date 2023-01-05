@@ -21,6 +21,8 @@ sudo apt install python3-pysaml2
 # Download the OKTA SAML APP https://github.com/jpf/okta-pysaml2-example
 # Follow the instrucion, it can launch the saml. The App based on Python3 needs to do some bug fixes as the okta sample is based python2. 
 # The key of the sample App is the login entry is @app.route("/saml/login/<idp_name>"), and the okta call back entry is @app.route("/saml/sso/<idp_name>", methods=['POST'])
+# The metadata should use the sha2
+
 
 
  
