@@ -1,0 +1,12 @@
+# OpenVPN server can use any plugin to do the authentication. One basic authentication is username and password.
+script-security 2
+auth-user-pass-verify yourscript(shell or python or ...) via-file
+username-as-common-name
+
+# This will make openvpn use yourscript to verify the username and passowrd by a file
+# As a result, the script will take $0 as itself, then $1 as the username and password file to verify, 
+# which 1st line is the username and 2nd line is the passowrd.
+# username-as-common-name to ask the use openvpn to use the username inputed instead of the cert's cn to verify the user.
+
+# On the client side, one line will work
+auth-user-pass
