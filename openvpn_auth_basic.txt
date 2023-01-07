@@ -10,3 +10,5 @@ username-as-common-name
 
 # On the client side, one line will work
 auth-user-pass
+
+# Here is one document for more information https://community.openvpn.net/openvpn/ticket/747
