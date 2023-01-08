@@ -20,6 +20,7 @@ sudo apt install python3-pysaml2
 python3 -m pip install pysaml2
 sudo apt install libcairo2-dev pkg-config python3-dev
 pip install pycairo
+python3 -m pip install xmlsec
 
 # Download the OKTA SAML APP https://github.com/jpf/okta-pysaml2-example
 # Follow the instrucion, it can launch the saml. The App based on Python3 needs to do some bug fixes as the okta sample is based python2. 
