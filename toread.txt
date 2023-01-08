@@ -3,6 +3,17 @@
 #IPSec VPN Client: https://github.com/halo/macosvpn
 #strongSwan Docker https://github.com/strongX509/docker/tree/master/strongswan
 #IPSec Docker: https://www.iicoom.shop/posts/11
+# MacOS/iOS clients: https://kean.blog/post/vpn-configuration-manager
+# https://github.com/AndreVasilev/AVVPNService/blob/master/Sources/AVVPNService/AVVPNService.swift
+# https://juejin.cn/post/6844903624200421390
+# https://kean.blog/post/vpn-configuration-manager
+# https://github.com/kean/VPN/tree/master/vpn-client
+
+# Switch Python version https://www.itsupportwale.com/blog/how-to-upgrade-to-python-3-10-on-ubuntu-18-04-and-20-04-lts/
+
+# Security MACsec https://www.juniper.net/documentation/us/en/software/junos/security-services/topics/topic-map/understanding_media_access_control_security_qfx_ex.html
+
+
 - Done
 https://blog.csdn.net/nerdsu/article/details/117522440
 https://gist.github.com/karlvr/34f46e1723a2118bb16190c22dbed1cc
