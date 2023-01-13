@@ -5,6 +5,11 @@ To start mongodb/brew/mongodb-community now and restart at login:
 Or, if you don't want/need a background service you can just run:
   mongod --config /usr/local/etc/mongod.conf
   mongod --config /usr/local/etc/mongod.conf --fork
-
+ 
+3. Install memcached https://haithai91.medium.com/how-to-setup-memcached-for-local-development-aabdaa5f4f1d
+4.
+brew services start memcached
+brew services restart memcached
+brew services stop memcached
 
   
