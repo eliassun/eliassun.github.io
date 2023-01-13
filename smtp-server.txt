@@ -1,0 +1,15 @@
+sudo apt install mailutils -y
+sudo dpkg-reconfigure postfix
+sudo nano /etc/postfix/main.cf
+# text begin
+mailbox_size_limit = 0
+recipient_delimiter = +
+inet_interfaces = loopback-only # or all
+mydestination = localhost.$mydomain, localhost, $myhostname
+masquerade_domains = your_main_domain
+#text end
+sudo systemctl restart postfix
+
+# Test
+echo "This is the body of the email" | mail -s "This is the subject line" your_email_address
+
