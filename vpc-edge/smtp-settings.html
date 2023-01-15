@@ -6,6 +6,7 @@
 <p>The SMTP server will be used to send out e-mail. 
   For example, send one-time temporary password to one e-mail address if the IT admin forgets his web login password.
 </p>
+<p>If this page is not set, then it will a local SMTP server. </p> 
 <p>
   <b>Server: </b> SMTP server URL or IP address, e.g. smtp.gmail.com or the company's SMTP URL
 </p>
@@ -24,6 +25,9 @@
 <p>  
   <b>Enable SSL: </b> SSL connection to transmit the e-mail, e.g. If it enables for Gmail, then the Port will use 465. 
 </p>
-  
+<p> <b> Only one of TLS or SSL can be enabled.</b> If both are enabled, then the default will use TLS. 
+  If both options are off, then it uses the plain connection. </p>
+<p> Here is one setting example for Gmail: </p>
+<img src = 'smtp-server.png'> </img>
 </body>
 </html>
