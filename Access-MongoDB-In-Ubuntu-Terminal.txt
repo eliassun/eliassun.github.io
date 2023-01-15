@@ -39,3 +39,6 @@ xlb a dictionary ，xlb_protocol is a value in that dictionary
 
 db.getCollection('my-colletion-0c275324e2ef47460').update({ _id: ObjectId("5eb4459d9328435f5bd9a497") }, { $set: { "xlb.xlb_protocol": "UDP" } })
 
+7. delete a record from a collection
+db.getCollection('my-collection').remove({'_id', ObjectId("63c2ee924aafb0373f6c13fa")})
+
