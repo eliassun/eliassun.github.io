@@ -1,3 +1,13 @@
+# Optional: Gmail SMTP
+# 1. Go to gmail to turn on 2 step verifiation:  https://myaccount.google.com --> "security" --> "2 step verification"--> On
+# 2. Turn on the "App Passwords": https://myaccount.google.com --> "security" --> "App Passwords" --> Add App Name to generate an App Password
+
+
+
+
+
+# Optional: Set up Local SMTP server
+
 sudo apt install mailutils -y
 sudo dpkg-reconfigure postfix
 sudo nano /etc/postfix/main.cf
