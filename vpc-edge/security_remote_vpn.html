@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Security Awareness of the Remote VPN in VPC Edge Server</h1>
+<p> The VPC Edge Access Point V1.0.0 has the several ways to implement Remote User VPN, including the OpenVPN, IPsec and SAML.
+</p>
+<p> <b>VPN Settings Saved in Server: </b> </p>
+<table>
+  <tr>
+    <th>Security</th> <th>IPSec</th>  <th>OpenVPN</th> <th>SAML IPSec</th> <th>SAML OpenVPN</th>
+  </tr>
+  <tr>
+    <td>Token(Password)</td> <td>Plain</td> <td>Hash</td> <td>Plain</td> <td>Hash</td>  
+  </tr>
+  <tr>
+    <td>Token Expired</td> <td>never</td> <td>never</td> <td>1 hour</td> <td>1 hour</td>  
+  </tr>
+  <tr>
+    <td>Token Changed</td> <td>Change Password</td> <td>Change Password</td> <td> Login into SAML IDP(e.g. Okta)</td> <td>Login into SAML IDP(e.g. Okta</td>  
+  </tr>
+</table>
+
+</body>
+</html>
