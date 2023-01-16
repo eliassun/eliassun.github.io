@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Security Awareness of the Web Login</h1>
+<p> The VPC Edge Access Point V1.0.0 has the Web Login to administrate the server, and it has the SMTP server settings to send the e-mail.
+</p>
+<p> <b>Important: </b> </p>
+<p> <b>1. Please change the default password of the web portal after the 1st time login. The first time default password is admin123 . </b></p>
+<p> <b>2. Please set the "Email for Forgot Password" to find the password back if the password is forgotten. </b></p>
+<p> Please set "SMTP to Send Email" to a well known SMTP server(e.g. your comapny email server), or the email sent out may go the spam folder of email.</p>
+<p>
+The password of the Web Login is hashed before it is saved into the server database. 
+  That means the server doesn't store the plain text of the Web portal password.
+</p>
+<p>
+The password to login the SMTP server is encrypted before it is saved into the server database. The keys to encrypt password are different in 
+  different servers.
+  That means the VPC Edge server doesn't have the plain text password of the SMTP password in the database. However, if someone finds the key in the server, 
+  and knows how to encrypt and decrypt the password, then the password can be turned into the plain text.
+</p>
+  
+</body>
+</html>
