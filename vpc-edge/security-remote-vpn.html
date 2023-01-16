@@ -16,11 +16,16 @@
   <tr>
     <td>Token Expired</td> <td>never</td> <td>never</td> <td>1 hour</td> <td>1 hour</td>  
   </tr>
-  <tr>
-    <td>Token Changed</td> <td>Change Password</td> <td>Change Password</td> <td> Login into SAML IDP(e.g. Okta)</td> <td>Login into SAML IDP(e.g. Okta</td>  
-  </tr>
 </table>
-
+<p>
+  The way to change the token or password of the remote VPN:
+</p>
+<p>
+  <b>IPSec or OpenVPN: </b> Change the password from the web site UI.
+<p>
+<p>
+  <b>SAML: </b> click the "Generate" to generate a new token. Any token will expire in 1 hour.
+<p>  
 <p> <b> A VPN connection is still alive </b> even if the SAML token is expired, until the endpoint user ends the existing connection, 
   then the next connection will use the new token.
 </p>
