@@ -1,1 +1,37 @@
 
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Add SMTP Server to Send Email</h1>
+<p>The SMTP server will be used to send e-mail. 
+  For example, send one-time temporary password to one e-mail address if the IT admin forgets his web login password.
+</p>
+<p>If this page is not set, then it will be a local SMTP server by default. </p> 
+<p>
+  <b>Server: </b> SMTP server URL or IP address, e.g. smtp.gmail.com or the company's SMTP URL
+</p>
+<p>  
+  <b>Port: </b> By default, 22 is for plain connection, 587 for TLS, 465 for SSL
+</p>
+<p>  
+  <b>Email: </b> The sender e-mail, which will be seen in one e-mail as the "From".
+</p>  
+<p>  
+  <b>Password: </b> Normally, it is the password that login the e-mail account. But Gmail needs to create the App password for it.
+</p>
+<p>  
+  <b>Enable TLS: </b> TLS connection to transmit the e-mail. e.g. If it enables for Gmail, then the Port will use 587.
+</p>  
+<p>  
+  <b>Enable SSL: </b> SSL connection to transmit the e-mail, e.g. If it enables for Gmail, then the Port will use 465. 
+</p>
+<p> <b> Only one of TLS or SSL can be enabled.</b> If both are enabled, then the default will use TLS. 
+  If both options are off, then it uses the plain connection. </p>
+<p> Here is one setting example for Gmail: </p>
+<p>1. Go to gmail to turn on 2 step verifiation:  https://myaccount.google.com --> "security" --> "2 step verification"--> On </p>
+<p>2. Turn on the "App Passwords": https://myaccount.google.com --> "security" --> "App Passwords" --> Add App Name to generate an App Password </p>
+<p>3. Configure VPC Edge: </p>
+<img src = 'smtp-server.png'> </img>
+</body>
+</html>
