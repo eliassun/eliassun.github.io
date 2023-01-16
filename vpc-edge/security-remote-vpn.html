@@ -3,7 +3,7 @@
 <body>
 
 <h1>Security Awareness of the Remote VPN in VPC Edge Server</h1>
-<p> The VPC Edge Access Point V1.0.0 has the several ways to implement Remote User VPN, including the OpenVPN, IPsec and SAML.
+<p> The VPC Edge Access Point V1.0.0 has several ways to implement Remote User VPN, including the OpenVPN, IPsec and SAML.
 </p>
 <p> <b>VPN Settings Saved in Server: </b> </p>
 <table>
@@ -14,7 +14,7 @@
     <td>Token(Password)</td> <td>Plain</td> <td>Hash</td> <td>Plain</td> <td>Hash</td>  
   </tr>
   <tr>
-    <td>Token Expired</td> <td>never</td> <td>never</td> <td>1 hour</td> <td>1 hour</td>  
+    <td>Token Expired</td> <td>Never</td> <td>Never</td> <td>1 hour</td> <td>1 hour</td>  
   </tr>
 </table>
 <p>
@@ -24,7 +24,7 @@
   <b>IPSec or OpenVPN: </b> Change the password from the web site UI.
 <p>
 <p>
-  <b>SAML: </b> click the "Generate" to generate a new token. Any token will expire in 1 hour.
+  <b>SAML: </b> Click the "Generate" button to generate a new token. Any token will expire in 1 hour.
 <p>  
 <p> <b> A VPN connection is still alive </b> even if the SAML token is expired, until the endpoint user ends the existing connection, 
   then the next connection will use the new token.
