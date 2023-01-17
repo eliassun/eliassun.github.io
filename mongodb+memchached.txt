@@ -14,4 +14,9 @@ brew services start memcached
 brew services restart memcached
 brew services stop memcached
 
+
+
+# Python
+sudo python3 -m pip install  pymongo
+
   
