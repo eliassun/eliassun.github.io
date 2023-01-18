@@ -42,3 +42,15 @@ db.getCollection('my-colletion-0c275324e2ef47460').update({ _id: ObjectId("5eb44
 7. delete a record from a collection
 db.getCollection('my-collection').remove({'_id', ObjectId("63c2ee924aafb0373f6c13fa")})
 
+8. delete a field from dict:
+db.getCollection('server_domain').find()
+[
+  {
+    _id: ObjectId("63c75a75abb602f063aceb00"),
+    pub_ip: '73.231.26.139',
+    domain: 'ying.voipeye.com'
+  }
+]
+db.getCollection('server_domain').update({_id: ObjectId("63c75a75abb602f063aceb00")}, {$unset:{"domain": "ying.vooipeye.com"}})
+
+
