@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html>
 <body>
+ <h1>ESun VPC Edge Features</h1>
+  1. OpenVPN SSL remote user VPN
+  2. IPSec remote user VPN
+  3. Okta/SAML single sign on(SSO) for both OpenVPN and IPSec
+  4. Cloud-to-Cloud IPSec Tunnel
+  5. Token-expiration secures the remote user VPN link 
+  
   
 <h1>Access the ESun VPC Edge EC2 Instance</h1>
   <p>
   After a new ESun VPC Edge is launched, <b>http://public_ip_of_ec2_instance</b> can access the configuration page. 
-  <b>http://public_ip_of_ec2_instance/login</b> is for the admin to login. The default username and password to login the VM is:
+  <b>http://public_ip_of_ec2_instance/login</b> is for the admin to login. The default username and password to login a new instance:
  </p>
   <p> username: admin </p>
   <p> password: admin123 </p>
   
-<h1> Upload the PKI certs for https </h1>  
+<h1> Upload the PKI Certs for HTTPS </h1>  
 <p> 
   <b>HTTPS </b> is recommended to access the EC2 instance. And it is required by Okta/SAML Single Sign On(SSO).
   To make HTTPS work, it needs to upload the certs. 
@@ -23,7 +30,7 @@
 <h1>Security Awareness of the Web Login</h1>
   
 <p> 
-  The VPC Edge Access Point V1.0.0 has the Web Login to administrate the server, and it has the SMTP server settings to send the e-mail.
+  The ESun VPC Edge has the Web Login to administrate the server, and it has the SMTP server settings to send the e-mail.
 </p>
 <p> <b>Important: </b> </p>
 <p> <b>1. Please change the default password of the web portal after the 1st time login. The default username/password is admin/admin123 .</b></p>
