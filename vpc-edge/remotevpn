@@ -9,7 +9,7 @@ conn remotevpn
 	right=%any
 	auto=add
 	leftid=localhost
-	leftsubnet=127.0.0.1/32
+	leftsubnet=172.16.0.0/24
 	rightdns=8.8.8.8
 	rightsourceip=192.168.97.0/24
   
