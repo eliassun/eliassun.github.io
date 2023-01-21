@@ -36,9 +36,11 @@
 <p> <b>1. Please change the default password of the web portal after the 1st time login. The default username/password is admin/admin123 .</b></p>
 <p> <b>2. Please set the "Email for Forgot Password" to get the password back if the password is forgotten. </b></p>
 <p>
-If it doesn't configure a email, it will use a local default email server, which will show the from <b>no-reply@voipeye.com</b> .
+If it doesn't configure an email SMTP server, it will use a local default email server, which will show the "From" <b>no-reply@voipeye.com</b> 
+ in the receiver's e-mail box .
 But, please set "SMTP to Send Email" to a well known SMTP server(e.g. your comapny email server, or gmail), 
-  or the email to the endpoint users or admin may go the spam folder of the email receivers.
+  or the email to the endpoint users or admin may go the spam folder of the email receivers. If it is <b>gmail</b>, 
+ then password is the <b>App password</b>, not the gmail login password.
 </p>
 <p>
 The password of the Web Login is hashed before it is saved into the server database. 
