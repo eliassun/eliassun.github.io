@@ -32,6 +32,25 @@ A instance can be launched from the "Launch Instances"-->"Browse More Instances"
   <td>us-east-2</td><td>esun_vpc_edge_v_1_0_1.01</td><td>ami-01421069646a85c8b</td>
  </tr>
 </table>
+  
+  The ports to open on the security group:
+  <table>
+ <tr>
+  <th>Port</th><th>Protocol</th><th>Source</th>
+ </tr>
+ <tr>
+  <td>80</td><td>tcp</td><td>anywhere</td>
+ </tr>
+ <tr>
+  <td>443</td><td>tcp</td><td>anywhere</td>
+ </tr>
+ <tr>
+  <td>500</td><td>udp</td><td>anywhere</td>
+ </tr>
+  <tr>
+  <td>4500</td><td>udp</td><td>anywhere</td>
+ </tr>
+</table>
  
 <h1>Access the ESun VPC Edge EC2 Instance with <b>HTTP</b></h1>
   <p>
