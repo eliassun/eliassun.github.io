@@ -148,3 +148,19 @@ include /etc/ipsec.d/secrets/*
 # sudo ipsec secrets to reload the secrects without interrupting the existing vpn connection.
 #cConfigure MacOS client: https://eliassun.github.io/ipsec-psk.png
 
+
+# call script when a connection is up:
+# configure
+leftupdown=/home/ubuntu/updown.sh
+
+# script updown.sh
+#!/usr/bin/env python3
+import syslog
+import os
+
+my_id = os.getenv('PLUTO_MY_ID')
+syslog.syslog(syslog.LOG_INFO, 'pluto_my_id: {}'.format(my_id))
+peer_id = os.getenv('PLUTO_PEER_ID')
+syslog.syslog(syslog.LOG_INFO, 'PLUTO_PEER_ID: {}'.format(peer_id))
+
+
