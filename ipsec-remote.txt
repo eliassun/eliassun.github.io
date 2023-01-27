@@ -150,10 +150,10 @@ include /etc/ipsec.d/secrets/*
 
 
 # call script when a connection is up:
-# configure
+# configure https://wiki.strongswan.org/projects/strongswan/wiki/connsection
 leftupdown=/home/ubuntu/updown.sh
 
-# script updown.sh
+# script updown.sh https://docs.strongswan.org/docs/5.9/plugins/updown.html
 #!/usr/bin/env python3
 import syslog
 import os
