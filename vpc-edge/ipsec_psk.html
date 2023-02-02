@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Configure MacOS IPSec Remote User VPN</h1>
+<p>
+  Display Name: Any
+</p>
+<p> Server address: Server IP or domain name</p>
+<p> Remote ID: Must be domain name if domain name is configured. Or it is the server IP address</p>  
+<p> Local ID: User name</p>
+<p> Type: None</p>
+<p> Select: Shared Secret</p>  
+<p> Shared Secret: The password</p>  
+If it is a SAML user, then the password is the token generated from "Generate New Token for VPN Auth". 
+  The SAML token is a temp password, which will expire in 2 hours. If the token is less than 2 hours 
+  and the same OKTA or SAML account has another login, then the last token will be replaced with new generated token. 
+  That means it needs to refill "Shared Secret" after 2 hours or another OKTA/SAML login. 
+<p> The existing VPN connection will not be disconnected until next VPN reconnection even if the token has been expired.</p>
+<img src = 'ipsec_psk.png'> </img>
+</body>
+</html>
