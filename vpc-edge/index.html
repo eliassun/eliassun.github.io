@@ -96,8 +96,8 @@ The keys to encrypt passwords are unique for each new launched ec2 instance.
   
 <h1>IPSec Remote User VPN or OpenVPN VPN</h1>
   Both IPSec remote user VPN and OpenVPN can connect the remote worker to the virtual private cloud. 
-  By the default, both IPSec and OpenVPn are turned on. However, if it goes to production, 
-  <b>it should run one mode only in one EC2 instance and turn off another mode.</b> 
+  By default, both IPSec and OpenVPn are turned on. However, if it goes to production, 
+  <b>then it should run on one mode only in one EC2 instance and turn off other modes.</b> 
   Or it may cause the traffic routes conflicting issues.
   For the iPhone/Android, IPSec remote user VPN should be the better choice.
   If the endpoint user with the laptop is traveling around, then OpenVPN is the better choice, as it will hit less firewall blocking issue.
