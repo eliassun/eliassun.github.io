@@ -93,7 +93,15 @@ The password of the Web Login is hashed before it is saved into the server datab
 The password to login the SMTP server is encrypted before it is stored into the server database. 
 The keys to encrypt passwords are unique for each new launched ec2 instance.
 </p>
-
+  
+<h1>IPSec Remote User VPN or OpenVPN VPN</h1>
+  Both IPSec remote user VPN and OpenVPN can connect the remote worker to the virtual private cloud. 
+  By the default, both IPSec and OpenVPn are turned on. However, if it goes to production, 
+  <b>it should run one mode only in one EC2 instance and turn off another mode.</b> 
+  Or it may cause the traffic routes conflicting issues.
+  For the iPhone/Android, IPSec remote user VPN should be the better choice.
+  If the endpoint user with the laptop is traveling around, then OpenVPN is the better choice, as it will hit less firewall blocking issue.
+  
 <h1> <a href="https://eliassun.github.io/vpc-edge/smtp-settings.html"> Add SMTP Server to Send E-mail<a> </h1>
 <h1> <a href="https://eliassun.github.io/vpc-edge/program_client_route.html"> Pass Client Traffic to Remote VPN Server<a> </h1>
   
