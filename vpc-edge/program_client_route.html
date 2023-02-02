@@ -6,9 +6,10 @@
 
 <h1>Route PC/Laptop/iPhone/Android Traffic Throught Remote VPN Server</h1>
 <p>
-"Configure Endpoint Routes" menu is to configure client traffic to pass through the remote VPN server.
+The <b>"Configure Endpoint Routes" </b>menu is to configure client traffic to pass through the remote VPN server.
 </p>
-<p>For example, the configuration below is to pass all traffic to the remove VPN server:
+<p>For example, the configuration below is to pass all traffic to the remove VPN server, and it routes the private CIDR 
+  in the cloud side to the remote VPN server too.
 <b>CIDR or IP to pass through server(must e.g.: 10.10.1.0/24,172.16.1.1)<b>:
 </p>
 <p>
@@ -16,5 +17,11 @@
   173.194.0.0/16,207.126.0.0/16,216.58.0.0/16,199.223.0.0/16,207.223.0.0/16,208.65.0.0/16,208.117.0.0/16,209.85.0.0/16,216.58.0.0/16,
   216.239.0.0/16,172.16.0.0/16,172.31.0.0/16
 </p>
+<p>
+The <b>"Configure Endpoint Routes" </b> is in the "IPSec Remote User VPN", "OpenVPN Remote User VPN" and "Okta/SAML Remote User VPN". 
+  Any modified configuration in "Okta/SAML Remote User VPN" will overwirte the "Configure Endpoint Routes" of "OpenVPN Remote User VPN" 
+  and "IPSec Remote User VPN". 
+  The modified configration in "Configure Endpoint Routes" of "OpenVPN Remote User VPN" will overwrite ""Okta/SAML Remote User VPN". 
+  Same for "IPSec Remote User VPN".
 </body>
 </html>
