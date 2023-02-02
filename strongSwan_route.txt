@@ -1,3 +1,17 @@
+# Configure the firewall
+# begin
+iptables -A INPUT -s 0.0.0.0 -p udp --dport 500 -j ACCEPT
+iptables -A INPUT -s 0.0.0.0 -p udp --dport 4500 -j ACCEPT
+## For openvpn and https
+iptables -A INPUT -s 0.0.0.0 -p tcp --dport 443 -j ACCEPT
+## Optional, allow http
+iptables -A INPUT -s 0.0.0.0 -p tcp --dport 80 -j ACCEPT
+## Optional, allow ssh from your laptop only
+iptables -A INPUT -s your_public_IP -p tcp --dport 22  -j ACCEPT
+
+iptables -A INPUT -s 0.0.0.0 -j DROP
+# end
+
 # Route traffic over IPSec
 
 # Route the traffic from site1(172.16.1.0/24) to site2(10.10.1.0/24), then to 10.10.2.0/24
