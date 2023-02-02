@@ -15,6 +15,10 @@ iptables -A INPUT -p udp --sport 53 -j ACCEPT
 iptables -A INPUT -p udp --dport 53 -j ACCEPT
 iptables -A OUTPUT -p udp --sport 53 -j ACCEPT
 iptables -A OUTPUT -p udp --dport 53 -j ACCEPT
+iptables -A INPUT -s 127.0.0.1 -p tcp --destination-port 27017 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT  -s 127.0.0.1 -p tcp --source-port 27017 -m state --state ESTABLISHED -j ACCEPT
+iptables -A INPUT -s 127.0.0.1 -p tcp --destination-port 11211 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT  -s 127.0.0.1 -p tcp --source-port 11211 -m state --state ESTABLISHED -j ACCEPT
 
 iptables -A INPUT -j DROP
 
