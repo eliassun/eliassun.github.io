@@ -95,12 +95,19 @@ The keys to encrypt passwords are unique for each new launched ec2 instance.
 </p>
   
 <h1>IPSec Remote User VPN or OpenVPN VPN</h1>
+  <p>
   Both IPSec remote user VPN and OpenVPN can connect the remote worker to the virtual private cloud. 
   By default, both IPSec and OpenVPn are turned on. However, if it goes to production, 
   <b>then it should run on one mode only in one EC2 instance and turn off other modes.</b> 
   Or it may cause the traffic routes conflicting issues.
-  For the iPhone/Android, IPSec remote user VPN should be the better choice.
-  If the endpoint user with the laptop is traveling around, then OpenVPN is the better choice, as it will hit less firewall blocking issue.
+  </p>
+  <p>For the iPhone/Android, IPSec remote user VPN should be the better choice. 
+    It does not require to install any extra client software, and less firewall issues.
+  </p>
+  <p>
+  If the endpoint user with a laptop is traveling around in different locations, 
+    then OpenVPN is the better choice, as it will hit less firewall blocking issues than IPSec.
+  </p>
   
 <h1> <a href="https://eliassun.github.io/vpc-edge/smtp-settings.html"> Add SMTP Server to Send E-mail<a> </h1>
 <h1> <a href="https://eliassun.github.io/vpc-edge/program_client_route.html"> Pass Client Traffic to Remote VPN Server<a> </h1>
