@@ -1,4 +1,4 @@
-# Configure the firewall
+# Configure the firewall. ufw is good too, but disable ufw and use iptables to make the configuration flexible. 
 # begin
 iptables -A INPUT -p udp --dport 500 -j ACCEPT
 iptables -A INPUT -p udp --dport 4500 -j ACCEPT
