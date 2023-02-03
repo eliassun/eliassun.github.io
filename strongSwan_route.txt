@@ -1,31 +1,3 @@
-# Configure the firewall. ufw is good too, but disable ufw and use iptables to make the configuration flexible. 
-# begin
-iptables -A INPUT -p udp --dport 500 -j ACCEPT
-iptables -A INPUT -p udp --dport 4500 -j ACCEPT
-## For openvpn and https
-iptables -A INPUT -p tcp --dport 443 -j ACCEPT
-## Optional, allow http
-iptables -A INPUT -p tcp --dport 80 -j ACCEPT
-## Optional, allow ssh from your laptop only
-iptables -A INPUT -s your_public_IP -p tcp --dport 22  -j ACCEPT
-## Optional, only allow from ping from your laptop. Remove "-s your_public_ip" for all IPs.
-iptables -A INPUT -s your_public_ip -p icmp -j ACCEPT
-
-iptables -A INPUT -p udp --sport 53 -j ACCEPT
-iptables -A INPUT -p udp --dport 53 -j ACCEPT
-iptables -A OUTPUT -p udp --sport 53 -j ACCEPT
-iptables -A OUTPUT -p udp --dport 53 -j ACCEPT
-iptables -A INPUT -s 127.0.0.1 -p tcp --dport 27017 -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT  -s 127.0.0.1 -p tcp --sport 27017 -m state --state ESTABLISHED -j ACCEPT
-iptables -A INPUT -s 127.0.0.1 -p tcp --dport 11211 -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT  -s 127.0.0.1 -p tcp --sport 11211 -m state --state ESTABLISHED -j ACCEPT
-
-iptables -A INPUT -j DROP
-
-# Persist the rules by:  
-# sudo apt install iptables-persistent 
-# sudo iptables-save > /etc/iptables/rules.v4
-# end
 
 # Route traffic over IPSec
 
@@ -72,5 +44,37 @@ sudo ip link add name app type dummy
 sudo ip addr add 172.16.1.102 dev app
 sudo ip link set app up
 # ping 172.16.1.102 should work
+
+# Configure the firewall. ufw is good too, but disable ufw and use iptables to make the configuration flexible. 
+# It recommends to use the custom iptables chain to set the new remote vpn rules. e.g. We can create a new chain "remotevpn".
+# However, this text is for the demo purpose, then INPUT chain is good enough for a demo.
+# begin
+iptables -A INPUT -p udp --dport 500 -j ACCEPT
+iptables -A INPUT -p udp --dport 4500 -j ACCEPT
+## For openvpn and https
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+## Optional, allow http
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+## Optional, allow ssh from your laptop only
+iptables -A INPUT -s your_public_IP -p tcp --dport 22  -j ACCEPT
+## Optional, only allow from ping from your laptop. Remove "-s your_public_ip" for all IPs.
+iptables -A INPUT -s your_public_ip -p icmp -j ACCEPT
+
+iptables -A INPUT -p udp --sport 53 -j ACCEPT
+iptables -A INPUT -p udp --dport 53 -j ACCEPT
+iptables -A OUTPUT -p udp --sport 53 -j ACCEPT
+iptables -A OUTPUT -p udp --dport 53 -j ACCEPT
+iptables -A INPUT -s 127.0.0.1 -p tcp --dport 27017 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT  -s 127.0.0.1 -p tcp --sport 27017 -m state --state ESTABLISHED -j ACCEPT
+iptables -A INPUT -s 127.0.0.1 -p tcp --dport 11211 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT  -s 127.0.0.1 -p tcp --sport 11211 -m state --state ESTABLISHED -j ACCEPT
+
+iptables -A INPUT -j DROP
+
+# Persist the rules by:  
+# sudo apt install iptables-persistent 
+# sudo iptables-save > /etc/iptables/rules.v4
+# end
+
 
 
