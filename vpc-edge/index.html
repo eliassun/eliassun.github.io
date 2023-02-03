@@ -6,116 +6,174 @@ table, th, td {
   border: 0.5px solid black;
 }
 </style>
+<!-- Page setup -->
+<meta charset="utf-8">
+<title>Your title here</title>
+<meta name="description" content="SSL and IPSec VPN for Multi Clouds">
+<meta name="author" content="eliassun@gmail">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+<link rel="icon" type="image/png" href="logo.png">
+
+<!-- Stylesheets -->
+<!-- Reset default styles and add support for google fonts -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet" type="text/css" />
+<link href="http://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css" />
+
+<!-- Custom styles -->
+<link href="style.css" rel="stylesheet" type="text/css" />
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>    
+
+<!-- Want to add Bootstrap? -->
+<!-- Visit: https://getbootstrap.com/docs/4.3/getting-started/introduction/ -->
 </head>
 <body>
- <h1>ESun VPC Edge Features</h1> </p>
-  <p>1. OpenVPN SSL remote user VPN </p>
-  <p>2. IPSec remote user VPN </p>
-  <p>3. Okta/SAML single sign on(SSO) for both OpenVPN and IPSec </p>
-  <p>4. Cloud-to-Cloud IPSec Tunnel </p>
-  <p>5. Token-expiration secures the remote user VPN link </p>
+      <header id="header">
+      <img src="logo.png">
+      <h1>ESun VPC Edge</h1>
+      
+      <!-- Menu link fragment #id should match a div id. Example: <a href="#home"> links to <div id="home"></div>  -->
+      <ul class="main-menu">
+        <li><a href="#home">home</a></li>
+        <li><a href="#about">about</a></li>
+        <li><a href="#contact">contact</a></li>
+      </ul>                 
+    </header>
   
-<h1>Luanch a New Instance from AWS Marketplace</h1>
-<p>
-A instance can be launched from the "Launch Instances"-->"Browse More Instances". Then search "esun" in the search box, 
- the AMI can be found inside of the tab "Community AMIs" of the search results.
-</p>
-<p>AMI is lanched in few regions:</p>
-<table>
- <tr>
-  <th>Region</th><th>Name</th><th>AMI</th>
- </tr>
- <tr>
-  <td>us-east-1</td><td>esun_vpc_edge_v_1_0_1_03</td><td>ami-065f20231befa4991</td>
- </tr>
-  <tr>
-  <td>us-east-2</td><td>esun_vpc_edge_v_1_0_1_03</td><td>ami-068dbe328d8b23339</td>
- </tr>
-</table>
-  
-  The ports to open on the security group:
-  <table>
- <tr>
-  <th>Port</th><th>Protocol</th><th>Source</th>
- </tr>
- <tr>
-  <td>80</td><td>tcp</td><td>anywhere</td>
- </tr>
- <tr>
-  <td>443</td><td>tcp</td><td>anywhere</td>
- </tr>
- <tr>
-  <td>500</td><td>udp</td><td>anywhere</td>
- </tr>
-  <tr>
-  <td>4500</td><td>udp</td><td>anywhere</td>
- </tr>
-</table>
- 
-<h1>Access the ESun VPC Edge EC2 Instance with <b>HTTP</b></h1>
-  <p>
-  After a new ESun VPC Edge is launched, <b>http://public_ip_of_ec2_instance</b> can access the configuration page. 
-  <b>http://public_ip_of_ec2_instance/login</b> is for the admin to login. The default username and password to login a new instance:
- </p>
-  <p> username: admin </p>
-  <p> password: admin123 </p>
-  
-<h1>Access the ESun VPC Edge EC2 Instance with <b>HTTPS</b></h1>
-<p> 
-  <b>HTTPS </b> is recommended to access the EC2 instance. And it is required by Okta/SAML Single Sign On(SSO).
-  To make HTTPS work, it needs to upload the certs. 
-  The <b>"Settings" </b> section has the "Upload Certs for Web Service" to upload the certs. 
- </p>
- <p> <b> IMPORTANT: Once the certs are applied, then the http will be closed. And it requires to to re-type the URL to broswer: </b></p>
- <p> <b>https:</b>//public_ip_of_ec2_instance/login </p>
-  
+      <div id="container">
+      <div class="inner">
+        <div id="content"> 
+          
+          <div id="home" class="content-region hide">
+            <h2>Home</h2>
+              <p>1. OpenVPN SSL remote user VPN </p>
+              <p>2. IPSec remote user VPN </p>
+              <p>3. Okta/SAML single sign on(SSO) for both OpenVPN and IPSec </p>
+              <p>4. Cloud-to-Cloud IPSec Tunnel </p>
+              <p>5. Token-expiration secures the remote user VPN link </p>
+          </div>
+          
+          <div id="contact" class="content-region hide">
+            <h2>Contact</h2>
+            <p>
+              eliassun@gmail.com
+            </p>
+          </div>
+          <div id="contact" class="content-region hide">
+            <h2>Document</h2>
 
-<h1>Best Security Pratice of Web Login</h1>
-  
-<p> 
-  The ESun VPC Edge has the Web Login to administrate the server, and it has the SMTP server settings to send the e-mail.
-</p>
-<p> <b>Important: </b> </p>
-<p> <b>1. Please change the default password of the web portal after the 1st time login. The default username/password is admin/admin123 .</b></p>
-<p> <b>2. Please set the "Email for Forgot Password" to get the password back if the password is forgotten. </b></p>
-<p>
-If it doesn't configure an email SMTP server, it will use a local default email server, which will show the "From" <b>no-reply@voipeye.com</b> 
- in the receiver's e-mail box .
-But, please set "SMTP to Send Email" to a well known SMTP server(e.g. your comapny email server, or gmail), 
-  or the email to the endpoint users or admin may go the spam folder of the email receivers. If it is <b>gmail</b>, 
- then password is the <b>App password</b>, not the gmail login password.
-</p>
-<p>
-The password of the Web Login is hashed before it is saved into the server database. 
-  That means the server doesn't store the plain text of the Web portal password. 
-</p>
-<p>
-The password to login the SMTP server is encrypted before it is stored into the server database. 
-The keys to encrypt passwords are unique for each new launched ec2 instance.
-</p>
-  
-<h1>IPSec Remote User VPN or OpenVPN VPN</h1>
-  <p>
-  Both IPSec remote user VPN and OpenVPN can connect the remote worker to the virtual private cloud. 
-  By default, both IPSec and OpenVPn are turned on. However, if it goes to production, 
-  <b>then it should run on one mode only in one EC2 instance and turn off other modes.</b> 
-  Or it may cause the traffic routes conflicting issues.
-  </p>
-  <p>For the iPhone/Android, IPSec remote user VPN should be the better choice. 
-    It does not require to install any extra client software, and less firewall issues.
-  </p>
-  <p>
-  If the endpoint user with a laptop is traveling around in different locations, 
-    then OpenVPN is the better choice, as it will hit less firewall blocking issues than IPSec. 
-    But it requires to install the OpenVPN client.
-  </p>
-  
-  
-  
-<h1> <a href="https://eliassun.github.io/vpc-edge/smtp-settings.html"> Add SMTP Server to Send E-mail<a> </h1>
-<h1> <a href="https://eliassun.github.io/vpc-edge/program_client_route.html"> Pass Client Traffic to Remote VPN Server<a> </h1>
-<h1> <a href="https://eliassun.github.io/vpc-edge/ipsec_psk.html"> Configure MacOS IPSec Remote User VPN<a> </h1>
-<h1> <a href="https://eliassun.github.io/vpc-edge/iphone_ipsec_psk.html"> Configure iPhone IPSec Remote User VPN<a> </h1>
+            <h3>Luanch a New Instance from AWS Marketplace</h3>
+            <p>
+            A instance can be launched from the "Launch Instances"-->"Browse More Instances". Then search "esun" in the search box, 
+             the AMI can be found inside of the tab "Community AMIs" of the search results.
+            </p>
+            <p>AMI is lanched in few regions:</p>
+            <table>
+             <tr>
+              <th>Region</th><th>Name</th><th>AMI</th>
+             </tr>
+             <tr>
+              <td>us-east-1</td><td>esun_vpc_edge_v_1_0_1_03</td><td>ami-065f20231befa4991</td>
+             </tr>
+              <tr>
+              <td>us-east-2</td><td>esun_vpc_edge_v_1_0_1_03</td><td>ami-068dbe328d8b23339</td>
+             </tr>
+            </table>
 
+              The ports to open on the security group:
+              <table>
+             <tr>
+              <th>Port</th><th>Protocol</th><th>Source</th>
+             </tr>
+             <tr>
+              <td>80</td><td>tcp</td><td>anywhere</td>
+             </tr>
+             <tr>
+              <td>443</td><td>tcp</td><td>anywhere</td>
+             </tr>
+             <tr>
+              <td>500</td><td>udp</td><td>anywhere</td>
+             </tr>
+              <tr>
+              <td>4500</td><td>udp</td><td>anywhere</td>
+             </tr>
+            </table>
+
+            <h3>Access the ESun VPC Edge EC2 Instance with <b>HTTP</b></h3>
+              <p>
+              After a new ESun VPC Edge is launched, <b>http://public_ip_of_ec2_instance</b> can access the configuration page. 
+              <b>http://public_ip_of_ec2_instance/login</b> is for the admin to login. The default username and password to login a new instance:
+             </p>
+              <p> username: admin </p>
+              <p> password: admin123 </p>
+
+            <h3>Access the ESun VPC Edge EC2 Instance with <b>HTTPS</b></h3>
+            <p> 
+              <b>HTTPS </b> is recommended to access the EC2 instance. And it is required by Okta/SAML Single Sign On(SSO).
+              To make HTTPS work, it needs to upload the certs. 
+              The <b>"Settings" </b> section has the "Upload Certs for Web Service" to upload the certs. 
+             </p>
+             <p> <b> IMPORTANT: Once the certs are applied, then the http will be closed. And it requires to to re-type the URL to broswer: </b></p>
+             <p> <b>https:</b>//public_ip_of_ec2_instance/login </p>
+
+
+            <h3>Best Security Pratice of Web Login</h3>
+
+            <p> 
+              The ESun VPC Edge has the Web Login to administrate the server, and it has the SMTP server settings to send the e-mail.
+            </p>
+            <p> <b>Important: </b> </p>
+            <p> <b>1. Please change the default password of the web portal after the 1st time login. The default username/password is admin/admin123 .</b></p>
+            <p> <b>2. Please set the "Email for Forgot Password" to get the password back if the password is forgotten. </b></p>
+            <p>
+            If it doesn't configure an email SMTP server, it will use a local default email server, which will show the "From" <b>no-reply@voipeye.com</b> 
+             in the receiver's e-mail box .
+            But, please set "SMTP to Send Email" to a well known SMTP server(e.g. your comapny email server, or gmail), 
+              or the email to the endpoint users or admin may go the spam folder of the email receivers. If it is <b>gmail</b>, 
+             then password is the <b>App password</b>, not the gmail login password.
+            </p>
+            <p>
+            The password of the Web Login is hashed before it is saved into the server database. 
+              That means the server doesn't store the plain text of the Web portal password. 
+            </p>
+            <p>
+            The password to login the SMTP server is encrypted before it is stored into the server database. 
+            The keys to encrypt passwords are unique for each new launched ec2 instance.
+            </p>
+
+            <h3>IPSec Remote User VPN or OpenVPN VPN</h3>
+              <p>
+              Both IPSec remote user VPN and OpenVPN can connect the remote worker to the virtual private cloud. 
+              By default, both IPSec and OpenVPn are turned on. However, if it goes to production, 
+              <b>then it should run on one mode only in one EC2 instance and turn off other modes.</b> 
+              Or it may cause the traffic routes conflicting issues.
+              </p>
+              <p>For the iPhone/Android, IPSec remote user VPN should be the better choice. 
+                It does not require to install any extra client software, and less firewall issues.
+              </p>
+              <p>
+              If the endpoint user with a laptop is traveling around in different locations, 
+                then OpenVPN is the better choice, as it will hit less firewall blocking issues than IPSec. 
+                But it requires to install the OpenVPN client.
+              </p>
+
+            <h3> <a href="https://eliassun.github.io/vpc-edge/smtp-settings.html"> Add SMTP Server to Send E-mail<a> </h3>
+            <h3> <a href="https://eliassun.github.io/vpc-edge/program_client_route.html"> Pass Client Traffic to Remote VPN Server<a> </h3>
+            <h3> <a href="https://eliassun.github.io/vpc-edge/ipsec_psk.html"> Configure MacOS IPSec Remote User VPN<a> </h3>
+            <h3> <a href="https://eliassun.github.io/vpc-edge/iphone_ipsec_psk.html"> Configure iPhone IPSec Remote User VPN<a> </h3>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+    <footer>  
+      Secure Your Work From Home Workspace
+    </footer>
+    
+    <!-- Load additional JS scripts here -->
+    <script type="text/javascript" src="script.js"></script>
 </body>
 </html>
