@@ -136,7 +136,10 @@ table, th, td {
             The password to login the SMTP server is encrypted before it is stored into the server database. 
             The keys to encrypt passwords are unique for each new launched ec2 instance.
             </p>
-
+            <h3>Start IPSec Remote User VPN</h3>
+            <p>After a new AMI is launched, <b>please go to "Services Status" to  turn on IPSec and turn off OpenVPN.</b></p>
+            <p><b>Please go to "Configure Endpoint Routes" of IPSec or SAML to configure the routes for traffic, 
+              or it will reject the client's connection.</b></p>
             <h3>IPSec Remote User VPN or OpenVPN VPN</h3>
               <p>
               Both IPSec remote user VPN and OpenVPN can connect the remote worker to the virtual private cloud. 
