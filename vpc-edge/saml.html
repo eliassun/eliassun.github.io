@@ -2,7 +2,7 @@
 <html>
 <body>
 <div>
-<h1>Configure SAML Application in OKTA</h1>
+<h3>Configure SAML Application in OKTA</h3>
   <p> Applications --> Create a new app integration --> SAML 2.0  </p>
   <p> App Name:remotevpn (or any other App name) </p>
   <p> Single sign-on URL: https://domain_or_ip_address_of_esun_vpc_edge/saml/sso/remotevpn </p>
@@ -14,7 +14,7 @@
 </div>
 
 <div>
-  <h1>Get SAML metadata in OKTA</h1>
+  <h3>Get SAML metadata in OKTA</h3>
   <p> Applications --> Application --> Your App (remotevpn)  --> Sign On --> SAML Signing Certificates  </p>
   <p> SHA-2 --> Actions --> view IDP metadata  </p>
   <p> Click the url  </p>
@@ -22,7 +22,7 @@
 </div>
   
 <div>
-  <h1>Configure SAML in ESun VPC Edge</h1>
+  <h3>Configure SAML in ESun VPC Edge</h3>
   <p> Okta/SAML Remote User VPN --> Add or Update App -->   </p>
   <p> SHA-2 --> Actions --> view IDP metadata  </p>
   <p> SAML App name:  remotevpn (or any other App name) </p>
