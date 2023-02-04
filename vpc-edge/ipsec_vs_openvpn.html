@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+  <h1>Start IPSec Remote User VPN</h1>
+<p>After a new AMI is launched, <b>please go to "Services Status" to  turn on IPSec and turn off OpenVPN.</b></p>
+<p><b>Please go to "Configure Endpoint Routes" of IPSec or SAML to configure the routes for traffic, 
+  or it will reject the client's connection.</b></p>
+<h3>Start OpenVPN SSL Remote User VPN</h3>
+<p>After a new AMI is launched, <b>please go to "Services Status" to  turn on OpenVPN and turn off IPSec.</b></p>
+<p><b>Please go to "Configure Endpoint Routes" of OpenVPN or SAML to configure the routes for traffic, 
+  or it may reject the client's connection.</b></p>
+<h1>IPSec Remote User VPN or OpenVPN VPN</h1>
+  <p>
+  Both IPSec remote user VPN and OpenVPN can connect the remote worker to the virtual private cloud. 
+  By default, both IPSec and OpenVPn are turned on. However, if it goes to production, 
+  <b>then it should run on one mode only in one EC2 instance and turn off other modes.</b> 
+  Or it may cause the traffic routes conflicting issues.
+  </p>
+  <p>For the iPhone/Android, IPSec remote user VPN should be the better choice. 
+    It does not require to install any extra client software, and less firewall issues.
+  </p>
+  <p>
+  If the endpoint user with a laptop is traveling around in different locations, 
+    then OpenVPN is the better choice, as it will hit less firewall blocking issues than IPSec. 
+    But it requires to install the OpenVPN client.
+  </p>
+
+</body>
+</html>
