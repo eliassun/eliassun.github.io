@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div>
+<h1>Access the ESun VPC Edge EC2 Instance with <b>HTTP</b></h1>
+<p>
+After a new ESun VPC Edge is launched, <b>http://public_ip_of_ec2_instance</b> can access the configuration page. 
+<b>http://public_ip_of_ec2_instance/login</b> is for the admin to login. The default username and password to login a new instance:
+</p>
+<p> username: admin </p>
+<p> password: admin123 </p>
+
+<h3>Access the ESun VPC Edge EC2 Instance with <b>HTTPS</b></h3>
+<p> 
+<b>HTTPS </b> is recommended to access the EC2 instance. And it is required by Okta/SAML Single Sign On(SSO).
+To make HTTPS work, it needs to upload the certs. 
+The <b>"Settings" </b> section has the "Upload Certs for Web Service" to upload the certs. 
+</p>
+<p> <b> IMPORTANT: Once the certs are applied, then the http will be closed. And it requires to to re-type the URL to broswer: </b></p>
+<p> <b>https:</b>//public_ip_of_ec2_instance/login </p>
+
+
+</body>
+</html>
