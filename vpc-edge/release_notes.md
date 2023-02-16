@@ -1,7 +1,7 @@
-# 1.0.1.09
+# 1.0.1.09  - Feb. 15
 1. Watch dog for the web server
 
-# 1.0.1.08
+# 1.0.1.08 - Feb. 2
 Init version with features:
 1. OpenVPN server as the SSL remote user VPN
 2. IPSec remote user VPN server
