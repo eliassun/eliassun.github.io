@@ -1,0 +1,5 @@
+1. get a new password
+python3 -c 'import crypt; print(crypt.crypt("password","Fx"))'
+2. sudo vim /etc/passwd 
+# e.g.
+esun:FxrfCVBMYiUxs:1001:1001:,,,:/home/esun:/bin/bash
