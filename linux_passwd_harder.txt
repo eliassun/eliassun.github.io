@@ -3,3 +3,6 @@ python3 -c 'import crypt; print(crypt.crypt("password","Fx"))'
 2. sudo vim /etc/passwd 
 # e.g.
 esun:FxrfCVBMYiUxs:1001:1001:,,,:/home/esun:/bin/bash
+
+2. disable root login
+https://www.digitalocean.com/community/tutorials/how-to-disable-root-login-on-ubuntu-20-04
