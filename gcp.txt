@@ -1,0 +1,5 @@
+1. Set firewall in VPC
+2. ssh-keygen -t rsa -b 4096 -C username
+3. put username.pub to Compute Engine Meta SSH
+4. Create VM
+5. ssh into vm with the "username"
