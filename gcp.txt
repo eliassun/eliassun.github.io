@@ -1,5 +1,18 @@
+== Create and SSH =============================
 1. Set firewall in VPC
 2. ssh-keygen -t rsa -b 4096 -C username
 3. put username.pub to Compute Engine Meta SSH
 4. Create VM
 5. ssh into vm with the "username"
+
+== Service Account ==========================
+1. Create Service Account from IAM, grant the service account with the permission
+2. Create an VM with the service account
+3. Check the service account in VM by the command
+   gcloud config list
+4. Check the service, e.g. check the secrets in the secrets manager by
+    gcloud secrets list
+5. Show a secret by
+     gcloud secrets versions access latest --secret=secret_name_from_list_above
+     
+
