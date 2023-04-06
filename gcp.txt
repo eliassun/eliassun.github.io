@@ -17,5 +17,19 @@
      
 6. gcp python packages
       gcloud googleapis-common-protos  google-apitools google-auth
+      
+   pip3 install gcloud
+   pip3 install googleapis-common-protos
+   pip3 install google-apitools
+   pip3 install google-auth
+   pip3 install google-cloud-secret-manager
      
+Python script:
+from google.cloud import secretmanager
+
+client = secretmanager.SecretManagerServiceClient()
+project_id = 'xxxxx'
+key_name = client.secret_version_path(project_id, 'key', '1')
+ret = client.access_secret_version(name=key_name)
+key_val = ret.payload.data.decode('UTF-8')
 
