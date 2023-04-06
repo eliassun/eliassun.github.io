@@ -15,4 +15,7 @@
 5. Show a secret by
      gcloud secrets versions access latest --secret=secret_name_from_list_above
      
+6. gcp python packages
+      gcloud googleapis-common-protos  google-apitools google-auth
+     
 
