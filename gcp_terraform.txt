@@ -1,0 +1,72 @@
+#1. Firstly, it needs to define a provider:
+provider "google" {
+  project = var.project
+  region  = var.region
+  zone    = var.zone
+  credentials = var.credentials # Or: export GOOGLE_APPLICATION_CREDENTIALS="/path/to/keyfile.json"
+}
+
+#2. Create the VPC and subnet
+
+# Create a VPC network
+resource "google_compute_network" "vpc_network" {
+  name = my_vpc_network
+}
+
+resource "google_compute_subnetwork" "subnet1" {
+  name          = "my-subnet-1"
+  ip_cidr_range = "10.0.1.0/24"
+  network       = google_compute_network.vpc_network.self_link
+}
+
+#3. create VM
+resource "google_compute_project_metadata_item" "ssh-keys" {
+  key   = "ssh-keys"
+  value = "username:${file(var.ssh_public_key_file)}"
+}
+
+resource "google_compute_firewall" "allow_ssh" {
+  name    = "allow-ssh"
+  network = google_compute_network.vpc_network.self_link
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  source_ranges = var.bastion_ssh_allow_ip
+}
+
+resource "google_compute_instance" "vm_instance" {
+  name         = "my_vm"
+  machine_type = "e2-micro"
+  zone         = "us-central1-a"
+
+  boot_disk {
+    initialize_params {
+      image = "ubuntu-os-cloud/ubuntu-2004-lts"
+    }
+  }
+
+  network_interface {
+    subnetwork = google_compute_subnetwork.vpc_subnet_bastion.self_link
+    access_config {
+    }
+  }
+
+  metadata = {
+    ssh-keys = "${google_compute_project_metadata_item.ssh-keys.value}"
+  }
+
+  metadata_startup_script = <<-EOF
+    #!/bin/sh
+    echo "Hello"
+  EOF
+  
+}
+
+# The image can be custom image
+#data "google_compute_image" "my_img" {
+#  name = "your own image"
+#}
+
