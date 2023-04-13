@@ -1,0 +1,23 @@
+#1. ssh proxy:
+ssh -i /path/to/ssh_private_key username@dst_ip  -o "proxycommand ssh -W %h:%p -i /path/to/ssh_private_key username@proxy_ip"
+# if it is ~/.ssh/id_rsa
+ssh  username@dst_ip  -o "proxycommand ssh -W %h:%p  username@proxy_ip"
+
+#2. ssh forward
+
+#!/bin/sh
+echo 1 > /proc/sys/net/ipv4/ip_forward
+iptables -F
+iptables -t nat -F
+iptables -X
+iptables -t nat -A PREROUTING -p tcp --dport 25 -j DNAT --to-destination dst_ip:22
+iptables -t nat -A POSTROUTING -p tcp -d dst_ip --dport 22 -j SNAT --to-source proxy_internal_ip
+
+#3. upload files:
+scp -P 25 -r ./local_folder username@proxy_external_ip(or dst_ip):full_path
+
+#4. upload one file:
+scp -P 25 $1 username@proxy_external_ip(or dst_ip):full_path
+
+#5. download one file:
+scp  username@proxy_external_ip(or dst_ip):full_path/$1 ./
