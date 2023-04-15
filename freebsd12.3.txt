@@ -10,4 +10,5 @@ python3.9 -m pip install cryptography
 pkg install py39-gevent
 sudo python3 -m ensurepip
 sudo pkg install py39-sqlite3
+pip3 install johnnydep
 
