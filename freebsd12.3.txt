@@ -9,4 +9,5 @@ sudo pkg install rust
 python3.9 -m pip install cryptography
 pkg install py39-gevent
 sudo python3 -m ensurepip
- 
+sudo pkg install py39-sqlite3
+
