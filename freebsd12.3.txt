@@ -12,3 +12,10 @@ sudo python3 -m ensurepip
 sudo pkg install py39-sqlite3
 pip3 install johnnydep
 
+sudo pkg install libmaxminddb
+wget https://github.com/maxmind/geoip-api-c/releases/download/v1.6.12/GeoIP-1.6.12.tar.gz
+tar xvfz GeoIP-1.6.12.tar.gz
+cd GeoIP-1.6.12
+./configure && make && sudo make install
+C_INCLUDE_PATH=/usr/local/include python3 -m pip install geoip
+
