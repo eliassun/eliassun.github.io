@@ -4,6 +4,11 @@ ssh -i /path/to/ssh_private_key username@dst_ip  -o "proxycommand ssh -W %h:%p -
 ssh  username@dst_ip  -o "proxycommand ssh -W %h:%p  username@proxy_ip"
 
 #2. ssh forward
+sudo vim /etc/sysctl.conf
+net.ipv4.ip_forward = 1
+sudo sysctl -p
+
+#3. Run the script
 
 #!/bin/sh
 echo 1 > /proc/sys/net/ipv4/ip_forward
