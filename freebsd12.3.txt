@@ -1,0 +1,9 @@
+
+sudo pkg install python39
+fetch https://bootstrap.pypa.io/get-pip.py
+python3.9 get-pip.py
+sudo unlink /usr/local/bin/python3
+sudo ln -s /usr/local/bin/python3.9 /usr/local/bin/python3
+python3 -m pip install isort
+sudo pkg install rust
+python3.9 -m pip install cryptography
