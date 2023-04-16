@@ -19,3 +19,7 @@ cd GeoIP-1.6.12
 ./configure && make && sudo make install
 C_INCLUDE_PATH=/usr/local/include python3 -m pip install geoip
 
+sudo pkg install git
+cd pygeoip
+python3 setup.py install
+
