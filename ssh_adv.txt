@@ -26,3 +26,8 @@ scp -P 25 $1 username@proxy_external_ip(or dst_ip):full_path
 
 #5. download one file:
 scp  username@proxy_external_ip(or dst_ip):full_path/$1 ./
+
+
+#6. upload by proxy
+
+scp -i private_ssh_key_to_dst.pem -o "ProxyCommand ssh  -W %h:%p username@proxy_ip" file_to_send username@dst_ip:dst_path
