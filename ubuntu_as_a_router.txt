@@ -1,0 +1,84 @@
+
+Setup:
+   VPC1 subnet1 10.0.0.0/16   ----- nic0(ens4) Ubuntu VM0 nic1(ens5) ---- VPC2 subnet2 10.1.0.0/16
+   
+   VM1 in subnet1: 10.0.100.2
+   VM2 in subnet2: 10.1.200.2
+   nic0(ens4) : 10.0.1.2 
+   nic1(ens5): 10.1.1.2 
+
+
+1. Create a VM with two network interfaces. For example, GCP create a VM by Terraform
+resource "google_compute_instance_from_machine_image" "vm_instance_ubuntu_forwarding" {
+  provider             = google-beta
+  project              = project-id
+  source_machine_image = "projects/project-id/global/machineImages/img-name"
+  name                 = "vm-name"
+  machine_type         = "e2-micro"
+  zone                 = "us-central1-a"
+  can_ip_forward       = true
+
+  network_interface {
+    subnetwork = google_compute_subnetwork.vpc_subnet1.self_link
+  }
+
+  network_interface {
+    subnetwork = google_compute_subnetwork.vpc_subnet2.self_link
+  }
+
+  metadata = {
+    ssh-keys  = your-key
+  }
+
+  service_account {
+    email  = google_service_account.created_service_account.email
+    scopes = ["cloud-platform"]
+  }
+
+}
+
+2. configure routes in VM0:
+#ifconfig
+ens4: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1460
+        inet 10.0.1.2  netmask 255.255.255.255  broadcast 0.0.0.0
+
+
+ens5: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1460
+        inet 10.1.1.2  netmask 255.255.255.255  broadcast 10.1.1.2
+        
+# sudo ip route add 10.1.0.0/16 via 10.1.1.1 dev ens5
+# sudo ip route add 10.0.0.0/16 via 10.0.1.1 dev ens4
+# sudo ip route show
+default via 10.0.1.1 dev ens4 proto dhcp src 10.0.1.2 metric 100 
+10.0.0.0/16 via 10.0.1.1 dev ens4 
+10.0.1.0/24 via 10.0.1.1 dev ens4 proto dhcp src 10.0.1.2 metric 100 
+10.0.1.1 dev ens4 proto dhcp scope link src 10.0.1.2 metric 100 
+10.1.0.0/16 via 10.1.1.1 dev ens5 
+10.1.1.0/24 via 10.1.1.1 dev ens5 
+10.1.1.1 dev ens5 scope link 
+
+# uncomment "net.ipv4.ip_forward=1" in the "/etc/sysctl.conf", then run "sudo sysctl -p"
+
+3. configure in the GCP console: vpc network --> route --> route management --> add route
+Name: default-to-vpc2
+Network: vpc1
+dst IP: 10.1.0.0/16 
+Next hop: Specify an instance
+Next hop instance: VM0
+
+Name: default-to-vpc1
+Network: vpc2
+dst IP: 10.0.0.0/16 
+Next hop: Specify an instance
+Next hop instance: VM0
+
+4. ping from VM1 to VM2
+ping 10.1.200.2
+
+5. check route in VM1:
+# ip route get 10.1.200.2
+10.1.200.2 via 10.0.100.1 dev ens4 src 10.0.100.2 uid 1000 cache 
+
+
+
+
