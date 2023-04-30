@@ -101,5 +101,16 @@ ping 10.1.200.2
 sudo tcpdump -i ens5 icmp
 sudo tcpdump -i ens4 icmp
 
+7. pass everything including Internet traffic from 10.1.0.0/16 to VM0 then Internet
+# In VM0
+# sudo iptables -t nat -A POSTROUTING -s 10.1.200.0/24 -j MASQUERADE
+# Then GCP console:
+Name: forward-all-via-vm0
+Network: vpc2
+dst IP: 0.0.0.0/0 
+Next hop: Specify an instance
+Next hop instance: VM0
+# Then GCP console delete the old default route for 0.0.0.0/0  in vpc2
+
 
 
