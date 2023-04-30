@@ -79,6 +79,9 @@ ping 10.1.200.2
 # ip route get 10.1.200.2
 10.1.200.2 via 10.0.100.1 dev ens4 src 10.0.100.2 uid 1000 cache 
 
+6. tcpdump in vm0
+sudo tcpdump -i ens5 icmp
+sudo tcpdump -i ens4 icmp
 
 
 
