@@ -72,6 +72,24 @@ dst IP: 10.0.0.0/16
 Next hop: Specify an instance
 Next hop instance: VM0
 
+Or by terraform:
+
+resource "google_compute_route" "route-from-subnet1-to-subnet2" {
+  name              = "route-from-subnet1-to-subnet2"
+  dest_range        = "10.1.0.0/16"
+  network           = google_compute_network.vpc_network_subnet1.name
+  next_hop_instance = "zones/${var.zone}/instances/${google_compute_instance_from_machine_image.vm_instance_ubuntu_forwarding.name}"
+  priority          = 1000
+}
+
+resource "google_compute_route" "route-from-subnet2-to-subnet1" {
+  name              = "route-from-subnet2-to-subnet1"
+  dest_range        = "10.0.0.0/16"
+  network           = google_compute_network.vpc_network_subnet2.name
+  next_hop_instance = "zones/${var.zone}/instances/${google_compute_instance_from_machine_image.vm_instance_ubuntu_forwarding.name}"
+  priority          = 1000
+}
+
 4. ping from VM1 to VM2
 ping 10.1.200.2
 
