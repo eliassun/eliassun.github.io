@@ -102,6 +102,7 @@ sudo tcpdump -i ens5 icmp
 sudo tcpdump -i ens4 icmp
 
 7. pass everything including Internet traffic from 10.1.0.0/16 to VM0 then Internet
+# This is optional to make VM0 as a NAT for 10.1.0.0/16
 # In VM0
 # sudo iptables -t nat -A POSTROUTING -s 10.1.200.0/24 -j MASQUERADE
 # Then GCP console:
@@ -111,6 +112,8 @@ dst IP: 0.0.0.0/0
 Next hop: Specify an instance
 Next hop instance: VM0
 # Then GCP console delete the old default route for 0.0.0.0/0  in vpc2
+
+8. Instead of 7., we can use the BGP e.g. https://www.watchguard.com/help/docs/help-center/en-US/Content/en-US/Fireware/dynamicrouting/bgp_sample_c.html 
 
 
 
