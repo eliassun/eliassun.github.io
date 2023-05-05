@@ -1,0 +1,37 @@
+1. Multiple Providers
+provider "google" {
+  credentials = var.credentials1
+  project = var.project1
+  region  = var.region1
+  zone    = var.zone1
+}
+
+provider "google-beta" {
+  credentials = var.credentials1
+  project = var.project1
+  region  = var.region1
+  zone    = var.zone1
+}
+
+provider "google" {
+  credentials = var.credentials2
+  project = var.project_app2
+  region  = var.region2
+  zone    = var.zone2
+  alias   = "testproject"
+}
+
+provider "google-beta" {
+  credentials = var.credentials_app
+  project = var.project_app
+  region  = var.region
+  zone    = var.zone
+  alias   = "testproject"
+}
+
+resource "google_compute_project_metadata_item" "ssh-keys-testproject" {
+  provider =  google.testproject
+  key      =  "keyname"
+  value    =  "keyvalue"
+}
+
