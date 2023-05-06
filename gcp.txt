@@ -33,3 +33,10 @@ key_name = client.secret_version_path(project_id, 'key', '1')
 ret = client.access_secret_version(name=key_name)
 key_val = ret.payload.data.decode('UTF-8')
 
+7. GCP gcloud command line
+Download the keyfile of a service account.
+export GOOGLE_APPLICATION_CREDENTIALS=/path/to/keyfile
+gcloud config set project [PROJECT_ID]
+Run commands, e.g. :    gcloud compute instances list
+
+
