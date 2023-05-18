@@ -40,3 +40,6 @@ gcloud config set project [PROJECT_ID]
 Run commands, e.g. :    gcloud compute instances list
 
 
+8. Check GCP metadata after SSH into
+curl -H Metadata-Flavor:Google http://metadata.google.internal/computeMetadata/v1/instance/
+
