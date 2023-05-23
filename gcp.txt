@@ -43,3 +43,34 @@ Run commands, e.g. :    gcloud compute instances list
 8. Check GCP metadata after SSH into
 curl -H Metadata-Flavor:Google http://metadata.google.internal/computeMetadata/v1/instance/
 # metadata.google.internal 169.254.169.254 
+
+9. Useful information from Metadata
+CC VM image:
+curl -H Metadata-Flavor:Google http://metadata.google.internal/computeMetadata/v1/instance/image
+Host Name:
+curl -H Metadata-Flavor:Google http://metadata.google.internal/computeMetadata/v1/instance/hostname
+VM Name:
+curl -H Metadata-Flavor:Google http://metadata.google.internal/computeMetadata/v1/instance/name 
+Machine Type
+curl -H Metadata-Flavor:Google http://metadata.google.internal/computeMetadata/v1/instance/machine-type
+Internal IP:
+curl -H Metadata-Flavor:Google http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/ip
+External IP:
+curl -H Metadata-Flavor:Google http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip
+Service Account Email:
+curl -H Metadata-Flavor:Google http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/email
+Service Account Token:
+curl -H Metadata-Flavor:Google http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token
+API Scopes:
+curl -H Metadata-Flavor:Google http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/scopes
+Zone:
+curl -H Metadata-Flavor:Google http://metadata.google.internal/computeMetadata/v1/instance/zone 
+Instance ID:
+curl -H Metadata-Flavor:Google http://metadata.google.internal/computeMetadata/v1/instance/id   
+Project ID:   
+curl -H Metadata-Flavor:Google http://metadata.google.internal/computeMetadata/v1/project/project-id
+Numeric Project ID:
+curl -H Metadata-Flavor:Google http://metadata.google.internal/computeMetadata/v1/project/numeric-project-id
+SSH Public Keys:
+curl -H Metadata-Flavor:Google http://metadata.google.internal/computeMetadata/v1/project/attributes/  
+
