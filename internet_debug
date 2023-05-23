@@ -1,0 +1,4 @@
+1. Get the IP information of the nat gateway, the Internet gateway, the public IP of VM
+https://ipinfo.io/
+or curl ipinfo.io
+
