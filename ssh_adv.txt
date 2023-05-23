@@ -31,3 +31,6 @@ scp  username@proxy_external_ip(or dst_ip):full_path/$1 ./
 #6. upload by proxy
 
 scp -i private_ssh_key_to_dst.pem -o "ProxyCommand ssh  -W %h:%p username@proxy_ip" file_to_send username@dst_ip:dst_path
+
+#7. Run commands, e.g. Get the Azure VM's internal IP
+ssh -i /path/to/ssh_private_key username@dst_ip  -o "proxycommand ssh -W %h:%p -i /path/to/ssh_private_key username@proxy_ip" 'curl -s  -H  Metadata:true   --noproxy "*" "http://169.254.169.254/metadata/instance?api-version=2021-02-01"; exit'|jq '.network .interface[0] .ipv4 .ipAddress[0] .privateIpAddress'
