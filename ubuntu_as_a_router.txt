@@ -59,6 +59,8 @@ default via 10.0.1.1 dev ens4 proto dhcp src 10.0.1.2 metric 100
 
 # uncomment "net.ipv4.ip_forward=1" in the "/etc/sysctl.conf", then run "sudo sysctl -p"
 
+# For FreeBSD: route add 10.1.0.0/16 10.1.1.1 -static -iface -ifp vtnet1
+
 3. configure in the GCP console: vpc network --> route --> route management --> add route
 Name: default-to-vpc2
 Network: vpc1
