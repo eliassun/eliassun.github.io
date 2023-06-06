@@ -1,2 +1,5 @@
 #1. proto and port
 tcpdump -i enp1s0 udp and port 50
+
+Details:
+https://gist.github.com/tuxfight3r/9ac030cb0d707bb446c7
