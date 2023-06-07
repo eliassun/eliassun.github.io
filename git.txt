@@ -1,8 +1,17 @@
 # List all tags
 git tag
+
 # List all branches
 git branch
+
 # List all tags contain a commit
 git tag --contains hash(e.g. c09a85a4746)
+
 # List all branches contain a commit
 git branch --contains hash(e.g. c09a85a4746)
+
+# cherry pick
+git cherry-pick -m 1 hash(e.g.fd9f578) # -m 1 or 2,  depends its parents
+git cherry-pick hash
+
+
