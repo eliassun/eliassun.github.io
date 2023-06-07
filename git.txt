@@ -1,0 +1,8 @@
+# List all tags
+git tag
+# List all branches
+git branch
+# List all tags contain a commit
+git tag --contains hash(e.g. c09a85a4746)
+# List all branches contain a commit
+git branch --contains hash(e.g. c09a85a4746)
