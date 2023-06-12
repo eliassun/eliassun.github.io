@@ -11,4 +11,7 @@ netcat -v -u -z 104.26.11.68 161
 -u uses UDP instead of TCP (the default behavior)
 -z scans for listening ports only
 
+# Only top 20 records
+ps -aux|head -n 20
+
 
