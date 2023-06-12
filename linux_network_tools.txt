@@ -1,0 +1,14 @@
+# scan UDP ports
+sudo apt install nmap
+sudo nmap -sU -p 161 itsfoss.com
+-sU was used to force nmap to scan for UDP ports
+-p option was used to mention specific ports or you can also use a range of ports here
+
+# Ping UDP port
+netcat -v -u -z itsfoss.com 161
+netcat -v -u -z 104.26.11.68 161
+-v was used to produce verbose output
+-u uses UDP instead of TCP (the default behavior)
+-z scans for listening ports only
+
+
