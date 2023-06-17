@@ -76,3 +76,7 @@ curl -H Metadata-Flavor:Google http://metadata.google.internal/computeMetadata/v
 SSH Public Keys:
 curl -H Metadata-Flavor:Google http://metadata.google.internal/computeMetadata/v1/project/attributes/  
 
+10. GCP routes to a VM of VPC
+1. route whole VPC to ILB in another VPC. ILB in front of that VM
+2. route the local network(VPC) to the Internet gateway; route the remote peer of that VM to the Internet gateway; route all other traffic to that vm
+3. policy-based routes, but it is still in the preview
