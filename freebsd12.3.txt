@@ -23,3 +23,10 @@ sudo pkg install git
 cd pygeoip
 python3 setup.py install
 
+### network config /etc/rc.conf
+hostname="zsdemo-cc-vm-klzqksin-xdkd.c.cc-poc-host-project-01.internal"
+network_interfaces="vtnet0 vtnet1 lo0"
+#ifconfig_vtnet1="SYNCDHCP"
+ifconfig_vtnet1="inet 10.0.1.3 netmask 255.255.255.0"
+defaultrouter="10.0.1.1"
+
