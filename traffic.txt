@@ -5,8 +5,8 @@ curl -o /dev/null -s -w "%{http_code}\n" http://localhost
 curl -k -o /dev/null -s -w "%{http_code}\n" https://www.cisco.com
 
 #nmap
-  sudo apt-get update
-  sudo apt-get install nmap
-  sudo nmap -sUV -T4 scanme.nmap.org
-  sudo nping --udp --traceroute -c 13 -p 53 scanme.nmap.org
+sudo apt-get update
+sudo apt-get install nmap
+sudo nmap -sU -v scanme.nmap.org
+sudo nping --udp --traceroute -c 13 -p 53 scanme.nmap.org
 
