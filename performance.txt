@@ -9,4 +9,4 @@ sudo iperf3 -s -B 0.0.0.0 -f m
 # Or iperf3 -s -D > iperf3log  ; -D write to log file
 # -c: client mode; 
 iperf3 -c 34.28.29.104 -f m
-
+iperf3 -c 34.28.29.104 --bidir
