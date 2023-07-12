@@ -1,4 +1,4 @@
-#iperf3
+#iperf3 https://help.mulesoft.com/s/article/How-to-Test-TCP-UDP-Traffic-Between-2-Servers-in-Each-Direction-Using-iperf3
 
 sudo add-apt-repository universe 
 sudo apt update && sudo apt install iperf3
