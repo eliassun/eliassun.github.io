@@ -10,3 +10,4 @@ sudo iperf3 -s -B 0.0.0.0 -f m
 # -c: client mode; 
 iperf3 -c 34.28.29.104 -f m
 iperf3 -c 34.28.29.104 --bidir
+iperf3 -c 34.28.29.104 -f m -u
