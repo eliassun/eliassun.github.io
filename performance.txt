@@ -8,5 +8,5 @@ iperf3 -s -f k
 sudo iperf3 -s -B 0.0.0.0 -f m
 # Or iperf3 -s -D > iperf3log  ; -D write to log file
 # -c: client mode; 
-iperf3 -c 192.168.10.1 -f k 
+iperf3 -c 34.28.29.104 -f m
 
