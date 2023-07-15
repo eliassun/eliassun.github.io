@@ -11,3 +11,4 @@ sudo iperf3 -s -B 0.0.0.0 -f m
 iperf3 -c 34.28.29.104 -f m
 iperf3 -c 34.28.29.104 --bidir
 iperf3 -c 34.28.29.104 -f m -u
+iperf3 -c 35.222.32.21  -f m --bidir
