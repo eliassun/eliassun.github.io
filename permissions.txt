@@ -1,0 +1,16 @@
+# GCP permissions to create a shared VPC
+Composer Shared VPC Agent
+Compute Admin
+Compute Image User
+Compute Instance Admin (v1)
+Compute Load Balancer Services User
+Compute Network Admin
+Compute Organization Firewall Policy Admin
+Compute Security Admin
+DNS Administrator
+Network Connectivity Service Agent
+Organization Administrator
+Security Admin
+Service Account Admin
+Service Account User
+TPU Shared VPC Agent
