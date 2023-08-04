@@ -1,6 +1,8 @@
-# get Metadata 
+# get instance information, including the image name
 curl -s  -H  Metadata:true --noproxy "*" "http://169.254.169.254/metadata/instance?api-version=2021-02-01"
+
 # get resource token
 curl -s  -H  Metadata:true --noproxy "*" "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fvault.azure.net"
-#get secret 
+# get secret 
 curl -s  -H   --noproxy "*" "https://esunkeyvalult01.vault.azure.net/secrets/username?api-version=7.1"  -H "Authorization: Bearer ${token}"
+# get 
