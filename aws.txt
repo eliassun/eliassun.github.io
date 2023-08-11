@@ -1,3 +1,4 @@
+# Debug at the cloud by enabling VPC log: https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs-cwl.html , firstly create a policy, then create a role with that policy
 
 # List AWS image name
 TOKEN=`curl -s -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"` 
