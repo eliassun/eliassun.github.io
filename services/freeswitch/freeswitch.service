@@ -1,0 +1,35 @@
+[Unit]
+Description=freeswitch
+Wants=network-online.target
+Requires=syslog.socket network.target local-fs.target
+After=syslog.socket network.target network-online.target local-fs.target
+
+[Service]
+Type=forking
+Environment="DAEMON_OPTS=-nonat"
+EnvironmentFile=-/etc/default/freeswitch
+ExecStartPre=/bin/chown -R freeswitch:freeswitch /usr/local/freeswitch
+ExecStart=/usr/bin/freeswitch -u freeswitch -g freeswitch -ncwait $DAEMON_OPTS
+TimeoutSec=45s
+Restart=always
+RestartSec=90
+StartLimitInterval=0
+StartLimitBurst=6
+
+User=root
+Group=daemon
+LimitCORE=infinity
+LimitNOFILE=100000
+LimitNPROC=60000
+LimitSTACK=250000
+LimitRTPRIO=infinity
+LimitRTTIME=infinity
+IOSchedulingClass=realtime
+IOSchedulingPriority=2
+CPUSchedulingPolicy=rr
+CPUSchedulingPriority=89
+UMask=0007
+NoNewPrivileges=false
+
+[Install]
+WantedBy=multi-user.target
