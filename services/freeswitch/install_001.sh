@@ -16,6 +16,12 @@ sudo echo "progress 10% ... " > /home/ubuntu/install/progress.log
 sudo apt install -y git subversion build-essential autoconf automake libtool libncurses5 libncurses5-dev make libjpeg-dev libtool libtool-bin libsqlite3-dev libpcre3-dev libspeexdsp-dev libldns-dev libedit-dev yasm liblua5.2-dev libopus-dev cmake
 sudo apt install -y libcurl4-openssl-dev libexpat1-dev libgnutls28-dev libtiff5-dev libx11-dev unixodbc-dev libssl-dev python-dev zlib1g-dev libasound2-dev libogg-dev libvorbis-dev libperl-dev libgdbm-dev libdb-dev uuid-dev libsndfile1-dev
 
+sudo apt-get install zlib1g-dev
+sudo apt-get install libcurl4-openssl-dev
+sudo apt-get install pkg-config
+sudo apt-get install libtiff-dev
+
+
 sudo echo "progress 15% ... " > /home/ubuntu/install/progress.log
 
 cd /usr/src
@@ -44,6 +50,7 @@ sudo echo "progress 30% ... " > /home/ubuntu/install/progress.log
 sudo apt-get install -y libavformat-dev >> /home/ubuntu/install/libavformat.log
 sudo apt-get install -y libswscale-dev >> /home/ubuntu/install/libavformat.log
 sudo apt-get install -y libpq-dev >> /home/ubuntu/install/libavformat.log
+
 
 sudo echo "progress 35% ... " > /home/ubuntu/install/progress.log
 cd /usr/src
