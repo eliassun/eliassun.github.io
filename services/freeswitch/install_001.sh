@@ -72,6 +72,10 @@ sudo make >  /home/ubuntu/install/freeswitch.make.log
 
 sudo make install > /home/ubuntu/install/freeswitch.install.log
 
+sudo echo "progress 50% ... " > /home/ubuntu/install/progress.log
+
+sudo make mod_sofia-install > /home/ubuntu/install/freeswitch.mod_sofia.install.log
+
 sudo echo "progress 60% ... " > /home/ubuntu/install/progress.log
 sudo make all cd-sounds-install cd-moh-install >  /home/ubuntu/install/sound.make.log
 sudo ln -s /usr/local/freeswitch/bin/freeswitch /usr/bin/
