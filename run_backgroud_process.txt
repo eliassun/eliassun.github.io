@@ -1,0 +1,4 @@
+1. Run from terminal
+sudo nohup python3 main.py  &
+disown
+
