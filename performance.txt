@@ -15,3 +15,22 @@ iperf3 -c 34.28.29.104 -f m -u
 iperf3 -c 35.222.32.21  -f m --bidir
 # bidirectiont
 iperf3 -c 34.121.103.13 -f m --bidir
+
+
+# performance setup 101
+
+bastion --- iperf-c(s) --- device to test --- iperf-s(s)
+
+- bastion will play as a controller to control iperf-c and iperf-s to generate the traffic
+
+- iperfc's IP and iperfs's IP is 1:1 match. iperfc bind one IP then iperfs bind one IP. AWS one interface can have multiple private IPs, e.g. 15
+
+- bastion can be m5.16xlarge, same iperf-c and iperf-s
+
+- run should use nohup, e.g. "sudo nohup test > iperf.log  2>&1  &" and disown
+
+
+
+
+
+
