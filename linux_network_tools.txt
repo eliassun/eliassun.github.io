@@ -1,3 +1,15 @@
+# download all links
+
+wget \
+     --recursive \
+     --page-requisites \
+     --span-hosts \
+     --convert-links \
+     --restrict-file-names=windows \
+     --domains 10.64.100.155 \
+     --no-parent http://10.64.100.155:8081/ec-developer-repositories/main/FreeBSD:11:amd64/
+
+
 # scan UDP ports
 sudo apt install nmap
 sudo nmap -sU -p 161 itsfoss.com
