@@ -7,7 +7,7 @@ wget \
      --convert-links \
      --restrict-file-names=windows \
      --domains 10.64.100.155 \
-     --no-parent http://10.64.100.155:8081/ec-developer-repositories/main/FreeBSD:11:amd64/
+     --no-parent http://link_to_download
 
 
 # scan UDP ports
