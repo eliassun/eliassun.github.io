@@ -9,6 +9,9 @@ wget \
      --domains 10.64.100.155 \
      --no-parent http://link_to_download
 
+# Scan unused IP address
+nmap -sP -PR 192.168.0.*
+
 
 # scan UDP ports
 sudo apt install nmap
