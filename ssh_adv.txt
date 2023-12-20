@@ -34,3 +34,9 @@ scp -i private_ssh_key_to_dst.pem -o "ProxyCommand ssh  -W %h:%p username@proxy_
 
 #7. Run commands, e.g. Get the Azure VM's internal IP
 ssh -i /path/to/ssh_private_key username@dst_ip  -o "proxycommand ssh -W %h:%p -i /path/to/ssh_private_key username@proxy_ip" 'curl -s  -H  Metadata:true   --noproxy "*" "http://169.254.169.254/metadata/instance?api-version=2021-02-01"; exit'|jq '.network .interface[0] .ipv4 .ipAddress[0] .privateIpAddress'
+
+8. upload with proxy
+
+scp -o "proxycommand ssh -W %h:%p root@10.66.107.15" -i zscc-key-t2wzlwgp.pem -r ../../reference  root@192.168.1.4:/tmp
+
+
