@@ -1,1 +1,7 @@
 /Library/Application Support/Bumblebee/Logs  openvpn log
+
+- last-reboot-info.txt  reboot time
+
+- tunnelblick-installer-log.txt  installation log
+
+- 
