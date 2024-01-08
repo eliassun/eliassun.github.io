@@ -1,0 +1,5 @@
+* element
+element(list, index)
+e.g. element(["a", "b", "c"], length(["a", "b", "c"])-1)
+list[0] == element(list, 0)
+
