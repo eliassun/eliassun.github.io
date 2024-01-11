@@ -1,0 +1,3 @@
+security find-identity -v -p codesigning
+xcrun altool --notarize-app   --primary-bundle-id "com.bumblebeenet.useragent" --username xxxxxx --password   xxxxxx  --file "Bumblebee.dmg"
+xcrun altool --notarization-info xxxxxxx  --username elias.sun.amazon@gmail.com --password   xxxx
