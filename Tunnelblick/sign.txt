@@ -5,3 +5,6 @@ security find-certificate -c "cert" -p | openssl x509 -noout -fingerprint
 
 #
 xattr -lr  Bumblebee.app
+
+# sign kenerl
+https://developer.apple.com/contact/kext/
