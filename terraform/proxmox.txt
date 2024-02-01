@@ -1,4 +1,4 @@
-1. Proxmox provider:
+#1. Proxmox provider:
 # https://registry.terraform.io/providers/bpg/proxmox/latest/docs
 provider "proxmox" {
     pm_api_url      = https://proxmox_host/api2/json
@@ -7,7 +7,7 @@ provider "proxmox" {
     pm_tls_insecure = true (or false)
 }
 
-2. Terraform modules:
+#2. Terraform modules:
 terraform {
   required_providers {
     random = {
@@ -35,7 +35,7 @@ terraform {
 }
 
 
-3. Create a VM from a template
+#3. Create a VM from a template
 resource "proxmox_vm_qemu" "proxmox_vm" {
     count       = n
     vmid        = random_vm_id
@@ -104,7 +104,7 @@ qm set 9001 --cicustom \"user=local:{user_data_file_name}\"
 qm start 9001
 
 
-4. Copy cloud-init 
+#4. Copy cloud-init 
 
 resource "null_resource" "copy_cloud_init_config_files" {
     connection {
@@ -124,7 +124,7 @@ resource "null_resource" "copy_cloud_init_config_files" {
   ]
 }
 
-5. Get the IP of the container
+#5. Get the IP of the container
 resource "null_resource" "get_lxc_ip" {
   provisioner "local-exec" {
     command = <<-EOT
@@ -139,7 +139,7 @@ resource "null_resource" "get_lxc_ip" {
   }
 }
 
-6. Check the VM on the proxmox host
+#6. Audit the VM cd-room and bootdisk on the proxmox host
 
 resource "null_resource" "refresh" {
   triggers = {
@@ -235,7 +235,7 @@ EOF
   }
 }
 
-7. Create the contain in the Proxmox
+#7. Create the container in the Proxmox
 resource "proxmox_lxc" "my_container" {
   target_node  = proxmox_node
   hostname     = 
