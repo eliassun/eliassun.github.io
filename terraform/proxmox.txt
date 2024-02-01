@@ -133,3 +133,100 @@ resource "null_resource" "get_lxc_ip" {
     always_run = timestamp()
   }
 }
+
+6. Check the VM on the proxmox host
+
+resource "null_resource" "refresh" {
+  triggers = {
+    bastion_username   = 
+    bastion_password   = 
+    bastion_ip         =
+    image_template_id  = 
+  }
+  connection {
+    type     = "ssh"
+    user     = self.triggers.bastion_username
+    password = self.triggers.bastion_password
+    host     = self.triggers.bastion_ip
+  }
+
+  provisioner "file" {
+    content     = <<EOF
+#!/bin/bash
+attach_cloud_init() {
+    qm set ${vm_id} --ide2 local-1:cloudinit
+}
+
+attach_boot_disk() {
+    qm set ${vm_id}  --virtio0 local-1:vm-${vm_id}-disk-0
+}
+
+handle_msg() {
+    local err="$1"
+    if [ -z "$err" ]; then
+        return 0
+    elif [[ "$err" == *"already exists"* ]]; then
+        return 0 
+    else
+        return 1
+    fi
+}
+
+max_execution_time=610 
+start_time=$(date + %s)
+max_attempts=300
+current_attempt=1
+
+while [ $(( $(date +%s) - start_time )) -le $max_execution_time ] && [ $current_attempt -le $max_attempts ]; do
+    # Execute command 1 and capture its output and error
+    attach_cloud_init
+    exit_status=$?
+    output1=$(attach_cloud_init 2>&1)
+    err_msg="$output1"
+
+    if [ $exit_status -eq 0 ] || handle_msg "$err_msg"; then
+        echo "Attached cloud init cd-room. Audit it in 10 seconds"
+        sleep 8
+        attach_cloud_init
+        echo "Ok for attach_cloud_init. Continuing..."
+        break  
+    else
+        echo "attach_cloud_init failed. Retrying..."
+        ((current_attempt++))
+    fi
+    sleep 2
+done
+
+current_attempt=1
+while [ $(( $(date +%s) - start_time )) -le $max_execution_time ] && [ $current_attempt -le $max_attempts ]; do
+    attach_boot_disk
+    exit_status=$?
+    output2=$(attach_boot_disk 2>&1)
+    err_msg="$output2"
+
+    if [ $exit_status -eq 0 ] || handle_msg "$err_msg"; then
+        echo "Attached boot disk cd-room. Audit it in 10 seconds"
+        sleep 5  
+        attach_boot_disk
+        echo "Ok for attach_boot_disk.  Continuing ..."
+        break  
+    else
+        echo "attach_boot_disk failed. Retrying..."
+        ((current_attempt++))
+    fi
+    sleep 2
+done
+
+EOF
+    destination = "file_on_the_remote_server"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x file_on_the_remote_server",
+      "file_on_the_remote_server"
+    ]
+    on_failure = continue
+  }
+}
+
