@@ -80,3 +80,20 @@ resource "proxmox_vm_qemu" "proxmox_vm" {
   }
 }
 
+Create image template on the Proxmox host:
+
+qm create 9001 --name qcow2-template --bios seabios --memory 4096 --cpu host --socket 1 --cores 1 --net0 virtio,bridge=vmbr0 --net1 virtio,bridge=vmbr1 --serial0 socket
+
+qm importdisk 9001 /var/lib/vz/template/my_image.qcow2 local-3
+
+qm set 9001 --virtio0 local-3:vm-9001-disk-0
+
+qm set 9001 --boot c --bootdisk virtio0 --scsihw lsi
+
+qm set 9001 --ide2 local-3:cloudinit
+
+qm set 9001 --serial0 socket --vga serial0
+
+qm set 9001 --agent enabled=1
+
+qm template 9001
