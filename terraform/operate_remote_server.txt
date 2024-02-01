@@ -36,3 +36,31 @@ resource "null_resource" "run_cmd_on_server" {
     null_resource.copy_files_to_server
   ]
 }
+
+
+resource "null_resource" "run_cmd_on_server" {
+    connection {
+        type                = "ssh"
+        user                = 
+        password            = 
+        host                = remote_server_ip
+    }
+
+  provisioner "file" {
+    content             = <<EOF
+   cmd1
+   cmd2
+EOF
+        destination         = "file_in_the_remote_server"
+    }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x file_in_the_remote_server",
+      "file_in_the_remote_server",
+      "rm -rf file_in_the_remote_server"
+    ]
+  }
+}
+
+
