@@ -118,3 +118,18 @@ resource "null_resource" "copy_cloud_init_config_files" {
     local_sensitive_file.local_userdata
   ]
 }
+
+5. Get the IP of the container
+resource "null_resource" "get_lxc_ip" {
+  provisioner "local-exec" {
+    command = <<-EOT
+      digit_id=$(basename "${lxc_vm.vmid}")
+      ssh username@proxmox_host_ip lxc-info -n $digit_id | awk '/IP:/ {print $2}' > local_file.xt
+      lxc_vm_ip=`cat local_file.txt`
+      sed -i "s/special_tag/$lxc_vm_ip/g" final_file_need_this_ip
+    EOT
+  }
+  triggers = {
+    always_run = timestamp()
+  }
+}
