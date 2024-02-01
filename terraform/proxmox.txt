@@ -52,7 +52,7 @@ resource "proxmox_vm_qemu" "proxmox_vm" {
     qemu_os                 = # "ubuntu" or "other"
 
     # Cloudinit
-    cicustom                = #path to a custom cloud-init config, e.g. user=local:snippets/userdata.cfg
+    cicustom                = #path to a custom cloud-init config, e.g. user=local:snippets/local_userdata.yml
     cloudinit_cdrom_storage = # storage to create cloudinit,e.g. local-1
     agent                   = 1
 
@@ -97,3 +97,24 @@ qm set 9001 --serial0 socket --vga serial0
 qm set 9001 --agent enabled=1
 
 qm template 9001
+
+
+4. Copy cloud-init 
+
+resource "null_resource" "copy_cloud_init_config_files" {
+    connection {
+        type                = "ssh"
+        user                = 
+        password            = 
+        host                = proxmox_host_ip
+    }
+
+    provisioner "file" { 
+      source      = "local_userdata.yml"
+      destination = "/var/lib/vz/snippets/remote_userdata.yml"
+    }
+
+  depends_on = [
+    local_sensitive_file.local_userdata
+  ]
+}
