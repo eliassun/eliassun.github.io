@@ -1,4 +1,4 @@
-1. Copy files to the remote server
+#1. Copy files to the remote server
 https://developer.hashicorp.com/terraform/language/resources/provisioners/file
 Copy by SSH
 resource "null_resource" "copy_files_to_server" {
@@ -15,7 +15,7 @@ resource "null_resource" "copy_files_to_server" {
     }
 }
 
-2. Run the command on the remote server
+#2. Run the command on the remote server
 
 resource "null_resource" "run_cmd_on_server" {
     connection {
