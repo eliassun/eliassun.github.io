@@ -1,0 +1,82 @@
+1. Proxmox provider:
+# https://registry.terraform.io/providers/bpg/proxmox/latest/docs
+provider "proxmox" {
+    pm_api_url      = https://proxmox_host/api2/json
+    pm_user         = 
+    pm_password     = 
+    pm_tls_insecure = true (or false)
+}
+
+2. Terraform modules:
+terraform {
+  required_providers {
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.3.0"
+    }
+    local = {
+      source  = "hashicorp/local"
+      version = "~> 2.2.0"
+    }
+    null = {
+      source  = "hashicorp/null"
+      version = "~> 3.1.0"
+    }
+    tls = {
+      source  = "hashicorp/tls"
+      version = "~> 3.4.0"
+    }
+  }
+  proxmox = {
+      source  = "thegameprofi/proxmox" # or telmate/proxmox
+      version = ">= 2.9.15"
+  }
+  required_version = ">= 0.13.7, < 2.0.0"
+}
+
+
+3. Create a VM from a template
+resource "proxmox_vm_qemu" "proxmox_vm" {
+    count       = n
+    vmid        = random_vm_id
+    name        = coalesce(var.proxmox_vm_name, "proxm_vm-${count.index + 1}")
+    target_node = # the name of node, e.g. proxmox_node_1
+
+    desc = "my proxmox vm"
+
+    clone                   = # need to make template first
+    full_clone              = true
+    os_type                 = "cloud-init"
+    bios                    = # seabios or ovmf
+    scsihw                  = # lsi, lsi53c810, megasas, pvscsi, virtio-scsi-pci, virtio-scsi-single
+    qemu_os                 = # "ubuntu" or "other"
+
+    # Cloudinit
+    cicustom                = #path to a custom cloud-init config, e.g. user=local:snippets/userdata.cfg
+    cloudinit_cdrom_storage = # storage to create cloudinit,e.g. local-1
+    agent                   = 1
+
+    sockets                 = 1
+    cores                   = 4
+    numa                    = false
+    memory                  = 4096
+
+    network {
+      model               = # virtio or e1000
+      bridge              = # vmbr1...
+      firewall            = false
+    }
+
+
+    serial {
+        id                  = 0
+        type                = "socket"
+    }
+
+  lifecycle {
+     ignore_changes = [
+       network, desc, cloudinit_cdrom_storage, disks
+     ]
+  }
+}
+
