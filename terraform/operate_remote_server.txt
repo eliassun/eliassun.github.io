@@ -1,0 +1,16 @@
+1. Copy files to the remote servers
+https://developer.hashicorp.com/terraform/language/resources/provisioners/file
+Copy by SSH
+resource "null_resource" "copy_files_to_server" {
+    connection {
+        type                = "ssh"
+        user                = 
+        password            = 
+        host                = remote_server_ip
+    }
+
+    provisioner "file" {
+      source      = local_file
+      destination = remote_file
+    }
+}
