@@ -1,0 +1,10 @@
+1. nest if ... else
+
+policy = condition_1 ? yes_1 : (condition_2 ? yes_2 : yes_3)
+policy = condition_1 ?  (condition_2 ? yes_2 : yes_3) : (condition_3 ? yes_2 : yes_3)
+
+2. try(value1, value2)
+the way #1 is prefered.
+
+
+
