@@ -265,3 +265,13 @@ Static IP:
     ip     = 
     gw     = 
   }
+
+#7. get the VM ip 
+pvesh get /nodes/<hostname>/qemu/<vmid>/agent/network-get-interfaces
+
+pvesh get /nodes/pve/qemu/201/agent/network-get-interfaces -o json | jq
+
+output=$(qm config ${vmid} | grep net0)
+mac_address=$(echo "$output" | awk -F'=' '{print $2}' | cut -d',' -f1)
+ip_address=$(arp -n | grep -i "$mac_address" | awk '{print $1}')
+
