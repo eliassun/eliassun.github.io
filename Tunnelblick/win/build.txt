@@ -1,3 +1,11 @@
 # Allow to run powershell script:
 Set-ExecutionPolicy RemoteSigned
 https://stackoverflow.com/questions/4037939/powershell-says-execution-of-scripts-is-disabled-on-this-system
+
+# Install Visual Studio 2022 and install all arch
+
+# Install wix and dotnet SDK and set WIX env into the openvpn-build
+
+# openvpn 2.6.9 source code, follow the win cmake readme to install cmake and python
+
+# run the openvpn-build script to build gui and openvpn
