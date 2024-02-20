@@ -4,7 +4,7 @@ https://stackoverflow.com/questions/4037939/powershell-says-execution-of-scripts
 
 # Install Visual Studio 2022 and install all arch
 
-# Install wix and dotnet SDK and set WIX env into the openvpn-build
+# Install wix and dotnet SDK and set WIX env into the openvpn-build. It needs to install wix3.x by downloading
 
 # openvpn 2.6.9 source code, follow the win cmake readme to install cmake and python
 
