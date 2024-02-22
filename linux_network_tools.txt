@@ -1,4 +1,10 @@
+#ubuntu vlan
+ip link add link eth0 vlan105 type vlan id 105
+
+ifconfig vlan105 up
+
 # netplan example:
+netplay apply
 
 cat /etc/netplan/00-installer-config.yaml  
 network:
