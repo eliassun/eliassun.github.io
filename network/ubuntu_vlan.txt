@@ -1,3 +1,21 @@
 sudo apt install net-tools vlan bridge-utils
 sudo modprobe 8021q
 echo 8021q >> /etc/modules
+
+/etc/netplan/xxxx:
+network:
+  ethernets:
+    ens18:
+      dhcp4: true
+  bridges:
+    br0:
+      interfaces: [ens18]
+      dhcp4: true
+    br105:
+      interfaces: [vlan105]
+      addresses: [192.168.105.171/24]
+  vlans:
+    vlan105:
+      id: 105
+      link: ens18
+  version: 2
