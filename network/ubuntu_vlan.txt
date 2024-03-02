@@ -1,0 +1,3 @@
+sudo apt install net-tools vlan bridge-utils
+sudo modprobe 8021q
+echo 8021q >> /etc/modules
