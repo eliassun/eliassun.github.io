@@ -1,3 +1,4 @@
+# Install tagged vlan
 sudo apt install net-tools vlan bridge-utils
 sudo modprobe 8021q
 echo 8021q >> /etc/modules
@@ -19,3 +20,9 @@ network:
       id: 105
       link: ens18
   version: 2
+
+# Install untagged vlan
+https://ubuntu.com/server/docs/network-configuration
+
+# DHCP IP relase and re new 
+dhclient -r -v eth0 && rm /var/lib/dhcp/dhclient.* ; dhclient -v eth0
