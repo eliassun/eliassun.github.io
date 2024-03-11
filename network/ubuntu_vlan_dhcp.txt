@@ -26,3 +26,35 @@ https://ubuntu.com/server/docs/network-configuration
 
 # DHCP IP relase and re new 
 dhclient -r -v eth0 && rm /var/lib/dhcp/dhclient.* ; dhclient -v eth0
+
+If vlan static ip:
+network:
+  ethernets:
+    ens18:
+      dhcp4: true
+      routes:
+        - to: default
+          via: 192.168.1.1
+      nameservers:
+          addresses: [8.8.8.8, 1.1.1.1]
+    ens19:
+      addresses: [192.168.4.172/24]
+      routes:
+        - to: default
+          via: 192.168.4.171
+      nameservers:
+          addresses: [8.8.8.8, 1.1.1.1]
+  bridges:
+    br104:
+      interfaces: [vlan104]
+      addresses: [192.168.104.111/24]
+      routes:
+        - to: default
+          via: 192.168.104.1
+      nameservers:
+          addresses: [8.8.8.8, 1.1.1.1]
+  vlans:
+    vlan104:
+      id: 104
+      link: ens19
+  version: 2
