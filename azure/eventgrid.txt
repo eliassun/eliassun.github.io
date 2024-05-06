@@ -1,0 +1,39 @@
+#1 get token
+az account get-access-token
+
+#2 create the destination (service provider side/my side, and the customer side)
+2.1 The peer (customer side) needs to do "Partner Events"--> "Partner configurations"
+2.2 Add a Partner Authorization with The partner registeration token(from service provider side or my side)
+2.3 The sp side needs to support the webhook validation from the customer side in the Azure Function App
+import azure.functions as func
+import logging
+
+app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
+
+@app.route(route="webhook_validation")
+def esun_webhook_test(req: func.HttpRequest) -> func.HttpResponse:
+    logging.info('Python HTTP trigger function processed a request.')
+    webhook_req_origin = req.headers.get("WebHook-Request-Origin")
+    webhook_req_callback = req.headers.get("WebHook-Request-Callback")
+    webhook_req_rate = req.headers.get("WebHook-Request-Rate")
+    name = req.params.get('name')
+
+    headers = dict()
+    headers["WebHook-Allowed-Rate"] = "*"
+    headers["WebHook-Allowed-Origin"] = webhook_req_origin
+
+    if not name:
+        try:
+            req_body = req.get_json()
+        except ValueError:
+            pass
+        else:
+            name = req_body.get('name')
+
+    if name:
+        return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.", headers=headers)
+    else:
+        return func.HttpResponse(
+             "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
+             status_code=200, headers=headers
+        )
