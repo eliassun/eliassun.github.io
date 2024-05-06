@@ -37,3 +37,5 @@ def esun_webhook_test(req: func.HttpRequest) -> func.HttpResponse:
              "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
              status_code=200, headers=headers
         )
+2.4 In the sp side creates the "Partner Destination Channels", The url needs to fill the url of the function app above. This is to send events to the customer.
+2.5 In the sp side creates the "Partner Topic Channels". This is for the events from the customer.
