@@ -1,0 +1,9 @@
+#1. SSH into Azure function App by:
+your_azure_function_app--> Development Tools --> SSH ---> Go
+
+#2. install vim by apt install vim
+
+#3. The App log is under
+/home/LogFiles/Application/Functions/Host
+
+
