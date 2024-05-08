@@ -1,0 +1,20 @@
+
+#1. Make a host.json file
+Read the document https://learn.microsoft.com/en-us/azure/azure-functions/functions-host-json
+
+#2. Make a  local.settings.json
+https://learn.microsoft.com/en-us/azure/azure-functions/functions-develop-local
+
+#3. Make a requirements.txt
+
+#4. Make a function_app.py for entry
+
+#5. Other modules
+
+#6. zip the files
+zip -r your_zip_file.zip  host.json function_app.py  requirements.txt  *.py your_module1 your_module2 ...
+
+#7. deploy
+az functionapp deployment source config-zip -g your_resource_group -n your_app_name --src your_zip_file.zip --build-remote true
+
+
