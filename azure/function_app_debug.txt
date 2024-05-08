@@ -1,3 +1,4 @@
+## SSH ##
 #1. SSH into Azure function App by:
 your_azure_function_app--> Development Tools --> SSH ---> Go
 
@@ -6,4 +7,12 @@ your_azure_function_app--> Development Tools --> SSH ---> Go
 #3. The App log is under
 /home/LogFiles/Application/Functions/Host
 
+
+## Advanced Tools ##
+#1. your_azure_function_app--> Development Tools --> Advanced Tools --> Go
+#2. "REST API" ---> "Files" --> search "LogFiles"
+#3. Copy the href url of "LogFiles" 
+#4. Open the URL above
+#5. Go to url above with  URL/Application/Functions/Host/
+From the #5, we can see the log output
 
