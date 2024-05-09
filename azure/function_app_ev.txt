@@ -1,6 +1,6 @@
 #1. setup python virtual env
 which python3.11 # The output may be /Library/Frameworks/Python.framework/Versions/3.11/bin/python3.11
-virtualenv --python="/Library/Frameworks/Python.framework/Versions/3.11/bin/python3.11"
+virtualenv --python="/Library/Frameworks/Python.framework/Versions/3.11/bin/python3.11" .
 python -m venv .venv
 
 #2. develop Azure function app locally
