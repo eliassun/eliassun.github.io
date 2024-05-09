@@ -1,0 +1,8 @@
+#1. setup python virtual env
+which python3.11 # The output may be /Library/Frameworks/Python.framework/Versions/3.11/bin/python3.11
+virtualenv --python="/Library/Frameworks/Python.framework/Versions/3.11/bin/python3.11"
+python -m venv .venv
+
+#2. develop Azure function app locally
+https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=macos%2Cisolated-process%2Cnode-v4%2Cpython-v2%2Chttp-trigger%2Ccontainer-apps&pivots=programming-language-python
+
