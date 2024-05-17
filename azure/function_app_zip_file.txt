@@ -1,3 +1,4 @@
+# Read https://www.pulumi.com/registry/packages/azure/api-docs/appservice/linuxfunctionapp/#zip_deploy_file_python if using Pulumi.
 
 #1. Make a host.json file
 Read the document https://learn.microsoft.com/en-us/azure/azure-functions/functions-host-json
