@@ -2,4 +2,7 @@
 https://stackoverflow.com/questions/54106071/how-can-i-set-up-a-virtual-environment-for-python-in-visual-studio-code
 It needs to add  a key pair: python.defaultInterpreterPath Your_venv_path/bin/python
 
-#1 How to enable pytest in visual studio: https://code.visualstudio.com/docs/python/testing
+#2 How to enable pytest in visual studio: https://code.visualstudio.com/docs/python/testing
+
+#3 Auzre function app remote debug
+https://jamiemaguire.net/index.php/2023/07/08/how-to-remote-debug-a-deployed-azure-function/
