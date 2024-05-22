@@ -1,0 +1,5 @@
+#1 How to make use the virtualenv in visual studio: 
+https://stackoverflow.com/questions/54106071/how-can-i-set-up-a-virtual-environment-for-python-in-visual-studio-code
+It needs to add  a key pair: python.defaultInterpreterPath Your_venv_path/bin/python
+
+#1 How to enable pytest in visual studio: https://code.visualstudio.com/docs/python/testing
