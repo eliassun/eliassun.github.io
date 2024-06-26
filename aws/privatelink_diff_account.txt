@@ -1,0 +1,16 @@
+# The 1st account A is the service account
+# The 2nd account B is the consumer account
+
+# In account A:
+1. Create a VPC vpc-a
+2. Create 2 private subnets(vpc-a-subnet-private-1, vpc-a-subnet-private-2) and 2 public subnets(vpc-a-subnet-public-1, vpc-a-subnet-public-2) in different AZ
+3. Create an instance as a jumper in the subnet vpc-a-subnet-public-1
+4. Create an instance in vpc-a-subnet-private-1, then install apache by sudo apt update; sudo apt install apache2
+5. Attach the security group with the port 80 and 22
+6. Create the NLB with the settings: internal, ipv4
+7. Create the endpoint service, and assign the principal account B: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html
+
+#In Account B:
+1. Same as account A #1-5
+2. Create the endpoint
+3. Get the subnet IP of the endpoint, then wget http://the_subnet_ip
