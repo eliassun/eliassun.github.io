@@ -1,0 +1,5 @@
+Azure APIM can control the REST API access policy.
+#1. Validate JWT https://learn.microsoft.com/en-us/azure/api-management/validate-jwt-policy
+Use a PKI public key to generate a key for "n" and the "e" for JWT.
+Then use the private key to generate a Bearer token.
+
