@@ -1,0 +1,2 @@
+  Remote debugger: python3 -m debugpy --listen 0.0.0.0:5678 --wait-for-client  app.py 
+  Local command line: python3 -m pdb app.py 
