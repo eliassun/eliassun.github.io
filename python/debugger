@@ -1,2 +1,14 @@
   Remote debugger: python3 -m debugpy --listen 0.0.0.0:5678 --wait-for-client  app.py 
   Local command line: python3 -m pdb app.py 
+
+
+# remote debugger for vscode:
+#!/bin/bash
+
+# Get the local IP address
+local_ip=$(hostname -I | awk '{print $1}')
+
+# Run the debugpy command with the dynamic IP address
+python3 -m debugpy --listen ${local_ip}:5678 --wait-for-client app.py
+
+
