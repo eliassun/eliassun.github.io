@@ -1,0 +1,22 @@
+lsblk
+fdisk /dev/sdb
+lsblk
+mkfs.ext4  /dev/sdb1
+mkfs.ext4  /dev/sdb1
+mkdir /mnt/hdd
+mount /dev/sdb1 /mnt/hdd
+echo '/dev/sdb1 /mnt/hdd ext4 defaults 0 2' >> /etc/fstab
+
+
+
+Or
+mkdir /mnt/backupHDD
+blkid | grep sda1 | grep UUID=
+/etc/fstab
+PARTUUID=xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxx   /mnt/backupHDD   ext4   defaults   0   2
+mount -a
+ls -la /mnt/backupHDD
+
+
+
+Datacenter -> Storage -> Add -> Directory
