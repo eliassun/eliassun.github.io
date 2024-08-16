@@ -1,1 +1,80 @@
+# Set up VGW and CGW.
+# here is the boto3 source code
+
+import boto3
+import botocore
+region=aws_region
+vpc_id=aws_vpc_id
+onpremise_ip=your_on_premise_ip
+onpremise_subnet=your_on_premise_subnet
+table_id=route_table_id
+client = boto3.client('ec2', region_name=region)
+ec2=client
+cgw_res = ec2.create_customer_gateway(Type='ipsec.1', PublicIp=onpremise_ip,  BgpAsn=65000)
+customer_gateway_id = cgw_res['CustomerGateway']['CustomerGatewayId']
+response = ec2.describe_vpcs(VpcIds=[vpc_id])
+vpc_cidr = response['Vpcs'][0]['CidrBlock']
+response = ec2.create_vpn_gateway(Type='ipsec.1', AmazonSideAsn=65001)
+vpn_gateway_id = response['VpnGateway']['VpnGatewayId']
+response = ec2.attach_vpn_gateway(VpcId=vpc_id, VpnGatewayId=vpn_gateway_id)
+response = ec2.create_vpn_connection(CustomerGatewayId=customer_gateway_id, VpnGatewayId=vpn_gateway_id, Type='ipsec.1', Options={'StaticRoutesOnly': True, 'LocalIpv4NetworkCidr':onpremise_subnet, 'RemoteIpv4NetworkCidr': vpc_cidr})
+vpn_connection_id = response['VpnConnection']['VpnConnectionId']
+response = ec2.create_vpn_connection_route(VpnConnectionId=vpn_connection_id, DestinationCidrBlock=onpremise_subnet)
+response = ec2.create_vpn_connection_route(VpnConnectionId=vpn_connection_id, DestinationCidrBlock=vpc_cidr)
+response=ec2.create_route(RouteTableId=table_id, DestinationCidrBlock=onpremise_subnet, GatewayId=vpn_gateway_id)
+response = ec2.enable_vgw_route_propagation(RouteTableId=table_id,GatewayId=vpn_gateway_id)
+
+# Download the strongswan configuration from AWS , selecting ike2
+root@ipsec1:~# cat /etc/ipsec.conf 
+# ipsec.conf - strongSwan IPsec configuration file
+
+config setup
+	charondebug="all"
+	uniqueids=yes
+	strictcrlpolicy=no
+
+
+conn Tunnel1
+	type=tunnel
+	auto=start
+	keyexchange=ikev2
+	authby=psk
+	leftid=on_premise_public_ip
+	leftsubnet=0.0.0.0/0 (or onpremise subnet cidr)
+	right=cgw_public_ip
+	rightsubnet=aws_vpc_cidr
+	aggressive=no
+	ikelifetime=28800s
+	lifetime=3600s
+	margintime=270s
+	rekey=yes
+	rekeyfuzz=100%
+	fragmentation=yes
+	replay_window=1024
+	dpddelay=30s
+	dpdtimeout=120s
+	dpdaction=restart
+	ike=aes128-sha1-modp1024
+	esp=aes128-sha1-modp1024
+	keyingtries=%forever
+
+
+root@ipsec1:~# cat /etc/ipsec.secrets 
+on_premise_public_ip cgw_public_ip : PSK "password_from_aws"
+
+
+# start ipsec
+ipsec restart
+#check status
+ipsec status
+root@ipsec1:~# ipsec status
+Security Associations (1 up, 0 connecting):
+     Tunnel1[1]: ESTABLISHED 19 minutes ago ...
+
+
+
+
+
+
+
 
