@@ -1,0 +1,3 @@
+# Find all IPs of ASN
+whois -h whois.radb.net — '-i origin AS32934' | grep ^route
+
