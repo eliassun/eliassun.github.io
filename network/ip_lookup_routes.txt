@@ -3,3 +3,22 @@ whois -h whois.radb.net — '-i origin AS32934' | grep ^route
 
 # Find vendor name
 whois 204.15.20.0 | grep -E '^(OriginAS|OrgName)'
+
+# whois
+whois.arin.net
+whois.ripe.net
+whois.apnic.net
+whois.lacnic.net
+whois.afrinic.net
+whois.iana.org
+whois.verisign-grs.com
+whois.afilias.net
+whois.neulevel.biz
+whois.nic.us
+whois.nic.uk
+whois.denic.de
+whois.cira.ca
+whois.audns.net.au
+whois.godaddy.com
+whois.namecheap.com
+
