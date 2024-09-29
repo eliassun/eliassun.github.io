@@ -1,3 +1,5 @@
 # Find all IPs of ASN
 whois -h whois.radb.net — '-i origin AS32934' | grep ^route
 
+# Find vendor name
+whois 204.15.20.0 | grep -E '^(OriginAS|OrgName)'
