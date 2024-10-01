@@ -1,0 +1,141 @@
+# https://www.ohyee.cc/post/note_suricata_start
+# suricata can call a lua script to do some advance functions.
+# make lua scripts under: /etc/suricata/lua, e.g.
+# 
+
+- lua:
+    enabled: yes
+    scripts-dir: /etc/suricata/lua/
+    scripts:
+      - tcp.lua
+      - tls.lua
+
+tcp.lua:
+local file
+local http = 0
+
+function init(args)
+    local needs = {}
+    needs["protocol"] = "http"
+    return needs
+end
+
+
+
+function setup(args)
+
+    local name = "tcp_lua.log"
+    local log_path = SCLogPath()
+    print("Log path: " .. log_path)  -- Debug statement
+
+    local filename = log_path .. "/" .. name
+    file, err = io.open(filename, "a")
+
+    if not file then
+        print("Failed to open log file: " .. err)
+        return
+    end
+
+    print("elias HTTP Log Filename: " .. filename)
+    http = 0
+end
+
+
+
+
+function log(args)
+    if not file then
+	filename = "/tmp/tcp_lua.log"
+        file, err = io.open(filename, "a")
+	if not file then
+             print("Failed to open log file: " .. err)
+             return
+         end
+    end
+
+    local http_uri = HttpGetRequestUriRaw() or "<unknown>"
+    http_uri = string.gsub(http_uri, "%c", ".")
+
+    local http_host = HttpGetRequestHost() or "<hostname unknown>"
+    http_host = string.gsub(http_host, "%c", ".")
+
+    local http_ua = HttpGetRequestHeader("User-Agent") or "<useragent unknown>"
+    http_ua = string.gsub(http_ua, "%g", ".")
+
+    local timestring = SCPacketTimeString()
+    local ip_version, src_ip, dst_ip, protocol, src_port, dst_port = SCFlowTuple()
+
+    file:write("elias" .. timestring .. " " .. http_host .. " [**] " .. http_uri .. " [**] " ..
+               http_ua .. " [**] " .. src_ip .. ":" .. src_port .. " -> " ..
+               dst_ip .. ":" .. dst_port .. "\n")
+    file:flush()
+
+    http = http + 1
+end
+
+function deinit(args)
+    print("elias HTTP transactions logged: " .. http)
+    if file then
+        file:close()
+    end
+end
+
+
+tls.lua:
+
+
+local file
+local http = 0
+
+function init(args)
+    local needs = {}
+    needs["protocol"] = "tls"
+    return needs
+end
+
+
+
+function setup(args)
+
+    local name = "tls_lua.log"
+    local log_path = SCLogPath()
+    print("Log path: " .. log_path)  -- Debug statement
+
+    local filename = log_path .. "/" .. name
+    file, err = io.open(filename, "a")
+
+    if not file then
+        print("Failed to open log file: " .. err)
+        return
+    end
+
+    print("elias HTTP Log Filename: " .. filename)
+    http = 0
+end
+
+
+
+
+function log(args)
+    if not file then
+	filename = "/tmp/tls_lua.log"
+        file, err = io.open(filename, "a")
+	if not file then
+             print("Failed to open log file: " .. err)
+             return
+         end
+    end
+    print("TLS is found")
+    print(TlsGetSNI())
+
+end
+
+function deinit(args)
+    print("elias HTTP transactions logged: " .. http)
+    if file then
+        file:close()
+    end
+end
+
+
+
