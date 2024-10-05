@@ -1,0 +1,94 @@
+#!/usr/bin/env lua
+
+local cjson = require("cjson")
+
+-- Function to convert timestamp formats
+local function convert_timestamp(ts)
+    -- Convert "MM/DD/YYYY-HH:MM:SS.ssssss" to ISO format "YYYY-MM-DDTHH:MM:SS.ssssssZ"
+    local month, day, year, hour, minute, second = ts:match("(%d+)/(%d+)/(%d+)-(%d+):(%d+):(%d+%.%d+)")
+    return string.format("%04d-%02d-%02dT%02d:%02d:%sZ", year, month, day, hour, minute, second)
+end
+
+-- Function to check if a log entry matches the search criteria
+local function matches(entry, search_dict)
+    return entry.alert.signature_id == tonumber(search_dict.sid) and
+           convert_timestamp(search_dict.timestamp) == entry.timestamp and
+           entry.flow_id == tonumber(search_dict.flow_id) and
+           entry.src_ip == search_dict.src_ip and
+           entry.dest_ip == search_dict.dest_ip and
+           entry.src_port == tonumber(search_dict.src_port) and
+           entry.dest_port == tonumber(search_dict.dest_port)
+end
+
+-- Read the log file
+local function search_log(file_path, entry)
+    local file = io.open(file_path, "r")
+    if not file then
+        print("Error opening file: " .. file_path)
+        return
+    end
+
+    for line in file:lines() do
+        local success, decoded_entry = pcall(cjson.decode, line)
+        if success then
+            if matches(decoded_entry, entry) then
+                print("Match found:", cjson.encode(decoded_entry))
+            end
+        else
+            print("Error decoding JSON:", decoded_entry)
+        end
+    end
+
+    file:close()
+end
+
+function init()
+    local needs     = {}
+    needs["type"]   = "packet"
+    needs["filter"] = "alerts"
+    return needs
+end
+
+function setup()
+
+end
+
+function log()
+    sid, rev, gid   = SCRuleIds()
+    id = SCFlowId()
+
+    ipver, srcip, dstip, proto, sp, dp = SCPacketTuple()
+
+    id = tonumber(SCFlowId())
+
+    sidstr = string.format("%.0f", tonumber(sid))
+    timestring      = SCPacketTimeString()
+    idstr = string.format("%.0f", id)
+    spstr = string.format("%.0f", sp)
+    dpstr = string.format("%.0f", dp)
+
+    msg = (
+    "{\"sid\": " .. "\"" .. sidstr ..  "\"" ..
+    ", \"timestamp\": " .. "\"".. timestring .. "\"" ..
+    ", \"flow_id\": " .. "\"".. idstr .. "\"" ..
+    ", \"src_ip\": " .. "\"" .. srcip .. "\""..
+    ", \"dest_ip\": " .. "\"" .. dstip .. "\"" ..
+    ", \"src_port\": " .. "\"" .. spstr .. "\""..
+    ", \"dest_port\": " .. "\"" .. dpstr .. "\"" ..
+    "}"
+    )
+
+    print(msg)
+
+    local success, dict = pcall(cjson.decode, msg)
+
+    if not success then
+        print("Error decoding JSON:", dict)
+    else
+        search_log("/var/log/suricata/eve.json", dict)
+    end
+end
+
+function deinit()
+
+end
