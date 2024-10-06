@@ -1,6 +1,6 @@
 1. Install desktop on ubuntu
 sudo apt update
-sudo apt install -y ubuntu-desktop
+sudo apt install -y ubuntu-desktop tightvncserver  gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal lxde xrdp
 sudo apt install  -y tightvncserver
 sudo apt install -y gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal
 sudo apt install lxde -y
