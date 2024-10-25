@@ -20,6 +20,7 @@ cd  libhtp-0.5.49/
 make
 pwd
 sudo make install
+sudo chmod 755 /usr/local/include
 
 
 
@@ -30,4 +31,43 @@ go to suricata source code:
 make
 sudo make install
 
+##############
+### Build deb
+##############
 
+
+# https://redmine.openinfosecfoundation.org/projects/suricata/wiki/Build_your_own_Suricata_package_-_deb_rpm
+
+sudo apt-get install wget build-essential autoconf automake autotools-dev dh-make debhelper devscripts fakeroot xutils lintian pbuilder -y
+
+echo "" | dh_make -s -c gpl2 -p suricata_8.0 -e elias@bumblebeenet.com -y --createorig
+
+node@cpe-275914844212400:~/suricata/debian$ cat control
+Source: suricata
+Section: net
+Priority: optional
+Maintainer: Elias Sun <your-email>
+Rules-Requires-Root: no
+Build-Depends:
+ debhelper-compat (= 13),
+ autotools-dev,
+Standards-Version: 4.6.2
+Homepage: https://www.bumblebeenet.com
+#Vcs-Browser: https://salsa.debian.org/debian/suricata
+#Vcs-Git: https://salsa.debian.org/debian/suricata.git
+
+Package: suricata
+Architecture: any
+Multi-Arch: foreign
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+Description: <insert up to 60 chars description>
+ <Insert long description, indented with spaces.>
+
+
+
+dpkg-depcheck -d ./configure  --enable-non-bundled-htp --with-libhtp-includes=/usr/local/include --with-libhtp-libraries=/usr/local/lib 
+
+
+dpkg-buildpackage -rfakeroot -kA2G34589
