@@ -1,0 +1,28 @@
+Build Suricata:
+sudo apt install -y build-essential pkg-config libpcap-dev libnet1-dev libyaml-dev \
+libjansson-dev libmagic-dev zlib1g-dev libcap-ng-dev liblua5.3-dev \
+libssl-dev libcurl4-openssl-dev git
+
+sudo apt-get install libhtp-dev -y
+sudo apt install libpcre2-dev -y
+sudo apt-get install libhtp-dev -y
+sudo apt install rustc cargo -y
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+. "$HOME/.cargo/env"
+cargo install --force cbindgen
+
+wget https://github.com/OISF/libhtp/archive/refs/tags/0.5.49.tar.gz
+tar -zxvf 0.5.49.tar.gz
+cd  libhtp-0.5.49/   
+./autogen.sh
+./configure
+make
+pwd
+sudo make install
+
+ go to suricata:
+
+./autogen.sh
+./configure  --enable-non-bundled-htp --with-libhtp-includes=/usr/local/include --with-libhtp-libraries=/usr/local/lib 
+make
+sudo make install
