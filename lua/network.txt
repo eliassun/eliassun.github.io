@@ -1,0 +1,14 @@
+# Unix socket udp
+local function send_to_unix_sockt(message)
+    app_socket = "/var/run/your_unix_app.sock"
+    local unix = require "socket.unix"
+    socket = unix.dgram()
+    local status, err = socket:connect(app_socket)
+    if not status then
+        info("error: connecting " .. app_socket .. " err : " .. err)
+        return
+    end
+    socket:send(message .. "\n")
+    socket:close()
+end
+
