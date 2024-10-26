@@ -1,0 +1,3 @@
+sudo apt install  luarocks lua5.4 liblua5.4-dev 
+sudo luarocks-5.4 install lua-cjson
+sudo luarocks-5.4 install luasyslog
