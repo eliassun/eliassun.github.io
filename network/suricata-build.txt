@@ -1,4 +1,6 @@
-### Build Suricata:
+###########################
+### Build Suricata for Dev
+###########################
 sudo apt install -y build-essential pkg-config libpcap-dev libnet1-dev libyaml-dev \
 libjansson-dev libmagic-dev zlib1g-dev libcap-ng-dev liblua5.3-dev \
 libssl-dev libcurl4-openssl-dev git
@@ -23,7 +25,6 @@ sudo make install
 sudo chmod 755 /usr/local/include
 
 
-
 go to suricata source code:
 
 ./autogen.sh
@@ -35,48 +36,21 @@ sudo make install
 ### Build deb
 ##############
 
-
+# https://idstower.com/blog/building-a-custom-suricata-deb-package/
 # https://redmine.openinfosecfoundation.org/projects/suricata/wiki/Build_your_own_Suricata_package_-_deb_rpm
 
-sudo apt-get install wget build-essential autoconf automake autotools-dev dh-make debhelper devscripts fakeroot xutils lintian pbuilder -y
+# Go to the Suricata source code folder, here is Suricata 8.0 from master branch
+./scripts/bundle.sh
+./autogen.sh
+autoreconf -i
+./configure --prefix=/usr/  --bindir=/usr/bin/  --sbindir=/usr/sbin/  --libdir=/usr/lib/ --sysconfdir=/etc/ --with-libhtp-libraries=/usr/lib
+make -j10
+echo "/etc/suricata" > suricata_conf_files
+echo "/var/log/suricata" >> suricata_conf_files
+sudo checkinstall -y -D -A amd64 --install=no --fstrans=no --backup=no --exclude=/home,/root --include=./suricata_conf_files --requires "libevent-2.1-7,libevent-pthreads-2.1-7,libhyperscan5,libluajit-5.1-2,libnet1,libnetfilter-log1,libnetfilter-queue1,python3-simplejson" make install install-conf
 
-echo "" | dh_make -s -c gpl2 -p suricata_8.0 -e elias@bumblebeenet.com -y --createorig
-
-node@cpe-275914844212400:~/suricata/debian$ cat control
-Source: suricata
-Section: net
-Priority: optional
-Maintainer: Elias Sun <your-email>
-Rules-Requires-Root: no
-Build-Depends:
- debhelper-compat (= 13),
- autotools-dev,
-Standards-Version: 4.6.2
-Homepage: https://www.bumblebeenet.com
-#Vcs-Browser: https://salsa.debian.org/debian/suricata
-#Vcs-Git: https://salsa.debian.org/debian/suricata.git
-
-Package: suricata
-Architecture: any
-Multi-Arch: foreign
-Depends:
- ${shlibs:Depends},
- ${misc:Depends},
-Description: <insert up to 60 chars description>
- <Insert long description, indented with spaces.>
-
-
-
-
-dpkg-depcheck -d ./configure  --enable-non-bundled-htp --with-libhtp-includes=/usr/local/include --with-libhtp-libraries=/usr/local/lib 
-
-cd debian
-echo "override_dh_auto_configure:" >> rules
-echo "   dh_auto_configure -- --enable-non-bundled-htp --disable-gccmarch-native" >> rules
-
-
-cd ..
-dpkg-buildpackage -rfakeroot -kA2G34589
-gpg --list-keys
-dpkg -i pakage_name.deb
-
+Test:
+sudo apt -y install libevent-2.1-7t64 libevent-pthreads-2.1-7t64 libhyperscan5 libluajit-5.1-2 libnet1 libnetfilter-log1 libnetfilter-queue1 python3-simplejson luarocks lua5.4 liblua5.4-dev libelf-dev
+sudo mkdir /var/log/suricata
+sudo mkdir -p /usr/var/run/suricata
+sudo dpkg -i suricata_8.0-1_amd64.deb
