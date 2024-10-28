@@ -8,6 +8,7 @@ sudo apt update
 sudo apt install -y build-essential pkg-config libpcap-dev libnetfilter-queue-dev libyaml-0-2 \
 libjansson-dev libmagic1 zlib1g-dev libcap-ng-dev liblua5.4-dev libssl-dev libcurl4 git
 sudo apt install libpcre2-dev
+apt-get install libyaml-dev
 
 24.04
 sudo apt install -y build-essential pkg-config libpcap-dev libnet1-dev libyaml-dev \
