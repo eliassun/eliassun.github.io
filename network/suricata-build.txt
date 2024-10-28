@@ -7,8 +7,14 @@ sudo add-apt-repository multiverse
 sudo apt update
 sudo apt install -y build-essential pkg-config libpcap-dev libnetfilter-queue-dev libyaml-0-2 \
 libjansson-dev libmagic1 zlib1g-dev libcap-ng-dev liblua5.4-dev libssl-dev libcurl4 git
-sudo apt install libpcre2-dev
-apt-get install libyaml-dev
+sudo apt -y install libpcre2-dev
+sudo apt-get  -y  install libyaml-dev
+sudo apt-get  -y install libmagic-dev
+sudo apt-get  -y install liblz4-dev
+sudo apt -y install rustc cargo -y
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+. "$HOME/.cargo/env"
+cargo install --force cbindgen
 
 24.04
 sudo apt install -y build-essential pkg-config libpcap-dev libnet1-dev libyaml-dev \
