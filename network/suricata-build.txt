@@ -1,6 +1,14 @@
 ###########################
 ### Build Suricata for Dev
 ###########################
+22.04
+sudo add-apt-repository universe
+sudo add-apt-repository multiverse
+sudo apt update
+sudo apt install -y build-essential pkg-config libpcap-dev libnetfilter-queue-dev libyaml-0-2 \
+libjansson-dev libmagic1 zlib1g-dev libcap-ng-dev liblua5.4-dev libssl-dev libcurl4 git
+
+24.04
 sudo apt install -y build-essential pkg-config libpcap-dev libnet1-dev libyaml-dev \
 libjansson-dev libmagic-dev zlib1g-dev libcap-ng-dev liblua5.3-dev \
 libssl-dev libcurl4-openssl-dev git
