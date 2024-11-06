@@ -1,0 +1,3 @@
+# check the details of network interfaces
+ip -s link show
+
