@@ -72,3 +72,23 @@ sudo apt -y install libevent-2.1-7t64 libevent-pthreads-2.1-7t64 libhyperscan5 l
 sudo mkdir /var/log/suricata
 sudo mkdir -p /usr/var/run/suricata
 sudo dpkg -i suricata_8.0-1_amd64.deb
+
+##############
+### Repack deb
+##############
+
+echo "/etc/suricata" > suricata_conf_files
+echo "/var/log/suricata" >> suricata_conf_files
+find ./suricata_config -type f -exec sh -c 'echo "/etc/suricata/$(echo {} | sed "s|^\./suricata_config/||")" >> suricata_conf_files' \;
+sudo checkinstall -y -D -A amd64  --fstrans=no --backup=no --exclude=/home,/root --include=./suricata_conf_files --requires "libluajit-5.1-2, luarocks, liblua5.1-0-dev, libelf-dev" --pkgversion "8.0.0" make install install-conf
+sudo rm -rf /tmp/suricata_pack
+sudo dpkg-deb -e suricata_amd64.deb /tmp/suricata_pack
+sudo dpkg-deb -x suricata_amd64.deb /tmp/suricata_pack
+sudo mkdir /tmp/suricata_pack/DEBIAN
+sudo cp control  /tmp/suricata_pack/DEBIAN
+sudo cp conffiles  /tmp/suricata_pack/DEBIAN
+sudo cp postinst /tmp/suricata_pack/DEBIAN/postinst
+sudo chmod +x /tmp/suricata_pack/DEBIAN/postinst
+sudo chmod -R 755 /tmp/suricata_pack
+sudo dpkg-deb --build /tmp/suricata_pack /tmp/suricata_final.deb
+
