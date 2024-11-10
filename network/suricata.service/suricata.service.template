@@ -1,0 +1,62 @@
+# config.yaml
+suricata:
+  interface: "enp3s0"
+  suricata_config: "/etc/suricata/suricata.yaml"
+  memory_limit: "1G"
+  restart_delay: 10
+  watchdog_timeout: "30s"
+  file_limit: 1024000
+  process_limit: 64000
+
+
+
+# suricata.service.template
+[Unit]
+Description=Suricata, built by Bumblebee Networks
+Documentation=https://suricata.readthedocs.io/en/latest/
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/suricata -c {{ suricata_config }} -i {{ interface }}
+ExecStop=/usr/bin/suricata -c {{ suricata_config }} -t
+Restart=always
+RestartSec={{ restart_delay }}
+MemoryLimit={{ memory_limit }}
+WatchdogSec={{ watchdog_timeout }}
+LimitNOFILE={{ file_limit }}
+LimitNPROC={{ process_limit }}
+TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target
+
+
+# generate_systemd_service.py
+import yaml
+import os
+
+# Load the YAML configuration
+with open('config.yaml', 'r') as file:
+    config = yaml.safe_load(file)
+
+# Read the systemd service template
+with open('suricata.service.template', 'r') as template_file:
+    service_template = template_file.read()
+
+# Replace placeholders in the template
+service_file_content = service_template.format(
+    interface=config['suricata']['interface'],
+    suricata_config=config['suricata']['suricata_config'],
+    memory_limit=config['suricata']['memory_limit'],
+    restart_delay=config['suricata']['restart_delay'],
+    watchdog_timeout=config['suricata']['watchdog_timeout'],
+    file_limit=config['suricata']['file_limit'],
+    process_limit=config['suricata']['process_limit']
+)
+
+# Write the generated service file
+with open('/etc/systemd/system/suricata.service', 'w') as output_file:
+    output_file.write(service_file_content)
+
+print("Systemd service file generated successfully!")
