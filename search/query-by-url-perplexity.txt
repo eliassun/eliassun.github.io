@@ -1,0 +1,29 @@
+
+1. Search Query: You can include your search query directly in the URL by adding it after the domain. For example:
+
+https://www.perplexity.ai/search?q=your+search+query+here
+
+2. Mode: You can specify the search mode using the mode parameter:
+
+https://www.perplexity.ai/search?q=your+query&mode=writing
+
+Available modes include:
+writing (for creative writing tasks)
+research (for academic research)
+analysis (for data analysis)
+
+3. Focus: You can set a specific focus for your search using the focus parameter:
+Some available focus options are:
+science
+technology
+history
+current_events
+
+
+4. Language: You can specify the language for the search results using the lang parameter:
+Language: You can specify the language for the search results using the lang parameter:
+https://www.perplexity.ai/search?q=your+query&lang=fr
+
+5. You can combine multiple parameters in a single URL by separating them with the & symbol:
+
+https://www.perplexity.ai/search?q=artificial+intelligence&mode=research&focus=technology&lang=en
