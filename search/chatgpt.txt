@@ -1,0 +1,6 @@
+https://chatgpt.com/?q=%s
+https://chatgpt.com/?q=What+is+the+capital+of+France%3F
+
+https://chat.openai.com/?lang=en
+
+https://chat.openai.com/?lang=zh
