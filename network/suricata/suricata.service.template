@@ -1,0 +1,16 @@
+[Unit]
+Description=Suricata, built by Bumblebee Networks
+After=network.target
+ConditionFileIsExecutable=/usr/bin/suricata
+
+[Service]
+ExecStart=/usr/bin/suricata -c {suricata_config} -i {interface}
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+MemoryLimit=1G
+LimitNOFILE=1024000
+LimitNPROC=64000
+TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target
