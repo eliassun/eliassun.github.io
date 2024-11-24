@@ -15,6 +15,17 @@
     dpkg-deb -e xx.deb /tmp/final/DEBIAN/
     dpkg-deb -x xx.deb /tmp/final
     dpkg-deb --build  /tmp/final /tmp/final.deb
-     
+
+
+### Uninstall ###
+sudo systemctl stop suricata
+sudo systemctl disable suricata
+sudo apt-get remove --purge suricata
+sudo dpkg --remove suricata
+sudo apt-get autoremove --purge
+sudo apt-get purge suricata
+dpkg -l | grep suricata
+sudo rm -rf /etc/suricata /var/log/suricata /var/lib/suricata
+
 
 
