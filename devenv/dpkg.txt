@@ -1,0 +1,20 @@
+#1. If two deb installer has the same files:
+  [verified] sudo dpkg -i --force-overwrite xx.deb 
+  [Not verify] sudo apt-get install --reinstall ./xx.deb
+
+#2. List all files to install in the deb
+    dpkg -c xx.deb 
+
+#3. Extract all control files
+    dpkg-deb -e xx.deb /tmp/deb-control
+
+#4. Extract all files to install
+    dpkg-deb -x xx.deb /tmp/data
+
+#5. Repack
+    dpkg-deb -e xx.deb /tmp/final/DEBIAN/
+    dpkg-deb -x xx.deb /tmp/final
+    dpkg-deb --build  /tmp/final /tmp/final.deb
+     
+
+
