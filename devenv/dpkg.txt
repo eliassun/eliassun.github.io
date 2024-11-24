@@ -8,6 +8,7 @@
 
 #3. Extract all control files
     dpkg-deb -e xx.deb /tmp/deb-control
+    dpkg-deb --control xx.deb /tmp/deb-control
     
 
 #4. Extract all files to install
