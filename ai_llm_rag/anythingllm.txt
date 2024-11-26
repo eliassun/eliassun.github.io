@@ -26,8 +26,8 @@ services:
     ports:
       - "3001:3001"
     volumes:
-      - /home/node/anythingllm:/app/server/storage
-      - /home/node/anythingllm/.env:/app/server/.env
+      - $HOME/anythingllm:/app/server/storage
+      - $HOME/anythingllm/.env:/app/server/.env
     environment:
       - STORAGE_DIR=/app/server/storage
     cap_add:
@@ -40,8 +40,7 @@ export STORAGE_LOCATION=$HOME/anythingllm
 mkdir -p $STORAGE_LOCATION 
 touch "$STORAGE_LOCATION/.env"
 sudo chmod 777 /var/run/docker.sock
-sudo docker-compose up -d
-docker run -p 11434:11434 <image_name>
+docker-compose up -d
 
 Or
 # 2.2
