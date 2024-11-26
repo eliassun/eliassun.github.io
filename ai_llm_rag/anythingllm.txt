@@ -2,13 +2,13 @@
 #sudo snap install ollama
 wget  https://ollama.ai/install.sh
 sh ./install.sh 
+ollama run llama3.2:3b
 sudo vim /etc/systemd/system/ollama.service
 # Add
 [Service]
 Environment="OLLAMA_HOST=0.0.0.0"
 sudo systemctl daemon-reload
 sudo systemctl restart ollama.service 
-ollama run llama3.2:3b
 sudo apt -y  install docker
 sudo apt -y install  docker-compose
 curl -fsSL https://s3.us-west-1.amazonaws.com/public.useanything.com/latest/installer.sh | sh
