@@ -1,5 +1,13 @@
 #1. Install
-sudo snap install ollama
+#sudo snap install ollama
+wget  https://ollama.ai/install.sh
+sh ./install.sh 
+sudo vim /etc/systemd/system/ollama.service
+# Add
+[Service]
+Environment="OLLAMA_HOST=0.0.0.0"
+sudo systemctl daemon-reload
+sudo systemctl restart ollama.service 
 ollama run llama3.2:3b
 sudo apt -y  install docker
 sudo apt -y install  docker-compose
@@ -33,6 +41,7 @@ mkdir -p $STORAGE_LOCATION
 touch "$STORAGE_LOCATION/.env"
 sudo chmod 777 /var/run/docker.sock
 sudo docker-compose up -d
+docker run -p 11434:11434 <image_name>
 
 Or
 # 2.2
