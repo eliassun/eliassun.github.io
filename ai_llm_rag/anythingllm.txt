@@ -41,6 +41,8 @@ mkdir -p $STORAGE_LOCATION
 touch "$STORAGE_LOCATION/.env"
 sudo chmod 777 /var/run/docker.sock
 docker-compose up -d
+#check docker: ps -a
+#login docker: docker exec -it 1a70daae0255 /bin/bash
 
 Or
 # 2.2
