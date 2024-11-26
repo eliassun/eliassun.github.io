@@ -11,7 +11,7 @@ sudo systemctl daemon-reload
 sudo systemctl restart ollama.service 
 sudo apt -y  install docker
 sudo apt -y install  docker-compose
-curl -fsSL https://s3.us-west-1.amazonaws.com/public.useanything.com/latest/installer.sh | sh
+#For aything desktop:  curl -fsSL https://s3.us-west-1.amazonaws.com/public.useanything.com/latest/installer.sh | sh
 
 #2. Run anythingllm
 
