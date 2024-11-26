@@ -18,8 +18,8 @@ services:
     ports:
       - "3001:3001"
     volumes:
-      - ./storage:/app/server/storage
-      - ./env.txt:/app/server/.env
+      - /home/node/anythingllm:/app/server/storage
+      - /home/node/anythingllm/.env:/app/server/.env
     environment:
       - STORAGE_DIR=/app/server/storage
     cap_add:
@@ -28,9 +28,10 @@ services:
       - "host.docker.internal:host-gateway"
     restart: unless-stopped
 
-touch env.txt 
-mkdir storage
-chmod 777 /var/run/docker.sock
+export STORAGE_LOCATION=$HOME/anythingllm
+mkdir -p $STORAGE_LOCATION 
+touch "$STORAGE_LOCATION/.env"
+sudo chmod 777 /var/run/docker.sock
 sudo docker-compose up -d
 
 Or
