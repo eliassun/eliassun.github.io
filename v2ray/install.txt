@@ -1,0 +1,2 @@
+sudo apt update -y && apt install -y curl socat wget
+sudo bash <(wget -qO- -o- https://git.io/v2ray.sh)
