@@ -1,0 +1,62 @@
+#1. Install
+#sudo snap install ollama
+wget  https://ollama.ai/install.sh
+sh ./install.sh 
+ollama run llama3.2:3b
+sudo vim /etc/systemd/system/ollama.service
+# Add
+[Service]
+Environment="OLLAMA_HOST=0.0.0.0"
+sudo systemctl daemon-reload
+sudo systemctl restart ollama.service 
+sudo apt -y  install docker
+sudo apt -y install  docker-compose
+#For aything desktop:  curl -fsSL https://s3.us-west-1.amazonaws.com/public.useanything.com/latest/installer.sh | sh
+
+#2. Run anythingllm
+
+#2.1
+docker-compose.yml
+
+version: '3.8'
+services:
+  anythingllm:
+    image: mintplexlabs/anythingllm
+    container_name: anythingllm
+    ports:
+      - "3001:3001"
+    volumes:
+      - $HOME/anythingllm:/app/server/storage
+      - $HOME/anythingllm/.env:/app/server/.env
+    environment:
+      - STORAGE_DIR=/app/server/storage
+    cap_add:
+      - SYS_ADMIN
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+export STORAGE_LOCATION=$HOME/anythingllm
+mkdir -p $STORAGE_LOCATION 
+touch "$STORAGE_LOCATION/.env"
+sudo chmod 777 /var/run/docker.sock
+docker-compose up -d
+#check docker: ps -a
+#login docker: docker exec -it 1a70daae0255 /bin/bash
+
+Or
+# 2.2
+export STORAGE_LOCATION=$HOME/anythingllm
+touch "$STORAGE_LOCATION/.env"
+mkdir -p $STORAGE_LOCATION 
+chmod 777 /var/run/docker.sock
+docker run -d -p 80:3001 --cap-add SYS_ADMIN -v ${STORAGE_LOCATION}:/app/server/storage -v ${STORAGE_LOCATION}/.env:/app/server/.env -e STORAGE_DIR="app/server/storage" mintplexlabs/anythingllm
+
+#3. Access website
+
+curl http://127.0.0.1:3001 
+or
+curl http://127.0.0.1
+
+
+

@@ -1,0 +1,15 @@
+#1. Install the auditd package:
+
+sudo apt-get install auditd audispd-plugins
+
+#2 .Configure auditing for file operations in the /tmp directory:
+
+sudo auditctl -w /tmp -p wa -k tmp_watch
+
+-w /tmp specifies the directory to watch (/tmp in your case).
+-p wa specifies the permissions to watch: w for write and a for attribute changes.
+-k tmp_watch adds a custom key for the log, making it easier to filter.
+
+#3. View the logs in /var/log/audit/audit.log:
+
+sudo ausearch -k tmp_watch
