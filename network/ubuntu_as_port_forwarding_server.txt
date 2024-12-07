@@ -1,0 +1,32 @@
+ubuntu has two network interfaces:
+ens18 has the ip 192.168.1.207
+ens19 has the ip 172.16.100.1
+
+ens18 as WAN
+ens19 as LAN
+any packet hit ens18, it will forward to ens18, then forward to the lan client 172.168.100.20
+
+Assumptions:
+ens18 (WAN) IP: 192.168.1.207
+ens19 (LAN) IP: 172.16.100.1
+LAN client: 172.16.100.20 (this is the internal machine that will receive forwarded packets)
+
+
+
+sudo nano /etc/sysctl.conf
+
+net.ipv4.ip_forward = 1
+
+sudo sysctl -p
+
+sudo iptables -t nat -A PREROUTING -i ens18 -j DNAT --to-destination 172.16.100.20
+sudo iptables -A FORWARD -d 172.16.100.20 -j ACCEPT
+
+sudo iptables -t nat -A POSTROUTING -o ens18 -j MASQUERADE
+
+sudo iptables -A FORWARD -i ens19 -o ens18 -j ACCEPT
+sudo iptables -A FORWARD -i ens18 -o ens19 -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+sudo apt install iptables-persistent
+
+
