@@ -7,6 +7,7 @@ sudo iptables -t nat -A POSTROUTING -s 10.10.3.0/24 -o ens18 -j MASQUERADE
 sudo iptables -A FORWARD -i ens19 -o ens18 -j ACCEPT
 sudo iptables -A FORWARD -i ens18 -o ens19 -j ACCEPT
 
+sudo apt install iptables-persistent
 sudo -i
 iptables-save > /etc/iptables/rules.v4
 
