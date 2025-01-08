@@ -1,0 +1,18 @@
+#1. Create an Index Pattern 
+Management --> Dashboards Management --> Index patterns
+
+e.g. netstat-*, which means netstat-1, netstat-2
+
+#2. Create the Indexes
+
+Management --> Index Management --> Indexes
+
+e.g. netstat-1
+This can be created with API.
+ 
+#3. Check the data
+After the data is sent to opensearch,
+
+Discover ---> filter by time and fields
+
+
