@@ -1,0 +1,265 @@
+class SVCState:
+    def __init__(self):
+        self.ipcserver = None
+        self.worker = None
+  
+
+class AsyncUnixUDPSocketClient:
+    """
+    A fully async Unix domain socket client for UDP communication.
+    """
+
+    RECV_BUF_SIZE = 1024
+
+    def __init__(self, unix_socket_path: str):
+        self.unix_socket_path = unix_socket_path
+        self.transport = None
+        self.protocol = None
+
+    async def connect(self):
+        """
+        Establish connection to the Unix domain UDP socket using low-level socket API.
+        """
+        if not os.path.exists(self.unix_socket_path):
+            err = FileNotFoundError(f"Socket file {self.unix_socket_path} does not exist.")
+            raise IPCError(err) from err
+        sock = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)
+        try:
+            sock.connect(self.unix_socket_path)
+            loop = asyncio.get_event_loop()
+            self.transport, self.protocol = await loop.create_datagram_endpoint(
+                lambda: DatagramProtocol(self),
+                sock=sock
+            )
+        except (OSError, FileNotFoundError) as err:
+            err = ConnectionError(f"Failed to connect to {self.unix_socket_path}: {err}")
+            raise IPCError(err) from err
+
+    async def send(self, msg: dict):
+        """
+        Send a message asynchronously via UDP socket with error handling.
+        """
+        if not self.transport:
+            err = ConnectionError(f"Cannot send message: No active connection. socket: {self.unix_socket_path}.")
+            raise IPCError(err) from err
+        try:
+            data = json.dumps(msg).encode()
+            self.transport.sendto(data)
+        except (BrokenPipeError, ConnectionResetError) as err:
+            err = ConnectionError(f"Failed to send data: {err} socket: {self.unix_socket_path}")
+            raise IPCError(err) from err
+
+    async def recv(self):
+        """
+        Receive a message asynchronously from the UDP socket with error handling.
+        """
+        if not self.transport:
+            err = ConnectionError(f"Cannot receive message: No active connection. socket {self.unix_socket_path}.")
+            raise IPCError(err) from err
+        try:
+            data = await self.protocol.recv()
+            if not data:
+                err = ConnectionError(f"Connection closed by server. socket: {self.unix_socket_path}")
+                raise IPCError(err) from err
+            return json.loads(data.decode())
+        except (json.JSONDecodeError, ConnectionResetError) as err:
+            err = ValueError(f"Invalid data received: {err}. socket: {self.unix_socket_path}")
+            raise IPCError(err) from err
+
+    async def close(self):
+        """
+        Close the connection gracefully.
+        """
+        if self.transport:
+            try:
+                self.transport.close()
+            except Exception as err:
+                err = RuntimeError(f"Error closing connection: {err}. socket: {self.unix_socket_path}")
+                raise IPCError(err) from err
+
+
+class DatagramProtocol(asyncio.DatagramProtocol):
+    """
+    Protocol class to handle receiving UDP messages for the client.
+    """
+    def __init__(self, client: AsyncUnixUDPSocketClient):
+        self.client = client
+
+    def datagram_received(self, data, addr):
+        """
+        Handle incoming UDP messages.
+        """
+        self.client.protocol.recv_queue.put(data)
+
+    def error_received(self, exc):
+        """
+        Handle error during receiving.
+        """
+        logger.error(f"Error received: {exc}. socket: {self.client.unix_socket_path}")
+
+    def connection_lost(self, exc):
+        """
+        Handle connection loss.
+        """
+        if exc:
+            logger.error(f"Connection lost: {exc}. socket: {self.client.unix_socket_path}")
+        else:
+            logger.info(f"Connection closed. socket: {self.client.unix_socket_path}")
+
+
+async def async_send_udp(address: str, msg: dict) -> bool:
+    """
+    Send a message to the Unix domain socket asynchronously.
+    Returns True if successful, False otherwise.
+    """
+    client = AsyncUnixUDPSocketClient(address)
+
+    try:
+        await client.connect()
+    except IPCError as err:
+        logger.error(err)
+        return False
+
+    try:
+        await client.send(msg)
+    except (IOError, IPCError) as err:
+        logger.error(f"Send failed: {err}")
+        return False
+    else:
+        return True
+    finally:
+        await client.close()
+
+class UnixSocketServer:
+    """
+    A server process listening on a Unix domain socket using UDP and threads.
+    """
+
+    def __init__(self, address=None):
+        self._address = address
+        self._queue = Queue()
+        self._stop = False
+        self._shutdown = threading.Event()
+        self._running = False
+
+    @property
+    def running(self) -> bool:
+        return self._running
+
+    @property
+    def empty(self) -> bool:
+        return self._queue.empty()
+
+    @property
+    def count(self) -> int:
+        return self._queue.qsize()
+
+    @property
+    def queue(self) -> Queue:
+        return self._queue
+
+    def _recv_udp(self, udp_socket):
+        """
+        Receive messages for UDP.
+        """
+        try:
+            data, _ = udp_socket.recvfrom(AsyncUnixUDPSocketClient.RECV_BUF_SIZE)
+            message = json.loads(data.decode())
+            msg_type = message.get("type")
+            if msg_type == "shutdown":
+                logger.info(f"Shutdown message received, quitting. socket: {self._address}")
+                self._stop = True
+            else:
+                self._queue.put(message)
+        except Exception as err:
+            logger.exception(f"Error receiving UDP message: {err}. socket: {self._address}")
+
+    def _listen_udp(self):
+        """
+        Listen for UDP messages using a Unix domain socket.
+        This runs in a separate thread.
+        """
+        try:
+            # Check if the socket file already exists and delete it if so
+            if os.path.exists(self._address):
+                os.remove(self._address)
+                logger.info(f"Deleted stale socket file at {self._address}")
+
+            # Create a UDP socket (SOCK_DGRAM) for Unix domain socket
+            udp_socket = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)
+
+            # Bind to the address (now safe)
+            try:
+                udp_socket.bind(self._address)
+            except OSError:
+                logger.error(f"Address {self._address} already in use or invalid.")
+                return
+
+            logger.info(f"Listening for UDP messages on {self._address}")
+
+            # Loop to continuously receive messages until stopped
+            while not self._stop:
+                self._recv_udp(udp_socket)
+
+            udp_socket.close()
+            logger.info(f"{self._address} udp socket is closed")
+
+        except Exception as err:
+            logger.exception(f"Error in listening loop: {err}. socket: {self._address}")
+
+    def start(self):
+        """
+        Start the server to listen for UDP messages.
+        This runs the listener in a separate thread.
+        """
+        logger.info("Starting UDP server on %s", self._address)
+        self._running = True
+        # Start the listening thread
+        listener_thread = threading.Thread(target=self._listen_udp)
+        listener_thread.daemon = True
+        listener_thread.start()
+
+    def stop(self):
+        """
+        Stop the server gracefully.
+        """
+        logger.info("Shutting down UDP server on %s", self._address)
+        self._stop = True
+        self._shutdown.set()
+        logger.info("Server at %s has been terminated.", self._address)
+        self._running = False
+
+    def receive(self) -> dict:
+        """
+        Returns messages received over UDP. Will block.
+        """
+        return self._queue.get()
+
+    @property
+    def unix_socket_path(self) -> str:
+        """
+        Returns unix socket path
+        """
+        return self._address
+
+
+def startup_ipc_udp(socket, svcstate, handler):
+    logger.info("Starting up IPC server. socket: %s", socket)
+    if not svcstate.ipcserver:
+        server = UnixSocketServer(socket)
+        svcstate.ipcserver = server
+        threading.Thread(target=server.start).start()
+    if not svcstate.worker:
+        worker_obj = Worker(queue=svcstate.ipcserver.queue, handler=handler)
+        svcstate.worker = worker_obj
+        threading.Thread(target=worker_obj.start).start()
+
+
+def shutdown_ipc_udp(svcstate):
+    logger.info(f"Shutting down IPC server. socket: {svcstate.ipcserver.unix_socket_path}")
+    ipcserver = svcstate.ipcserver
+    if ipcserver:
+        ipcserver.stop()
+    worker_ = svcstate.worker
+    if worker_:
+        worker_.stop()
