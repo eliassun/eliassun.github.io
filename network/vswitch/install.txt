@@ -142,7 +142,7 @@ systemctl restart networking
 
 
 
-# VM
+# VM to access vswitch
 netplan:
 network:
   version: 2
@@ -155,6 +155,102 @@ network:
       link: eth2
       addresses: [192.168.200.2/24]  # Adjust based on your VLAN 200 subnet
       dhcp4: no
+
+
+#DHCP server(optional)
+#1.
+sudo apt install vim curl wget net-tools zip vlan -y
+sudo apt install isc-dhcp-server -y
+sudo modprobe 8021q
+echo "8021q" | sudo tee -a /etc/modules
+
+#2.
+#sudo cat /etc/netplan/50-cloud-init.yaml
+network:
+    version: 2
+    ethernets:
+        ens18:
+            dhcp4: no
+        ens19:
+            dhcp4: true
+    vlans:
+        vlan200:
+            id: 200
+            link: ens18
+            addresses:
+                - 10.10.200.2/24
+            nameservers:
+                addresses:
+                    - 8.8.8.8
+            routes:
+                - to: 0.0.0.0/0
+                  via: 10.10.200.1
+        vlan100:
+            id: 100
+            link: ens18
+            addresses:
+                - 10.10.100.3/24
+            nameservers:
+                addresses:
+                    - 8.8.8.8
+            routes:
+                - to: 10.0.0.0/8
+                  via: 10.10.200.1
+        vlan300:
+            id: 300
+            link: ens18
+            addresses:
+                - 10.10.130.3/24
+            nameservers:
+                addresses:
+                    - 8.8.8.8
+            routes:
+                - to: 10.0.0.0/8
+                  via: 10.10.130.1
+
+sudo touch /etc/cloud/cloud-init.disabled
+
+sudo reboot
+
+/etc/dhcp/dhcpd.conf
+
+subnet 10.10.200.0 netmask 255.255.255.0 {
+    range 10.10.200.50 10.10.200.150;  # IP range for clients
+    option routers 10.10.200.1;         # Gateway (VM A)
+    option domain-name-servers 8.8.8.8, 8.8.4.4;  # DNS Servers
+    option broadcast-address 10.10.200.255;
+    default-lease-time 600;
+    max-lease-time 7200;
+}
+
+subnet 10.10.100.0 netmask 255.255.255.0 {
+    range 10.10.100.50 10.10.100.150;  # IP range for clients
+    option routers 10.10.100.1;         # Gateway (VM A)
+    option domain-name-servers 8.8.8.8, 8.8.4.4;  # DNS Servers
+    option broadcast-address 10.10.100.255;
+    default-lease-time 600;
+    max-lease-time 7200;
+}
+
+subnet 10.10.130.0 netmask 255.255.255.0 {
+    range 10.10.130.50 10.10.130.150;  # IP range for clients
+    option routers 10.10.130.1;         # Gateway (VM A)
+    option domain-name-servers 8.8.8.8, 8.8.4.4;  # DNS Servers
+    option broadcast-address 10.10.130.255;
+    default-lease-time 600;
+    max-lease-time 7200;
+}
+
+/etc/default/isc-dhcp-server
+INTERFACESv4="vlan200 vlan100 vlan300"
+INTERFACESv6=""
+
+
+sudo systemctl restart isc-dhcp-server
+sudo systemctl enable isc-dhcp-server
+sudo systemctl status isc-dhcp-server
+
+
 
 
 
