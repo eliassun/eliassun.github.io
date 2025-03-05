@@ -103,7 +103,7 @@ sudo netfilter-persistent save
 sudo netfilter-persistent reload
 
 
-#### Proxmox
+#### Proxmox host
 # cat /etc/network/interfaces
 
 auto lo
@@ -141,6 +141,20 @@ systemctl restart networking
 
 
 
+
+# VM
+netplan:
+network:
+  version: 2
+  ethernets:
+    eth2:
+      dhcp4: no
+  vlans:
+    vlan200:
+      id: 200
+      link: eth2
+      addresses: [192.168.200.2/24]  # Adjust based on your VLAN 200 subnet
+      dhcp4: no
 
 
 
