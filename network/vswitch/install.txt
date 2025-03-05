@@ -98,6 +98,10 @@ sudo iptables -t nat -A POSTROUTING -o ens18 -s 10.10.100.0/24 -j MASQUERADE
 sudo iptables -A FORWARD -i vlan100 -o ens18 -j ACCEPT
 sudo iptables -A FORWARD -i ens18 -o vlan100 -m state --state RELATED,ESTABLISHED -j ACCEPT
 
+sudo iptables -t nat -A POSTROUTING -o ens18 -s 10.10.130.0/24 -j MASQUERADE
+sudo iptables -A FORWARD -i vlan130 -o ens18 -j ACCEPT
+sudo iptables -A FORWARD -i ens18 -o vlan130 -m state --state RELATED,ESTABLISHED -j ACCEPT
+
 sudo apt install iptables-persistent -y
 sudo netfilter-persistent save
 sudo netfilter-persistent reload
