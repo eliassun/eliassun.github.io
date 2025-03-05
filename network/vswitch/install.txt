@@ -1,8 +1,11 @@
 
-
-VM1 ------------VLAN(100,200,300)---------(eth2) vswitch(eth0 NAT)  ---------WAN----------
+							VM3
 							|
-							| VLAN200
+							|-------- Local Network
+							|		|
+VM1 ------------VLAN(100,200,300)---------(eth2) vswitch(eth0 NAT)--------------- Internet
+							|
+							| VLAN100 or VLAN200
 							|
 							VM2
 #### vSwitch 
