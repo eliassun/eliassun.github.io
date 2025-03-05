@@ -1,0 +1,125 @@
+
+
+------------VLAN(100,200,300)---------(eth2) vswitch(eth0 NAT)  ---------WAN----------
+
+#### vSwitch 
+
+#1. 
+sudo apt update
+sudo apt install -y openvswitch-switch
+ovs-vsctl show
+sudo ovs-vsctl add-br br0
+sudo ovs-vsctl add-port br0 eth2
+ovs-vsctl show
+#2.
+#For all VLANs:
+sudo ovs-vsctl set port eth2 trunks=1-4094
+#For specific VLANs (e.g., 10, 20, 30):
+sudo ovs-vsctl set port eth2 trunks=10,20,30
+ovs-vsctl list port eth2
+
+#3.
+sudo systemctl enable openvswitch-switch
+sudo systemctl restart openvswitch-switch
+sudo systemctl status openvswitch-switch
+
+#4. (optional)
+If you want to create VLAN access ports for other interfaces:
+# eth3 will be an access port in VLAN 10.
+sudo ovs-vsctl add-port br0 eth3 tag=10
+# eth4 will be an access port in VLAN 20.
+sudo ovs-vsctl add-port br0 eth4 tag=20
+
+#5. (optional)
+sudo tcpdump -i eth2 -n vlan
+
+#6
+#eth0=ens18
+#eth1=ens19
+#eth2=ens20
+#sudo cat cat /etc/netplan/50-cloud-init.yaml
+network:
+  version: 2
+  ethernets:
+    ens18:
+      addresses:
+        - 192.168.1.231/24
+      nameservers:
+        addresses:
+          - 8.8.8.8
+      routes:
+        - to: default
+          via: 192.168.1.1
+    ens19:
+      dhcp4: true
+    ens20:
+      dhcp4: no
+    ens21:
+      dhcp4: true
+    ens22:
+      dhcp4: true
+  vlans:
+    vlan100:
+      id: 100
+      link: ens20
+      addresses: [10.10.100.1/24]
+      dhcp4: no
+    vlan200:
+      id: 200
+      link: ens20
+      addresses: [10.10.200.1/24]
+      dhcp4: no
+    vlan300:
+      id: 300
+      link: ens20
+      addresses: [10.10.130.1/24]
+      dhcp4: no
+
+
+#### Proxmox
+# cat /etc/network/interfaces
+
+auto lo
+iface lo inet loopback
+
+iface eno1 inet manual
+
+auto vmbr0
+iface vmbr0 inet static
+	address 192.168.1.201/24
+	gateway 192.168.1.1
+	bridge-ports eno1
+	bridge-stp off
+	bridge-fd 0
+	bridge-vlan-aware yes
+	bridge-vids 2-4094
+
+# VLAN 200 Sub-interface
+auto vmbr0.200
+iface vmbr0.200 inet manual
+
+auto vmbr0.100
+iface vmbr0.100 inet manual
+
+
+auto vmbr0.300
+iface vmbr0.300 inet manual
+
+source /etc/network/interfaces.d/*
+
+# end interfaces
+
+systemctl restart networking
+
+
+
+
+
+
+
+
+
+
+
+
+
