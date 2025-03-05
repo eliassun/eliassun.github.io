@@ -45,6 +45,10 @@ sudo tcpdump -i eth2 -n vlan
 #6
 
 sudo touch /etc/cloud/cloud-init.disabled
+OR
+sudo vim /etc/cloud/cloud.cfg
+network:
+  config: disabled
 
 #eth0=ens18
 #eth1=ens19
