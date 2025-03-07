@@ -1,0 +1,12 @@
+#decode.py
+async def decode(file_path):
+  # code here
+  pass
+
+async def main():
+	ret = await decode(file_path)
+
+asyncio.run(main())
+
+
+sudo PYTHONPATH=/path/to/your/lib:/home/ubuntu/.local/lib/python3.10/site-packages python3 decode.py
