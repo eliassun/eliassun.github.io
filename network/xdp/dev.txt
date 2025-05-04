@@ -7,6 +7,11 @@ Understand BPF_MAP_TYPE_LPM_TRIE and BPF_MAP_TYPE_HASH ...
 
 
 2 XDP Program
+https://github.com/dropbox/goebpf/tree/master/examples/xdp/basic_firewall
 
-  https://github.com/dropbox/goebpf/tree/master/examples/xdp/basic_firewall
+3. Tools
+Check all BPF maps:  sudo bpftool map
+Check a detail of BPF map:  sudo bpftool map dump id map_id
+Check which NIC has XDP:  ip link show
+Delete the XDP: sudo ip link set dev iface xdp off
 
