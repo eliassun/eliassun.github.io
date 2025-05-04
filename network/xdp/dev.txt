@@ -1,0 +1,12 @@
+1 Understand the BPF Map
+  https://docs.ebpf.io/linux/helper-function/bpf_map_update_elem/
+  https://docs.ebpf.io/linux/map-type/
+bpf_map_lookup_elem:  Find a value by a key
+bpf_map_update_elem:  Create or update a value by a key
+Understand BPF_MAP_TYPE_LPM_TRIE and BPF_MAP_TYPE_HASH ...
+
+
+2 XDP Program
+
+  https://github.com/dropbox/goebpf/tree/master/examples/xdp/basic_firewall
+
