@@ -1,0 +1,20 @@
+# ubuntu cannot bootup. Rescue it.
+1. Ubuntu Desktop USB boot
+2. Boot from USB, select Ubuntu(safe graphic)
+3. mount the problematic drive to new Ubuntu, for example:
+
+mount /dev/mapper/ubuntu_lvm /mnt
+Or mount -o ro /mnt/sda1 /mnt
+
+mount -o -ro /mnt/nvmen0p1 /mnt/boot
+
+4. mount --bind /dev /mnt/dev
+mount --bind /sys /mnt/sys
+mount --bind /proc /mnt/proc
+
+5. sudo chroot /mnt
+
+6. Check the logs, e.g. /var/syslog, kernel to figure out problem. Fix the problem, then reboot the problematic ubuntu, for example:
+
+grep -i "reboot\|shutdown\|panic" /var/log/kern.log
+grep -i "reboot\|shutdown\|panic" /var/log/syslog
