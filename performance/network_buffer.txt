@@ -31,3 +31,18 @@ sudo sysctl -w net.core.wmem_default=2400
 sudo sysctl net.core.wmem_default
 sudo sysctl net.core.wmem_max
 
+# More files:
+sudo vim /etc/security/limits.conf
+Add:
+  node soft nofile 100000
+  node hard nofile 100000
+
+sudo grep pam_limits.so /etc/pam.d/common-session
+sudo vim /etc/pam.d/common-session
+Add:
+   session required pam_limits.so
+
+sudo vim /etc/pam.d/common-session-noninteractive
+Add:
+   session required pam_limits.so
+
