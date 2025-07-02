@@ -24,4 +24,8 @@ git stash
   git checkout 1st_branch
   git cherry-pick git_commit_hash_which_is_on_2nd_branch
 
+  2.3 check all changes on master
+  git checkout master
+  git log  , here to find the commit hash
+
   
