@@ -1,8 +1,7 @@
 #1. Bumblebee
-#1.1 Monitor bumbleblebee the LAN throughput
+  #1.1 Monitor bumbleblebee the LAN throughput
   
-/opt/bumblebee/bin/throughput -i enp3s0
-
+  /opt/bumblebee/bin/throughput -i enp3s0
 
 #2. Check IP addr
 
@@ -10,15 +9,30 @@
 
 #3. list ethrnet devices 
 
-lspci | grep Ethernet
+  lspci | grep Ethernet
   
-lspci -nn | grep Ethernet
+  lspci -nn | grep Ethernet
 
-#4  capture in traffic only
+#4 tcpdump 
+  #4.1 capture inbound traffic only
   
-  sudo tcpdump -ni enp3s0 -Q in
+    sudo tcpdump -ni enp3s0 -Q in
 
-  -n: IP instead of domain
-  -i: interface
-  -Q: direction: in, out, inout
+    -n: IP instead of domain
+    -i: interface
+    -Q: direction: in, out, inout
 
+  #4.2 capture traffic with lay2 information, such MAC or VLAN
+
+    sudo tcpdump -ni enp3s0 host 8.8.8.8 -e
+
+    -e: display layer2, including MAC or VLAN
+
+#5. display linux network connections, including TCP, UDP, ICMP, SCTP, or Other Layer 4+ protocols
+
+  #5.1 display current number of active connections 
+
+    cat /proc/sys/net/netfilter/nf_conntrack_count
+
+  #5.2 display max number of connections
+     cat /proc/sys/net/netfilter/nf_conntrack_max
