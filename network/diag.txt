@@ -36,3 +36,12 @@
 
   #5.2 display max number of connections
      cat /proc/sys/net/netfilter/nf_conntrack_max
+
+  #5.3 display active TCP connections only. wants udp, replace tcp below to udp
+
+    sudo conntrack -L | grep tcp | wc -l
+
+  #5.4  connections usage percentage
+    echo $(( $(cat /proc/sys/net/netfilter/nf_conntrack_count) * 100 / $(cat /proc/sys/net/netfilter/nf_conntrack_max) ))%
+
+
