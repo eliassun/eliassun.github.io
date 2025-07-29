@@ -1,0 +1,24 @@
+#1. Bumblebee
+#1.1 Monitor bumbleblebee the LAN throughput
+  
+/opt/bumblebee/bin/throughput -i enp3s0
+
+
+#2. Check IP addr
+
+  ip -4 addr show
+
+#3. list ethrnet devices 
+
+lspci | grep Ethernet
+  
+lspci -nn | grep Ethernet
+
+#4  capture in traffic only
+  
+  sudo tcpdump -ni enp3s0 -Q in
+
+  -n: IP instead of domain
+  -i: interface
+  -Q: direction: in, out, inout
+
