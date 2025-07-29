@@ -49,4 +49,11 @@
   #5.4  connections usage percentage
     echo $(( $(cat /proc/sys/net/netfilter/nf_conntrack_count) * 100 / $(cat /proc/sys/net/netfilter/nf_conntrack_max) ))%
 
+#6. openswitch
+  #6.1 Show the MAC address forwarding table (FDB – Forwarding Database) for the Open vSwitch (OVS) bridge named br0.
+   sudo ovs-appctl fdb/show br0
+
+  
+
+
 
