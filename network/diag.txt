@@ -7,11 +7,16 @@
 
   ip -4 addr show
 
-#3. list ethrnet devices 
+#3. layer 2 command 
+  #3.1 list ethrnet devices 
 
   lspci | grep Ethernet
   
   lspci -nn | grep Ethernet
+
+  #3.2 list ARP table
+
+   ip neigh
 
 #4 tcpdump 
   #4.1 capture inbound traffic only
