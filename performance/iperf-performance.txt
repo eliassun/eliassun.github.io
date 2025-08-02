@@ -1,3 +1,4 @@
+
 #iperf3 https://help.mulesoft.com/s/article/How-to-Test-TCP-UDP-Traffic-Between-2-Servers-in-Each-Direction-Using-iperf3
 
 sudo add-apt-repository universe 
@@ -29,7 +30,9 @@ bastion --- iperf-c(s) --- device to test --- iperf-s(s)
 
 - run should use nohup, e.g. "sudo nohup test > iperf.log  2>&1  &" and disown
 
+# Run performance test forever for stress
 
+sudo iperf3 -c 192.168.1.16 -t 0 -i 5
 
 
 
