@@ -1,0 +1,22 @@
+1. Allow the local network to be access:
+sudo tailscale set --advertise-routes=192.168.100.0/24
+
+2. Tailscale become exit-node to route all traffic
+
+   1  curl -fsSL https://tailscale.com/install.sh | sh
+    2  sudo tailscale up --advertise-exit-node
+    3  sudo sysctl -w net.ipv4.ip_forward=1
+    4  echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf
+    5  ip a
+    6  sudo iptables -t nat -A POSTROUTING -o ens18 -j MASQUERADE
+    7  sudo iptables -A FORWARD -i tailscale0 -o ens18 -j ACCEPT
+    8  sudo iptables -A FORWARD -i ens18 -o tailscale0 -m state --state ESTABLISHED,RELATED -j ACCEPT
+    9  sudo apt install iptables-persistent
+   10  sudo netfilter-persistent save
+
+    Remember go to web page, select the device to mark it as exit-node
+
+
+
+
+
