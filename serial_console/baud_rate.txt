@@ -1,7 +1,7 @@
 #1. Ubuntu OS baud rate:
 cat /usr/lib/systemd/system/serial-getty@.service
 
-e.g. Popuplar baud rate: 9600, 19200, 38400, 57600
+e.g. Popuplar baud rate: 9600, 19200, 38400, 57600, 115200
 
 #2. Ubuntu Kernel baud rate:
 /etc/default/grub
