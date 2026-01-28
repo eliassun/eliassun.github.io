@@ -1,0 +1,81 @@
+#1. Ubuntu OS baud rate:
+cat /usr/lib/systemd/system/serial-getty@.service
+
+#2. Ubuntu Kernel baud rate:
+/etc/default/grub
+sudo update-grub
+sudo reboot
+
+#3. Temp Change:
+sudo systemctl stop serial-getty@ttyS0
+sudo stty -F /dev/ttyS0 9600 cs7 parenb parodd cstopb -ixon -ixoff -crtscts
+sudo agetty -o '-p -- \u' 9600 ttyS0 vt102
+sudo systemctl start serial-getty@ttyS0
+
+
+#4. Reset RJ45:
+#4.1
+cat /etc/systemd/system/watch-rj45.service
+[Unit]
+Description=Watch RJ45 serial connect state
+
+[Service]
+ExecStart=/usr/local/bin/watch-rj45.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+#4.2
+
+cat /usr/local/bin/watch-rj45.sh
+#!/bin/bash
+
+PORT=0   # ttyS0 is index 0 in /proc/tty/driver/serial
+LAST=""
+
+while true; do
+    LINE=$(grep "^$PORT:" /proc/tty/driver/serial)
+
+    if echo "$LINE" | grep -q "CTS|DTR|DSR"; then
+        STATE="connected"
+    else
+        STATE="disconnected"
+    fi
+
+    if [ "$STATE" != "$LAST" ]; then
+        if [ "$STATE" = "connected" ]; then
+            /usr/local/bin/reset-serial.sh
+        fi
+        LAST="$STATE"
+    fi
+
+    sleep 0.5
+done
+
+#4.3
+cat /usr/local/bin/reset-serial.sh
+#!/bin/bash
+set -e
+
+PORT=/dev/ttyS0
+
+systemctl stop serial-getty@ttyS0 2>/dev/null || true
+fuser -k $PORT 2>/dev/null || true
+
+stty -F $PORT sane || true
+stty -F $PORT 115200 cs8 -parenb -cstopb -ixon -ixoff -crtscts hupcl || true
+
+dd if=/dev/zero of=$PORT bs=1024 count=1 status=none || true
+
+python3 - <<'EOF'
+import serial,time
+s=serial.Serial('/dev/ttyS0',115200,timeout=1)
+s.dtr=False; s.rts=False
+time.sleep(1)
+s.dtr=True; s.rts=True
+s.close()
+EOF
+
+systemctl start serial-getty@ttyS0 2>/dev/null || true
+
