@@ -16,6 +16,13 @@ sudo systemctl start serial-getty@ttyS0
 
 
 #4. Reset RJ45:
+
+sudo systemctl stop serial-getty@ttyS0
+sudo stty -F /dev/ttyS0 115200 cs8 -parenb -cstopb -ixon -ixoff -crtscts hupcl
+sudo systemctl start serial-getty@ttyS0
+
+--OR--
+
 #4.1
 cat /etc/systemd/system/watch-rj45.service
 [Unit]
